@@ -17,7 +17,7 @@ namespace ToolkipCAD
 {
     public partial class Form1 : Form
     {
-        private static MyToolBar bar_state=new MyToolBar();
+        private static MyToolBar bar_state=new MyToolBar();       
         public Form1()
         {
             InitializeComponent();
@@ -50,7 +50,8 @@ namespace ToolkipCAD
         {
             //大小自适应
             //asc.controlAutoSize(this);
-            axMxDrawX1.Size = new Size(Form1.ActiveForm.Width-15, Form1.ActiveForm.Height-68);
+            tabControl1.Size = new Size(Form1.ActiveForm.Width - 22, Form1.ActiveForm.Height - 68);
+            axMxDrawX1.Size = new Size(tabControl1.Width, tabControl1.Height);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -97,12 +98,13 @@ namespace ToolkipCAD
                             mxDrawSelection = new MxDrawSelectionSet();
                             filter.AddStringEx(entity.Layer, 8);//过滤
                             mxDrawSelection.Select(MCAD_McSelect.mcSelectionSetAll, null, null, filter);//获取此图层元素
-                            for (int i = 0; i < mxDrawSelection.Count; i++)
+                            for (int i = 1; i < mxDrawSelection.Count; i++)
                             {
                                 //性能有问题
                                 //选中元素
-                                axMxDrawX1.AddCurrentSelect(mxDrawSelection.Item(i).ObjectID, true, true);
-                            }
+                                axMxDrawX1.AddCurrentSelect(mxDrawSelection.Item(i).ObjectID, false, false);
+                            }                      
+                            //axMxDrawX1.PutEntityInView(entity.ObjectID, 100);
                         }
                         bar_state.state = false;
                         e.lRet = 1;
@@ -111,11 +113,34 @@ namespace ToolkipCAD
                     break;
             } 
         }
-
+        private static int objID=0;
         private void axMxDrawX1_MxKeyUp(object sender, AxMxDrawXLib._DMxDrawXEvents_MxKeyUpEvent e)
         {
             //ESC取消掉执行此功能
             if (e.lVk == 27) bar_state.state = false;
+            //shift切换选择
+            if (e.lVk == 16)
+            {
+                if (bar_state.id == 1001)
+                {
+                    MxDrawSelectionSet mxDrawSelection = new MxDrawSelectionSet();
+                    MxDrawResbuf filter = new MxDrawResbuf();
+                    mxDrawSelection.CurrentSelect(filter);
+                    if (mxDrawSelection.Count > 0)
+                    {                       
+                        axMxDrawX1.AddCurrentSelect(mxDrawSelection.Item(objID).ObjectID, true,true);
+                    }
+                }
+            }
+        }
+
+        private void tabControl1_DoubleClick(object sender, EventArgs e)
+        {
+            MoreWindow tab1 = new MoreWindow();
+            tab1.MdiParent = this;
+            tab1.Show();
+            this.tabControl1.Controls.Add(tab1);
+           
         }
     }
 }

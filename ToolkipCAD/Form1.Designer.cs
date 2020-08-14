@@ -45,9 +45,13 @@
             this.功能2ToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.帮助ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.axMxDrawX1 = new AxMxDrawXLib.AxMxDrawX();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
             this.menuStrip1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axMxDrawX1)).BeginInit();
+            this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -171,35 +175,57 @@
             this.关于ToolStripMenuItem.Text = "关于";
             this.关于ToolStripMenuItem.Click += new System.EventHandler(this.关于ToolStripMenuItem_Click);
             // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.axMxDrawX1);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(837, 553);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
             // axMxDrawX1
             // 
             this.axMxDrawX1.Enabled = true;
-            this.axMxDrawX1.Location = new System.Drawing.Point(0, 28);
+            this.axMxDrawX1.Location = new System.Drawing.Point(-4, 0);
             this.axMxDrawX1.Name = "axMxDrawX1";
             this.axMxDrawX1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axMxDrawX1.OcxState")));
-            this.axMxDrawX1.Size = new System.Drawing.Size(848, 526);
-            this.axMxDrawX1.TabIndex = 1;
-            this.axMxDrawX1.ImplementCommandEvent += new AxMxDrawXLib._DMxDrawXEvents_ImplementCommandEventEventHandler(this.axMxDrawX1_ImplementCommandEvent);
-            this.axMxDrawX1.MouseEvent += new AxMxDrawXLib._DMxDrawXEvents_MouseEventEventHandler(this.axMxDrawX1_MouseEvent);
-            this.axMxDrawX1.MxKeyUp += new AxMxDrawXLib._DMxDrawXEvents_MxKeyUpEventHandler(this.axMxDrawX1_MxKeyUp);
-            this.axMxDrawX1.InitComplete += new System.EventHandler(this.axMxDrawX1_InitComplete);
+            this.axMxDrawX1.Size = new System.Drawing.Size(840, 553);
+            this.axMxDrawX1.TabIndex = 2;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Location = new System.Drawing.Point(3, 23);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(845, 579);
+            this.tabControl1.TabIndex = 2;
+            this.tabControl1.DoubleClick += new System.EventHandler(this.tabControl1_DoubleClick);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(848, 554);
-            this.Controls.Add(this.axMxDrawX1);
+            this.BackColor = System.Drawing.SystemColors.Window;
+            this.ClientSize = new System.Drawing.Size(848, 604);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
+            this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
+            this.TransparencyKey = System.Drawing.Color.White;
             this.Load += new System.EventHandler(this.Form1_Load);
             this.SizeChanged += new System.EventHandler(this.Form1_SizeChanged);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.axMxDrawX1)).EndInit();
+            this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -223,7 +249,9 @@
         private System.Windows.Forms.ToolStripMenuItem 功能2ToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem 帮助ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 关于ToolStripMenuItem;
+        private System.Windows.Forms.TabPage tabPage1;
         private AxMxDrawXLib.AxMxDrawX axMxDrawX1;
+        private System.Windows.Forms.TabControl tabControl1;
     }
 }
 

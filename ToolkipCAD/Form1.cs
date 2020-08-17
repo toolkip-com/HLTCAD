@@ -50,12 +50,16 @@ namespace ToolkipCAD
         {
             //大小自适应
             //asc.controlAutoSize(this);
-            tabControl1.Size = new Size(Form1.ActiveForm.Width - 22, Form1.ActiveForm.Height - 68);
-            axMxDrawX1.Size = new Size(tabControl1.Width, tabControl1.Height);
+            axMxDrawX1.Size = new Size(Form1.ActiveForm.Width - 22-238, Form1.ActiveForm.Height - 68);
+            PR_Panel.Size = new Size(238,Form1.ActiveForm.Height);
+            PR_Panel.Location = new Point(axMxDrawX1.Size.Width, 25);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            //加载自定义的菜单栏
+            axMxDrawX1.Iniset = "./mxmenu.mnu";
+            axMxDrawX1.Call("Mx_ReLoadMenu", @"D:\好蓝图平面CAD钢筋\HLTCAD\ToolkipCAD\bin\Debug\mxmenu.mnu");
             axMxDrawX1.LoadToolBar("Toolkip_toolbar.mxt",true);
             axMxDrawX1.OpenDwgFile(@"D:\Program Files (x86)\MXDraw\MxDraw52\Bin\vc100\管道安装大样图.dwg");
         }
@@ -65,7 +69,7 @@ namespace ToolkipCAD
             bar_state.state = !bar_state.state;
             bar_state.id = e.iCommandId;
             //通过命令id执行命令
-            //MyToolBar.CommandRun(ref axMxDrawX1, e.iCommandId);
+            MyToolBar.CommandRun(ref axMxDrawX1, e.iCommandId);
         }
         private void axMxDrawX1_InitComplete(object sender, EventArgs e)
         {
@@ -134,13 +138,10 @@ namespace ToolkipCAD
             }
         }
 
-        private void tabControl1_DoubleClick(object sender, EventArgs e)
+        private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
-            MoreWindow tab1 = new MoreWindow();
-            tab1.MdiParent = this;
-            tab1.Show();
-            this.tabControl1.Controls.Add(tab1);
-           
+            //窗体的按键
+            if (e.KeyCode==(Keys.Control|Keys.N)) MessageBox.Show("1123");
         }
     }
 }

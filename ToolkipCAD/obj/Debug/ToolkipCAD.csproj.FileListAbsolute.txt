@@ -18,7 +18,6 @@ D:\好蓝图平面CAD钢筋\HLTCAD\ToolkipCAD\bin\Debug\ToolkipCAD.exe
 D:\好蓝图平面CAD钢筋\HLTCAD\ToolkipCAD\bin\Debug\ToolkipCAD.pdb
 D:\好蓝图平面CAD钢筋\HLTCAD\ToolkipCAD\bin\Debug\Interop.MxDrawXLib.dll
 D:\好蓝图平面CAD钢筋\HLTCAD\ToolkipCAD\bin\Debug\AxInterop.MxDrawXLib.dll
-D:\好蓝图平面CAD钢筋\HLTCAD\ToolkipCAD\obj\Debug\ToolkipCAD.csprojAssemblyReference.cache
 D:\好蓝图平面CAD钢筋\HLTCAD\ToolkipCAD\obj\Debug\Interop.MxDrawXLib.dll
 D:\好蓝图平面CAD钢筋\HLTCAD\ToolkipCAD\obj\Debug\AxInterop.MxDrawXLib.dll
 D:\好蓝图平面CAD钢筋\HLTCAD\ToolkipCAD\obj\Debug\ToolkipCAD.csproj.ResolveComReference.cache
@@ -29,3 +28,5 @@ D:\好蓝图平面CAD钢筋\HLTCAD\ToolkipCAD\obj\Debug\ToolkipCAD.csproj.CoreCo
 D:\好蓝图平面CAD钢筋\HLTCAD\ToolkipCAD\obj\Debug\ToolkipCAD.exe
 D:\好蓝图平面CAD钢筋\HLTCAD\ToolkipCAD\obj\Debug\ToolkipCAD.pdb
 D:\好蓝图平面CAD钢筋\HLTCAD\ToolkipCAD\obj\Debug\ToolkipCAD.MoreWindow.resources
+D:\好蓝图平面CAD钢筋\HLTCAD\ToolkipCAD\obj\Debug\ToolkipCAD.CustomForm.CreateProjectForm.resources
+D:\好蓝图平面CAD钢筋\HLTCAD\ToolkipCAD\obj\Debug\ToolkipCAD.csprojAssemblyReference.cache

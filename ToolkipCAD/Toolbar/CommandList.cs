@@ -16,9 +16,9 @@ namespace ToolkipCAD.Toolbar
         /// <param name="axMx">控件</param>
         public CommandList(ref AxMxDrawX axMx)
         {
-            axMx.RegistUserCustomCommand("select_layer", 1001);
-
-
+            axMx.RegistUserCustomCommand("select_layer", 1001);//选择图层
+            axMx.RegistUserCustomCommand("TK_NewObj", 1002);//新建项目
+            axMx.RegistUserCustomCommand("TK_OpenObj", 1003);//打开项目
 
 
 

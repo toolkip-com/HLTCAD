@@ -49,9 +49,9 @@ namespace ToolkipCAD
         string Strup_type { get; set; }     //默认箍筋等级
         string earth_type { get; set; }     //默认抗震等级
         //选择集
-        List<objectid> side_lines { get; set; }  //梁线集合
-        List<objectid> seat_lines { get; set; }  //支座线集合
-        List<objectid> dim_texts { get; set; }  //标注及标注线集合
+        List<long> side_lines { get; set; }  //梁线集合
+        List<long> seat_lines { get; set; }  //支座线集合
+        List<long> dim_texts { get; set; }  //标注及标注线集合
         List<Point3d> pto { get; set; } //识别范围
         //梁数据
         List<Beam> beams { get; set; }  
@@ -61,15 +61,15 @@ namespace ToolkipCAD
     {
         string id { get; set; }  //梁编号GUID
         //数据采集
-        List<objectid> side_lines { get; set; }  //梁边线
-        List<objectid> left_seat_lines { get; set; }  //左支座线
-        List<objectid> right_seat_lines { get; set; }  //右支座线
-        List<objectid> turn_lines { get; set; }  //折梁转折线
-        List<objectid> globe_dim { get; set; } //集中标注及线
-        List<objectid> public_frame_dim { get; set; } //原位：通长及架力钢筋标注
-        List<objectid> left_seat_dim { get; set; } //原位：左支座标注
-        List<objectid> right_seat_dim { get; set; } //原位：右支座标注
-        List<objectid> mid_dim { get; set; } //原位：跨中标注，含主筋、箍筋、腰筋
+        List<long> side_lines { get; set; }  //梁边线
+        List<long> left_seat_lines { get; set; }  //左支座线
+        List<long> right_seat_lines { get; set; }  //右支座线
+        List<long> turn_lines { get; set; }  //折梁转折线
+        List<long> globe_dim { get; set; } //集中标注及线
+        List<long> public_frame_dim { get; set; } //原位：通长及架力钢筋标注
+        List<long> left_seat_dim { get; set; } //原位：左支座标注
+        List<long> right_seat_dim { get; set; } //原位：右支座标注
+        List<long> mid_dim { get; set; } //原位：跨中标注，含主筋、箍筋、腰筋
         //数据存储
         bool isStartBeam { get; set; }  //是否为首段梁
         string pid { get; set; } //梁归属id，即连续梁的左侧梁
@@ -88,8 +88,8 @@ namespace ToolkipCAD
         List<Rebar_Dim> Waist_Bar { get; set; } //腰筋
         List<Rebar_Dim> Twist_Bar { get; set; } //抗扭筋
         //数据应用--平显   
-        List<objectid> PM_Line { get; set; }  //平显中心线
-        List<objectid> PM_Text { get; set; }  //平显文字
+        List<long> PM_Line { get; set; }  //平显中心线
+        List<long> PM_Text { get; set; }  //平显文字
         //?1、当绘制出来后必须跟踪否则就会重新绘制
     }
 
@@ -114,7 +114,5 @@ namespace ToolkipCAD
         double Sa { get; set; }  //箍筋非加密区间距
         double Se { get; set; }  //箍筋加密区间距
     }
-
-    public class objectid{}  //仅是用于模拟梦想CAD中的objectid，看到后改对删去
 
 }

@@ -157,15 +157,19 @@ namespace ToolkipCAD
             ReNameDialog reName = new ReNameDialog();
             reName.Text = $"新建{type}";
             reName.transf += ((string result) =>
-            {
-                _TreeView.SelectedNode.Nodes.Add(result);
-                _HLT.Project_Manage_Tree.Add(new Project_Manage
+            {                
+                Project_Manage project = new Project_Manage
                 {
                     id = Guid.NewGuid().ToString(),
                     pid = _TreeView.SelectedNode.Tag.ToString(),
                     name = result,
                     type = (Project_type)Enum.Parse(typeof(Project_type), type)
-                });
+                };
+                _HLT.Project_Manage_Tree.Add(project);
+                TreeNode node = new TreeNode();
+                node.Tag = project.id;
+                node.Text = project.name;
+                _TreeView.SelectedNode.Nodes.Add(node);
             });
             reName.ShowDialog();
         }

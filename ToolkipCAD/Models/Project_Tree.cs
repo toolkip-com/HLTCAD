@@ -9,12 +9,12 @@ using ToolkipCAD.CustomForm;
 
 namespace ToolkipCAD
 {
-    class MyTestData
+    class Project_Tree
     {
         //项目管理工具类
         private static HLTDataStruct _HLT = new HLTDataStruct();
         private TreeView _TreeView;
-        public MyTestData(ref TreeView tree)
+        public Project_Tree(ref TreeView tree)
         {
             //构造函数加载树数据
             //先为数据模拟，再按需从文件读取

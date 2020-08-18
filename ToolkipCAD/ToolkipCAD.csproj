@@ -67,7 +67,7 @@
     </Compile>
     <Compile Include="Models\HLTDataStruct.cs" />
     <Compile Include="Models\HLTElement.cs" />
-    <Compile Include="Models\MyTestData.cs" />
+    <Compile Include="Models\Project_Tree.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Toolbar\CommandList.cs" />

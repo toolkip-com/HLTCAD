@@ -19,34 +19,13 @@ namespace ToolkipCAD
     public partial class Form1 : Form
     {
         private static MyToolBar bar_state=new MyToolBar();
-        private MyTestData _TestData;
+        private Project_Tree _TestData;
         public Form1()
         {
             InitializeComponent();
         }
         /*修改按钮的功能可以通过改写命令,重新注册此命令
-         *
-         * 
          */
-        private void 打开ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //选择文件窗口
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "dwg 文件(*.dwg)|*.dwg";//设置可以打开的文件类型
-            DialogResult dialogResult= openFileDialog.ShowDialog();
-            //点击了窗口中的打开按钮
-            if (dialogResult == DialogResult.OK)
-            {
-                //文件打开的处理
-                MessageBox.Show(openFileDialog.FileName);
-                //axMxDrawX1.OpenDwgFile(openFileDialog.FileName);//MX打开文件
-            }
-        }
-
-        private void 关于ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("2020/08/12,MXDraw测试1","关于");
-        }
 
         private void Form1_SizeChanged(object sender, EventArgs e)
         {
@@ -61,12 +40,12 @@ namespace ToolkipCAD
         {
             //加载自定义的菜单栏
             axMxDrawX1.Iniset = "./mxmenu.mnu";
-            axMxDrawX1.Call("Mx_ReLoadMenu", @"D:\好蓝图平面CAD钢筋\HLTCAD\ToolkipCAD\bin\Debug\mxmenu.mnu");
+            axMxDrawX1.Call("Mx_ReLoadMenu", $@"{Directory.GetCurrentDirectory()}\mxmenu.mnu");
             axMxDrawX1.LoadToolBar("Toolkip_toolbar.mxt",true);
             axMxDrawX1.OpenDwgFile(@"D:\Program Files (x86)\MXDraw\MxDraw52\Bin\vc100\管道安装大样图.dwg");
             //TreeView测试
             //tree_project.Nodes.Add("测试项目");//根节点
-            _TestData = new MyTestData(ref tree_project);
+            _TestData = new Project_Tree(ref tree_project);
             _TestData.StructTree();
         }
 

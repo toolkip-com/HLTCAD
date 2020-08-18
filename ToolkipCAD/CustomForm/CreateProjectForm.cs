@@ -68,6 +68,7 @@ namespace ToolkipCAD.CustomForm
                         sw.Close();
                     }
                 MessageBox.Show("项目创建成功");
+                this.Close();
                 return;
             }
             catch(Exception ex)

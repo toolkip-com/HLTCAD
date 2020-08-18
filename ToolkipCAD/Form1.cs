@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MxDrawXLib;
+using ToolkipCAD.CustomForm;
 using ToolkipCAD.fig;
 using ToolkipCAD.Toolbar;
 
@@ -17,7 +18,8 @@ namespace ToolkipCAD
 {
     public partial class Form1 : Form
     {
-        private static MyToolBar bar_state=new MyToolBar();       
+        private static MyToolBar bar_state=new MyToolBar();
+        private MyTestData _TestData;
         public Form1()
         {
             InitializeComponent();
@@ -50,9 +52,9 @@ namespace ToolkipCAD
         {
             //大小自适应
             //asc.controlAutoSize(this);
-            axMxDrawX1.Size = new Size(Form1.ActiveForm.Width - 22-238, Form1.ActiveForm.Height - 68);
+            axMxDrawX1.Size = new Size(Form1.ActiveForm.Width - 22-238, Form1.ActiveForm.Height - 40);
             PR_Panel.Size = new Size(238,Form1.ActiveForm.Height);
-            PR_Panel.Location = new Point(axMxDrawX1.Size.Width, 25);
+            PR_Panel.Location = new Point(axMxDrawX1.Size.Width, 0);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -62,6 +64,10 @@ namespace ToolkipCAD
             axMxDrawX1.Call("Mx_ReLoadMenu", @"D:\好蓝图平面CAD钢筋\HLTCAD\ToolkipCAD\bin\Debug\mxmenu.mnu");
             axMxDrawX1.LoadToolBar("Toolkip_toolbar.mxt",true);
             axMxDrawX1.OpenDwgFile(@"D:\Program Files (x86)\MXDraw\MxDraw52\Bin\vc100\管道安装大样图.dwg");
+            //TreeView测试
+            //tree_project.Nodes.Add("测试项目");//根节点
+            _TestData = new MyTestData(ref tree_project);
+            _TestData.StructTree();
         }
 
         private void axMxDrawX1_ImplementCommandEvent(object sender, AxMxDrawXLib._DMxDrawXEvents_ImplementCommandEventEvent e)
@@ -140,8 +146,31 @@ namespace ToolkipCAD
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
-            //窗体的按键
-            if (e.KeyCode==(Keys.Control|Keys.N)) MessageBox.Show("1123");
+            
+        }
+
+        private void axMxDrawX1_MxKeyUp_1(object sender, AxMxDrawXLib._DMxDrawXEvents_MxKeyUpEvent e)
+        {
+            if ((Control.ModifierKeys & Keys.Control) != 0 && e.lVk == (int)Keys.N) new CreateProjectForm().ShowDialog();
+        }
+
+        private void tree_project_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+            _TestData.DeleteItem();
+            List<Project_Manage> aaa = _TestData.GetProjectTree();
+        }
+        //树的点击事件
+        private void tree_project_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right) return;
+            tree_project.SelectedNode = e.Node;
+            ContextMenuStrip contextMenuStrip_project = _TestData.CreateItemMenu(e.Node);
+            contextMenuStrip_project.Show(tree_project,e.X,e.Y);
         }
     }
 }

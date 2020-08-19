@@ -14,6 +14,7 @@ namespace ToolkipCAD.CustomForm
 {
     public partial class CreateProjectForm : Form
     {
+        public delegate void TransGate(dynamic param);
         public CreateProjectForm()
         {
             InitializeComponent();
@@ -23,6 +24,7 @@ namespace ToolkipCAD.CustomForm
         {
             //选择目录按钮
             FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
+            folderBrowser.SelectedPath = @"D:\好蓝图平面CAD钢筋\测试";
             if (folderBrowser.ShowDialog()==DialogResult.OK)
             {
                 select_menu_path.Text = folderBrowser.SelectedPath;
@@ -33,7 +35,7 @@ namespace ToolkipCAD.CustomForm
             //取消创建项目
             this.Close();
         }
-
+        public event TransGate transf;
         private void project_activepro_Click(object sender, EventArgs e)
         {
             try
@@ -67,7 +69,10 @@ namespace ToolkipCAD.CustomForm
                         sw.WriteLine(project_name.Text);
                         sw.Close();
                     }
-                MessageBox.Show("项目创建成功");
+                transf(new { 
+                name= project_name.Text,
+                path=relayPath
+                });
                 this.Close();
                 return;
             }

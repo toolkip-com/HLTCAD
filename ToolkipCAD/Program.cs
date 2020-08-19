@@ -8,6 +8,7 @@ namespace ToolkipCAD
 {
     static class Program
     {
+        public static Form1 MainForm;
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
@@ -16,7 +17,9 @@ namespace ToolkipCAD
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            MainForm = new Form1();
+            //Application.Run(new Form1());
+            Application.Run(MainForm);
         }
     }
 }

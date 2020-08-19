@@ -18,11 +18,11 @@ namespace ToolkipCAD
         /// <summary>
         /// id号，6位GUID
         /// </summary>
-        public string id { get; set; }   //id号，6位GUID
+        public string id { get; set; }   //id号，16位GUID
         /// <summary>
         /// 父亲的id号
         /// </summary>
-        public string pid { get; set; }   //父亲的id号
+        public string pid { get; set; }   //父id号
         /// <summary>
         /// 节点名称
         /// </summary>
@@ -55,22 +55,27 @@ namespace ToolkipCAD
         梁,
         板,
         柱,
-        墙 ,
+        墙,
         其它
     }
     public class Drawing_Manage   //资源管理结构
     {
         public string id { get; set; }   //id号，12位GUID
-        public string pid { get; set; }   //父亲的id号
+        public string pid { get; set; }   //父id号
         public string name { get; set; }   //节点名称
-        public int type { get; set; }   //节点类型  0--根节点   1--资源类型    2--文件
+        public Drawing_type type { get; set; }   //节点类型  0--根节点   1--资源类型    2--文件
         public string ext { get; set; }  //当type=2时，记录扩展名，节点名称则为文件名
     }
-
+    public enum Drawing_type
+    {
+        根节点,
+        资源类型,
+        文件
+    }
     public class XRecord  //针对一张图纸识别、计算等一切数据的记录
     {
         public string id { get; set; }  //12位 GUID
-        public int type { get; set; }   //1--梁   2--板  3--柱  4--墙  5--其它
+        public Xrecord_type type { get; set; }   //1--梁   2--板  3--柱  4--墙  5--其它
         public string json { get; set; } //存详细记录数据，包括梁数据 Beam_XRrecord等        
     }
 
@@ -90,7 +95,16 @@ namespace ToolkipCAD
         //梁数据
         public List<Beam> beams { get; set; }
     }
-
+    public enum Side_type
+    {
+        主梁,//(KL)
+        次梁,//(L)
+        屋框梁,//(WKL)
+        屋面次梁,//(WL)
+        框支梁,//(KZL)
+        连梁,//(LL)
+        地梁//(JL或DL)
+    }
     public class Beam //一段梁
     {
         public string id { get; set; }  //梁编号GUID
@@ -107,7 +121,7 @@ namespace ToolkipCAD
         //数据存储
         public bool isStartBeam { get; set; }  //是否为首段梁
         public string pid { get; set; } //梁归属id，即连续梁的左侧梁
-        public int type { get; set; } //梁类型 0主梁(KL)、1次梁(L)、2屋框梁(WKL)、3屋面次梁(WL)、4框支梁(KZL)、5连梁(LL)、6地梁(JL或DL)
+        public Side_type type { get; set; } //梁类型 0主梁(KL)、1次梁(L)、2屋框梁(WKL)、3屋面次梁(WL)、4框支梁(KZL)、5连梁(LL)、6地梁(JL或DL)
         public string Concrete_type { get; set; }  //混凝土等级
         public string Rebar_type { get; set; }     //主筋等级
         public string Stirrup_type { get; set; }     //箍筋等级 

@@ -30,3 +30,4 @@ D:\好蓝图平面CAD钢筋\HLTCAD\ToolkipCAD\obj\Debug\ToolkipCAD.pdb
 D:\好蓝图平面CAD钢筋\HLTCAD\ToolkipCAD\obj\Debug\ToolkipCAD.CustomForm.CreateProjectForm.resources
 D:\好蓝图平面CAD钢筋\HLTCAD\ToolkipCAD\obj\Debug\ToolkipCAD.csprojAssemblyReference.cache
 D:\好蓝图平面CAD钢筋\HLTCAD\ToolkipCAD\obj\Debug\ToolkipCAD.CustomForm.ReNameDialog.resources
+D:\好蓝图平面CAD钢筋\HLTCAD\ToolkipCAD\obj\Debug\ToolkipCAD.CustomForm.RecodeDialog.resources

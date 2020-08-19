@@ -14,7 +14,8 @@ namespace ToolkipCAD
         //项目管理工具类
         private static HLTDataStruct _HLT = new HLTDataStruct();
         private TreeView _TreeView;
-        public Project_Tree(ref TreeView tree)
+        private TreeView _DrawView;
+        public Project_Tree(ref TreeView tree, ref TreeView draw)
         {
             //构造函数加载树数据
             //先为数据模拟，再按需从文件读取
@@ -84,18 +85,57 @@ namespace ToolkipCAD
                 xrecord_id=""
                 } ,
             };
+            List<Drawing_Manage> drawings = new List<Drawing_Manage>
+            {
+                new Drawing_Manage
+                {
+                    id="111111",
+                    pid="",
+                    name="根节点",
+                    type=Drawing_type.根节点,
+                    ext=""
+                },
+                new Drawing_Manage
+                {
+                    id="22222",
+                    pid="111111",
+                    name="类型1",
+                    type=Drawing_type.资源类型,
+                    ext=""
+                },
+                new Drawing_Manage
+                {
+                    id="33333",
+                    pid="22222",
+                    name="文件1",
+                    type=Drawing_type.文件,
+                    ext="dwg"
+                },
+                new Drawing_Manage
+                {
+                    id="33333-2",
+                    pid="22222",
+                    name="文件2",
+                    type=Drawing_type.文件,
+                    ext="dwg"
+                }
+
+            };
             _HLT.Project_Manage_Tree = projects;
+            _HLT.Drawing_Manage_Tree = drawings;
             this._TreeView = tree;
+            this._DrawView = draw;
         }
-        //加载这棵树到界面
+        //加载这棵树
         public void StructTree()
         {
             Addnode(ref _TreeView);
+            AddDrawnode(ref _DrawView);
         }
         //获取树数据
-        public List<Project_Manage> GetProjectTree()
+        public HLTDataStruct GetTreeData()
         {
-            return _HLT.Project_Manage_Tree;
+            return _HLT;
         }
         //创建子项菜单
         public ContextMenuStrip CreateItemMenu(TreeNode node)
@@ -157,7 +197,7 @@ namespace ToolkipCAD
             ReNameDialog reName = new ReNameDialog();
             reName.Text = $"新建{type}";
             reName.transf += ((string result) =>
-            {                
+            {
                 Project_Manage project = new Project_Manage
                 {
                     id = Guid.NewGuid().ToString(),
@@ -173,15 +213,22 @@ namespace ToolkipCAD
             });
             reName.ShowDialog();
         }
+
         //重命名
-        public void RenameForItem(string name)
+        public void RenameForItem()
         {
             if (_TreeView.SelectedNode != null)
             {
-                _TreeView.SelectedNode.Text = name;
-                string id = _TreeView.SelectedNode.Tag.ToString();
-                Project_Manage project = _HLT.Project_Manage_Tree.Find(x => x.id == id);
-                project.name = name;
+                ReNameDialog reName = new ReNameDialog();
+                reName.Text = "重命名";
+                reName.transf += ((string result) =>
+                {
+                    string id = _TreeView.SelectedNode.Tag.ToString();
+                    Project_Manage project = _HLT.Project_Manage_Tree.Find(x=>x.id==id);
+                    project.name = result;
+                    _TreeView.SelectedNode.Text = result; 
+                });
+                reName.ShowDialog();
             }
         }
         //删除
@@ -217,10 +264,72 @@ namespace ToolkipCAD
                 });
             }
         }
-        //编辑  只有记录能编辑
-        public void EditItem(string id)
+        //创建记录
+        public void CreateRecode()
         {
+            //创建记录
+            RecodeDialog recode = new RecodeDialog();
+            recode.Tag = new
+            {
+                name = "",
+                oner = _HLT.Drawing_Manage_Tree,
+                path = "",
+            };
+            recode.transf += (dynamic result) =>
+            {
+                Project_Manage project = new Project_Manage
+                {
+                    id = Guid.NewGuid().ToString(),
+                    pid = _TreeView.SelectedNode.Tag.ToString(),
+                    name = result.name,
+                    type = Project_type.记录
+                };
+                _HLT.Project_Manage_Tree.Add(project);
+                TreeNode node = new TreeNode();
+                node.Tag = project.id;
+                node.Text = project.name;
+                _TreeView.SelectedNode.Nodes.Add(node);
 
+            };
+            recode.ShowDialog();
+        }
+        //编辑  只有记录能编辑
+        public void EditRecode()
+        {
+            //编辑记录
+            RecodeDialog recode = new RecodeDialog();
+            recode.Text = "编辑记录";
+            string id = _TreeView.SelectedNode.Tag.ToString();
+            Project_Manage project = _HLT.Project_Manage_Tree.Find(x => x.id == id);
+            recode.Tag = new
+            {
+                name=project.name,
+                oner=_HLT.Drawing_Manage_Tree,
+                path="",
+            };
+            recode.transf += (dynamic result) =>
+            {  
+                project.name = result.name;
+                /*++++++++++图纸管理操作++++++++++++++*/
+
+
+
+
+
+                _TreeView.SelectedNode.Text = result.name;
+            };
+            recode.ShowDialog();
+        }
+        //记录的点击事件
+        public string RecodeClick()
+        {
+            if (_TreeView.SelectedNode != null)
+            {
+                string id = _TreeView.SelectedNode.Tag.ToString();
+                Project_Manage project = _HLT.Project_Manage_Tree.Find(x=>x.id==id);
+                return "";
+            }
+            return "";
         }
         //右键菜单，不同类型对应不同菜单
 
@@ -254,6 +363,37 @@ namespace ToolkipCAD
                 }
             }
         }
+
+        // 图纸资源管理
+        public void AddDrawnode(ref TreeView treeView1)
+        {
+            for (int i = 0; i < _HLT.Drawing_Manage_Tree.Count; i++)
+            {
+                if (_HLT.Drawing_Manage_Tree[i].pid == "")
+                {
+                    TreeNode pnode = new TreeNode();
+                    pnode.Text = _HLT.Drawing_Manage_Tree[i].name;
+                    pnode.Tag = _HLT.Drawing_Manage_Tree[i].id;
+                    treeView1.Nodes.Add(pnode);
+                    AddDrawChildnode(_HLT.Drawing_Manage_Tree[i].id, pnode);
+                }
+            }
+        }
+
+        public void AddDrawChildnode(string pid, TreeNode pnode)
+        {
+            for (int i = 0; i < _HLT.Drawing_Manage_Tree.Count; i++)
+            {
+                if (_HLT.Drawing_Manage_Tree[i].pid == pid)
+                {
+                    TreeNode cnode = new TreeNode();
+                    cnode.Text = _HLT.Drawing_Manage_Tree[i].name;
+                    cnode.Tag = _HLT.Drawing_Manage_Tree[i].id;
+                    pnode.Nodes.Add(cnode);
+                    AddDrawChildnode(_HLT.Drawing_Manage_Tree[i].id, cnode);
+                }
+            }
+        }
         //删除
         public void NodeRemove(string id)
         {
@@ -270,35 +410,15 @@ namespace ToolkipCAD
         #endregion
 
         #region 右键菜单事件 2020/08/18
-        void CreateBuild_Click(object sender, EventArgs e)
-        {
-            //创建号楼
-            AddTreeNode("号楼");
-        }
-        void CreateFloor_Click(object sender, EventArgs e)
-        {
-            //创建楼层
-            AddTreeNode("楼层");
-        }
-        void CreateRange_Click(object sender, EventArgs e)
-        {
-            //创建范围
-            AddTreeNode("区域");
-        }
-        void CreateComponet_Click(object sender, EventArgs e)
-        {
-            //创建构件
-            AddTreeNode("构件");
-        }
-        void CreateRecode_Click(object sender, EventArgs e)
-        {
-            //创建记录
-            AddTreeNode("记录");
-        }
-        void Edit_Click(object sender, EventArgs e) => RenameForItem("123");//编辑
+        void CreateBuild_Click(object sender, EventArgs e)=> AddTreeNode("号楼"); //创建号楼
+        void CreateFloor_Click(object sender, EventArgs e)=> AddTreeNode("楼层");//创建楼层
+        void CreateRange_Click(object sender, EventArgs e)=> AddTreeNode("区域"); //创建范围
+        void CreateComponet_Click(object sender, EventArgs e) => AddTreeNode("构件"); //创建构件
+        void CreateRecode_Click(object sender, EventArgs e) => CreateRecode();//创建记录
+        void Edit_Click(object sender, EventArgs e) => EditRecode();//编辑记录
         void Delete_Click(object sender, EventArgs e) => DeleteItem();//删除
         void Copy_Click(object sender, EventArgs e) => CopyItem();//复制
-        void Rename_Click(object sender, EventArgs e) => RenameForItem("123");//重命名
+        void Rename_Click(object sender, EventArgs e) => RenameForItem();//重命名
         #endregion
     }
 }

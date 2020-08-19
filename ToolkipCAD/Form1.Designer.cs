@@ -33,9 +33,9 @@
             this.PR_Panel = new System.Windows.Forms.Panel();
             this.tab_Proandresource = new System.Windows.Forms.TabControl();
             this.tab_project = new System.Windows.Forms.TabPage();
+            this.tree_project = new System.Windows.Forms.TreeView();
             this.tab_resource = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
-            this.tree_project = new System.Windows.Forms.TreeView();
             this.axMxDrawX1 = new AxMxDrawXLib.AxMxDrawX();
             this.重命名ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.删除ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,9 +50,11 @@
             this.删除ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.复制ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.编辑ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tree_drawing = new System.Windows.Forms.TreeView();
             this.PR_Panel.SuspendLayout();
             this.tab_Proandresource.SuspendLayout();
             this.tab_project.SuspendLayout();
+            this.tab_resource.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axMxDrawX1)).BeginInit();
             this.resource_contextMenuStrip1.SuspendLayout();
             this.project_contextMenuStrip1.SuspendLayout();
@@ -89,8 +91,18 @@
             this.tab_project.Text = "项目管理";
             this.tab_project.UseVisualStyleBackColor = true;
             // 
+            // tree_project
+            // 
+            this.tree_project.Location = new System.Drawing.Point(3, 6);
+            this.tree_project.Name = "tree_project";
+            this.tree_project.Size = new System.Drawing.Size(217, 598);
+            this.tree_project.TabIndex = 0;
+            this.tree_project.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tree_project_AfterSelect);
+            this.tree_project.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tree_project_NodeMouseClick);
+            // 
             // tab_resource
             // 
+            this.tab_resource.Controls.Add(this.tree_drawing);
             this.tab_resource.Location = new System.Drawing.Point(4, 22);
             this.tab_resource.Name = "tab_resource";
             this.tab_resource.Padding = new System.Windows.Forms.Padding(3);
@@ -110,15 +122,6 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "项目及资源管理";
             this.label1.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // tree_project
-            // 
-            this.tree_project.Location = new System.Drawing.Point(3, 6);
-            this.tree_project.Name = "tree_project";
-            this.tree_project.Size = new System.Drawing.Size(217, 598);
-            this.tree_project.TabIndex = 0;
-            this.tree_project.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tree_project_AfterSelect);
-            this.tree_project.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tree_project_NodeMouseClick);
             // 
             // axMxDrawX1
             // 
@@ -170,56 +173,63 @@
             // 创建楼号ToolStripMenuItem
             // 
             this.创建楼号ToolStripMenuItem.Name = "创建楼号ToolStripMenuItem";
-            this.创建楼号ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.创建楼号ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.创建楼号ToolStripMenuItem.Text = "创建楼号";
             // 
             // 创建楼层ToolStripMenuItem
             // 
             this.创建楼层ToolStripMenuItem.Name = "创建楼层ToolStripMenuItem";
-            this.创建楼层ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.创建楼层ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.创建楼层ToolStripMenuItem.Text = "创建楼层";
             // 
             // 创建范围ToolStripMenuItem
             // 
             this.创建范围ToolStripMenuItem.Name = "创建范围ToolStripMenuItem";
-            this.创建范围ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.创建范围ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.创建范围ToolStripMenuItem.Text = "创建范围";
             // 
             // 创建构件ToolStripMenuItem
             // 
             this.创建构件ToolStripMenuItem.Name = "创建构件ToolStripMenuItem";
-            this.创建构件ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.创建构件ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.创建构件ToolStripMenuItem.Text = "创建构件";
             // 
             // 创建记录ToolStripMenuItem
             // 
             this.创建记录ToolStripMenuItem.Name = "创建记录ToolStripMenuItem";
-            this.创建记录ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.创建记录ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.创建记录ToolStripMenuItem.Text = "创建记录";
             // 
             // 重命名ToolStripMenuItem
             // 
             this.重命名ToolStripMenuItem.Name = "重命名ToolStripMenuItem";
-            this.重命名ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.重命名ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.重命名ToolStripMenuItem.Text = "重命名";
             // 
             // 删除ToolStripMenuItem
             // 
             this.删除ToolStripMenuItem.Name = "删除ToolStripMenuItem";
-            this.删除ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.删除ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.删除ToolStripMenuItem.Text = "删除";
             // 
             // 复制ToolStripMenuItem
             // 
             this.复制ToolStripMenuItem.Name = "复制ToolStripMenuItem";
-            this.复制ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.复制ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.复制ToolStripMenuItem.Text = "复制";
             // 
             // 编辑ToolStripMenuItem
             // 
             this.编辑ToolStripMenuItem.Name = "编辑ToolStripMenuItem";
-            this.编辑ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.编辑ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.编辑ToolStripMenuItem.Text = "编辑";
+            // 
+            // tree_drawing
+            // 
+            this.tree_drawing.Location = new System.Drawing.Point(3, 4);
+            this.tree_drawing.Name = "tree_drawing";
+            this.tree_drawing.Size = new System.Drawing.Size(217, 598);
+            this.tree_drawing.TabIndex = 1;
             // 
             // Form1
             // 
@@ -232,7 +242,7 @@
             this.IsMdiContainer = true;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "好蓝图平面CAD";
             this.TransparencyKey = System.Drawing.Color.White;
             this.Load += new System.EventHandler(this.Form1_Load);
             this.SizeChanged += new System.EventHandler(this.Form1_SizeChanged);
@@ -241,6 +251,7 @@
             this.PR_Panel.PerformLayout();
             this.tab_Proandresource.ResumeLayout(false);
             this.tab_project.ResumeLayout(false);
+            this.tab_resource.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.axMxDrawX1)).EndInit();
             this.resource_contextMenuStrip1.ResumeLayout(false);
             this.project_contextMenuStrip1.ResumeLayout(false);
@@ -269,6 +280,7 @@
         private System.Windows.Forms.ToolStripMenuItem 重命名ToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem 删除ToolStripMenuItem1;
         private System.Windows.Forms.ContextMenuStrip resource_contextMenuStrip1;
+        private System.Windows.Forms.TreeView tree_drawing;
     }
 }
 

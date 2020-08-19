@@ -20,6 +20,7 @@ namespace ToolkipCAD
     {
         private static MyToolBar bar_state=new MyToolBar();
         private Project_Tree _TestData;
+        private delegate void ActiveProject(String pro);//当前项目
         public Form1()
         {
             InitializeComponent();
@@ -45,8 +46,8 @@ namespace ToolkipCAD
             axMxDrawX1.OpenDwgFile(@"D:\Program Files (x86)\MXDraw\MxDraw52\Bin\vc100\管道安装大样图.dwg");
             //TreeView测试
             //tree_project.Nodes.Add("测试项目");//根节点
-            _TestData = new Project_Tree(ref tree_project);
-            _TestData.StructTree();
+            _TestData = new Project_Tree(ref tree_project,ref tree_drawing);
+            _TestData.StructTree();            
         }
 
         private void axMxDrawX1_ImplementCommandEvent(object sender, AxMxDrawXLib._DMxDrawXEvents_ImplementCommandEventEvent e)
@@ -54,7 +55,11 @@ namespace ToolkipCAD
             bar_state.state = !bar_state.state;
             bar_state.id = e.iCommandId;
             //通过命令id执行命令
-            MyToolBar.CommandRun(ref axMxDrawX1, e.iCommandId);
+            //如果是保存项目
+            if(e.iCommandId==1004)
+            bar_state.T1004(_TestData.GetTreeData());
+
+            bar_state.CommandRun(ref axMxDrawX1, e.iCommandId);
         }
         private void axMxDrawX1_InitComplete(object sender, EventArgs e)
         {
@@ -140,16 +145,22 @@ namespace ToolkipCAD
 
         private void label1_Click(object sender, EventArgs e)
         {
-            _TestData.DeleteItem();
-            List<Project_Manage> aaa = _TestData.GetProjectTree();
+            
         }
         //树的点击事件
         private void tree_project_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if (e.Button != MouseButtons.Right) return;
-            tree_project.SelectedNode = e.Node;
-            ContextMenuStrip contextMenuStrip_project = _TestData.CreateItemMenu(e.Node);
-            contextMenuStrip_project.Show(tree_project,e.X,e.Y);
+            if (e.Button == MouseButtons.Right)
+            {
+                //Tree的右键
+                tree_project.SelectedNode = e.Node;
+                ContextMenuStrip contextMenuStrip_project = _TestData.CreateItemMenu(e.Node);
+                contextMenuStrip_project.Show(tree_project, e.X, e.Y);
+                return;
+            }
+            //点击记录显示图纸
+            string src=_TestData.RecodeClick();
+            if(src!="") axMxDrawX1.OpenDwgFile(src);
         }
     }
 }

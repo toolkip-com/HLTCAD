@@ -163,5 +163,17 @@ namespace ToolkipCAD
             string src=_TestData.RecodeClick();
             if(src!="") axMxDrawX1.OpenDwgFile(src);
         }
+
+        private void tree_drawing_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            tree_drawing.SelectedNode = e.Node;
+            if (e.Node.Level != 2) return;
+            if (e.Button == MouseButtons.Right)
+            {                      
+                ContextMenuStrip contextMenuStrip_drawing = _TestData.CreateDrawMenu();
+                contextMenuStrip_drawing.Show(tree_drawing,e.X,e.Y);
+                return;
+            }
+        }
     }
 }

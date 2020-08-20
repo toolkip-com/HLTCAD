@@ -230,6 +230,7 @@
             this.tree_drawing.Name = "tree_drawing";
             this.tree_drawing.Size = new System.Drawing.Size(217, 598);
             this.tree_drawing.TabIndex = 1;
+            this.tree_drawing.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tree_drawing_NodeMouseClick);
             // 
             // Form1
             // 

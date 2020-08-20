@@ -9,6 +9,8 @@ namespace ToolkipCAD
 {
     public class HLTDataStruct  //项目文件数据结构
     {
+        public string Project_name { get; set; }//项目名称
+        public string Project_path { get; set; }//项目目录
         public List<Project_Manage> Project_Manage_Tree { get; set; }  //项目管理树结构
         public List<Drawing_Manage> Drawing_Manage_Tree { get; set; }  //图纸管理树结构
         public List<XRecord> XRecords { get; set; }  //记录

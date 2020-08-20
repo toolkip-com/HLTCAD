@@ -20,6 +20,7 @@ namespace ToolkipCAD.Toolbar
             axMx.RegistUserCustomCommand("TK_NewObj", 1002);//新建项目
             axMx.RegistUserCustomCommand("TK_OpenObj", 1003);//打开项目
             axMx.RegistUserCustomCommand("TK_SaveObj", 1004);//保存操作
+            axMx.RegistUserCustomCommand("TK_OutObj", 1005);//退出操作
         }
     }
 }

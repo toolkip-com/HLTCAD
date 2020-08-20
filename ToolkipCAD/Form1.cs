@@ -18,7 +18,7 @@ namespace ToolkipCAD
 {
     public partial class Form1 : Form
     {
-        private static MyToolBar bar_state=new MyToolBar();
+        private static MyToolBar bar_state;
         private Project_Tree _TestData;
         private delegate void ActiveProject(String pro);//当前项目
         public Form1()
@@ -47,7 +47,8 @@ namespace ToolkipCAD
             //TreeView测试
             //tree_project.Nodes.Add("测试项目");//根节点
             _TestData = new Project_Tree(ref tree_project,ref tree_drawing);
-            _TestData.StructTree();            
+            bar_state = new MyToolBar(ref _TestData);
+            //_TestData.StructTree();            
         }
 
         private void axMxDrawX1_ImplementCommandEvent(object sender, AxMxDrawXLib._DMxDrawXEvents_ImplementCommandEventEvent e)
@@ -56,10 +57,10 @@ namespace ToolkipCAD
             bar_state.id = e.iCommandId;
             //通过命令id执行命令
             //如果是保存项目
-            if(e.iCommandId==1004)
-            bar_state.T1004(_TestData.GetTreeData());
+            //if(e.iCommandId==1004)
+            //bar_state.T1004(_TestData.GetTreeData());
 
-            bar_state.CommandRun(ref axMxDrawX1, e.iCommandId);
+            bar_state.CommandRun( e.iCommandId);
         }
         private void axMxDrawX1_InitComplete(object sender, EventArgs e)
         {
@@ -150,10 +151,10 @@ namespace ToolkipCAD
         //树的点击事件
         private void tree_project_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
+            tree_project.SelectedNode = e.Node;
             if (e.Button == MouseButtons.Right)
             {
-                //Tree的右键
-                tree_project.SelectedNode = e.Node;
+                //Tree的右键               
                 ContextMenuStrip contextMenuStrip_project = _TestData.CreateItemMenu(e.Node);
                 contextMenuStrip_project.Show(tree_project, e.X, e.Y);
                 return;

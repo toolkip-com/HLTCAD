@@ -47,8 +47,8 @@ namespace ToolkipCAD.CustomForm
                     if(inputdwg_path.Text!="")
                     {
                         dynamic Propath=Program.MainForm.Tag;
-                        FileInfo file = new FileInfo(inputdwg_path.Text);
-                        File.Copy(inputdwg_path.Text,$@"{Propath.path}\src\{file.Name}",true);
+                        //FileInfo file = new FileInfo(inputdwg_path.Text);
+                        File.Copy(inputdwg_path.Text,$@"{Propath.path}\src\{input_recode.Text}.dwg",true);
                     }
                     //委托传值
                     transf(new

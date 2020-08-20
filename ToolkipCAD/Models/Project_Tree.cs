@@ -1,10 +1,12 @@
 ﻿using stdole;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using ToolkipCAD.CustomForm;
 
 namespace ToolkipCAD
@@ -12,125 +14,170 @@ namespace ToolkipCAD
     class Project_Tree
     {
         //项目管理工具类
-        private static HLTDataStruct _HLT = new HLTDataStruct();
+        public HLTDataStruct _HLT = new HLTDataStruct();
         private TreeView _TreeView;
-        private TreeView _DrawView;
+        private TreeView _DrawView; 
         public Project_Tree(ref TreeView tree, ref TreeView draw)
         {
-            //构造函数加载树数据
-            //先为数据模拟，再按需从文件读取
-            List<Project_Manage> projects = new List<Project_Manage> {
-                 new Project_Manage {
-                id="11111",
-                pid="",
-                name="测试项目",
-                type=Project_type.根节点,
-                xrecord_type=Xrecord_type.墙,
-                xrecord_id=""
-                } ,
-                new Project_Manage {
-                id="11111-22222-33333",
-                pid="11111",
-                name="一号楼",
-                type=Project_type.号楼,
-                xrecord_type=Xrecord_type.墙,
-                xrecord_id=""
-                } ,
-                 new Project_Manage {
-                id="11111-22222-1",
-                pid="11111-22222-33333",
-                name="B1层",
-                type=Project_type.楼层,
-                xrecord_type=Xrecord_type.墙,
-                xrecord_id=""
-                },
-                  new Project_Manage {
-                id="11111-2211",
-                pid="11111-22222-1",
-                name="区域1",
-                type=Project_type.区域,
-                xrecord_type=Xrecord_type.墙,
-                xrecord_id=""
-                },
-                  new Project_Manage {
-                id="11111-221133",
-                pid="11111-2211",
-                name="梁",
-                type=Project_type.构件,
-                xrecord_type=Xrecord_type.墙,
-                xrecord_id=""
-                },
-                new Project_Manage {
-                id="11111-22113344",
-                pid="11111-221133",
-                name="2020081801",
-                type=Project_type.记录,
-                xrecord_type=Xrecord_type.墙,
-                xrecord_id=""
-                },
-                new Project_Manage {
-                id="11111-22113355",
-                pid="11111-221133",
-                name="20200818023",
-                type=Project_type.记录,
-                xrecord_type=Xrecord_type.墙,
-                xrecord_id=""
-                },
-                 new Project_Manage {
-                id="22222-22222-33333",
-                pid="11111",
-                name="二号楼",
-                type=Project_type.号楼,
-                xrecord_type=Xrecord_type.墙,
-                xrecord_id=""
-                } ,
-            };
-            List<Drawing_Manage> drawings = new List<Drawing_Manage>
-            {
-                new Drawing_Manage
-                {
-                    id="111111",
-                    pid="",
-                    name="根节点",
-                    type=Drawing_type.根节点,
-                    ext=""
-                },
-                new Drawing_Manage
-                {
-                    id="22222",
-                    pid="111111",
-                    name="类型1",
-                    type=Drawing_type.资源类型,
-                    ext=""
-                },
-                new Drawing_Manage
-                {
-                    id="33333",
-                    pid="22222",
-                    name="文件1",
-                    type=Drawing_type.文件,
-                    ext="dwg"
-                },
-                new Drawing_Manage
-                {
-                    id="33333-2",
-                    pid="22222",
-                    name="文件2",
-                    type=Drawing_type.文件,
-                    ext="dwg"
-                }
+            #region
+            //List<Project_Manage> projects = new List<Project_Manage> {
+            //     new Project_Manage {
+            //    id="11111",
+            //    pid="",
+            //    name="测试项目",
+            //    type=Project_type.根节点,
+            //    xrecord_type=Xrecord_type.墙,
+            //    xrecord_id=""
+            //    } ,
+            //    new Project_Manage {
+            //    id="11111-22222-33333",
+            //    pid="11111",
+            //    name="一号楼",
+            //    type=Project_type.号楼,
+            //    xrecord_type=Xrecord_type.墙,
+            //    xrecord_id=""
+            //    } ,
+            //     new Project_Manage {
+            //    id="11111-22222-1",
+            //    pid="11111-22222-33333",
+            //    name="B1层",
+            //    type=Project_type.楼层,
+            //    xrecord_type=Xrecord_type.墙,
+            //    xrecord_id=""
+            //    },
+            //      new Project_Manage {
+            //    id="11111-2211",
+            //    pid="11111-22222-1",
+            //    name="区域1",
+            //    type=Project_type.区域,
+            //    xrecord_type=Xrecord_type.墙,
+            //    xrecord_id=""
+            //    },
+            //      new Project_Manage {
+            //    id="11111-221133",
+            //    pid="11111-2211",
+            //    name="梁",
+            //    type=Project_type.构件,
+            //    xrecord_type=Xrecord_type.墙,
+            //    xrecord_id=""
+            //    },
+            //    new Project_Manage {
+            //    id="11111-22113344",
+            //    pid="11111-221133",
+            //    name="2020081801",
+            //    type=Project_type.记录,
+            //    xrecord_type=Xrecord_type.墙,
+            //    xrecord_id=""
+            //    },
+            //    new Project_Manage {
+            //    id="11111-22113355",
+            //    pid="11111-221133",
+            //    name="20200818023",
+            //    type=Project_type.记录,
+            //    xrecord_type=Xrecord_type.墙,
+            //    xrecord_id=""
+            //    },
+            //     new Project_Manage {
+            //    id="22222-22222-33333",
+            //    pid="11111",
+            //    name="二号楼",
+            //    type=Project_type.号楼,
+            //    xrecord_type=Xrecord_type.墙,
+            //    xrecord_id=""
+            //    } ,
+            //};
+            //List<Drawing_Manage> drawings = new List<Drawing_Manage>
+            //{
+            //    new Drawing_Manage
+            //    {
+            //        id="111111",
+            //        pid="",
+            //        name="根节点",
+            //        type=Drawing_type.根节点,
+            //        ext=""
+            //    },
+            //    new Drawing_Manage
+            //    {
+            //        id="22222",
+            //        pid="111111",
+            //        name="类型1",
+            //        type=Drawing_type.资源类型,
+            //        ext=""
+            //    },
+            //    new Drawing_Manage
+            //    {
+            //        id="33333",
+            //        pid="22222",
+            //        name="文件1",
+            //        type=Drawing_type.文件,
+            //        ext="dwg"
+            //    },
+            //    new Drawing_Manage
+            //    {
+            //        id="33333-2",
+            //        pid="22222",
+            //        name="文件2",
+            //        type=Drawing_type.文件,
+            //        ext="dwg"
+            //    }
 
-            };
-            _HLT.Project_Manage_Tree = projects;
-            _HLT.Drawing_Manage_Tree = drawings;
+            //};
+            //_HLT.Project_Manage_Tree = projects;
+            //_HLT.Drawing_Manage_Tree = drawings;
+            #endregion
             this._TreeView = tree;
             this._DrawView = draw;
+        }
+        //打开项目数据
+        public void LoadHLTTree(string HltPath)
+        {
+            XmlSerializer xs = new XmlSerializer(_HLT.GetType());
+            TextReader tw = new StreamReader(HltPath);
+            _HLT=(HLTDataStruct)xs.Deserialize(tw);
+            tw.Close();
+            this._TreeView.Nodes.Clear();
+            this._DrawView.Nodes.Clear();
+            StructTree();
+            Program.MainForm.Tag = new
+            {
+                name=_HLT.Project_name,
+                path=_HLT.Project_path
+            };
+        }
+        //存储新建项目信息
+        public void SaveProjectInfo(dynamic info)
+        {
+            _HLT.Project_name = info.name;
+            _HLT.Project_path = info.path;
+            List<Project_Manage> project =new List<Project_Manage>{ new Project_Manage
+            {
+                id = Guid.NewGuid().ToString(),
+                pid="",
+                name=info.name,
+                type=Project_type.根节点,
+            } };
+            List<Drawing_Manage> drawing =new List<Drawing_Manage>{ new Drawing_Manage
+            {
+                id=Guid.NewGuid().ToString(),
+                pid="",
+                name=info.name,
+                type=Drawing_type.根节点
+            } };
+            _HLT.Project_Manage_Tree = project;
+            _HLT.Drawing_Manage_Tree = drawing; 
+            XmlSerializer xs = new XmlSerializer(_HLT.GetType());
+            TextWriter tw = new StreamWriter($@"{info.path}\{info.name}.hlt");
+            xs.Serialize(tw, _HLT);
+            tw.Close();
+            StructTree();
         }
         //加载这棵树
         public void StructTree()
         {
             Addnode(ref _TreeView);
             AddDrawnode(ref _DrawView);
+            _TreeView.ExpandAll();
+            _DrawView.ExpandAll();
         }
         //获取树数据
         public HLTDataStruct GetTreeData()
@@ -210,6 +257,7 @@ namespace ToolkipCAD
                 node.Tag = project.id;
                 node.Text = project.name;
                 _TreeView.SelectedNode.Nodes.Add(node);
+                _TreeView.SelectedNode.Expand();
             });
             reName.ShowDialog();
         }
@@ -325,9 +373,16 @@ namespace ToolkipCAD
         {
             if (_TreeView.SelectedNode != null)
             {
-                string id = _TreeView.SelectedNode.Tag.ToString();
-                Project_Manage project = _HLT.Project_Manage_Tree.Find(x=>x.id==id);
-                return "";
+                if (Program.MainForm.Tag != null)
+                {
+                    string id = _TreeView.SelectedNode.Tag.ToString();
+                    Project_Manage project = _HLT.Project_Manage_Tree.Find(x => x.id == id);
+                    if (project.type != Project_type.记录) return "";
+                    dynamic Propath = Program.MainForm.Tag;
+                    string file = $@"{Propath.path}\src\{project.name}.dwg";
+                    if (!File.Exists(file)) return "";
+                    return file;
+                }
             }
             return "";
         }

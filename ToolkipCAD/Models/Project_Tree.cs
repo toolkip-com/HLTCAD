@@ -138,6 +138,7 @@ namespace ToolkipCAD
             this._TreeView.Nodes.Clear();
             this._DrawView.Nodes.Clear();
             StructTree();
+            Program.MainForm.Text = $"好蓝图平面CAD-[{_HLT.Project_name}.hlt]";
             Program.MainForm.Tag = new
             {
                 name = _HLT.Project_name,
@@ -172,6 +173,8 @@ namespace ToolkipCAD
             });
             _HLT.Project_Manage_Tree = project;
             _HLT.Drawing_Manage_Tree = drawing;
+            this._TreeView.Nodes.Clear();
+            this._DrawView.Nodes.Clear();
             XmlSerializer xs = new XmlSerializer(_HLT.GetType());
             TextWriter tw = new StreamWriter($@"{info.path}\{info.name}.hlt");
             xs.Serialize(tw, _HLT);
@@ -339,7 +342,7 @@ namespace ToolkipCAD
             recode.Tag = new
             {
                 name = "",
-                oner = _HLT.Drawing_Manage_Tree,
+                oner =new List<Drawing_Manage>(_HLT.Drawing_Manage_Tree.ToArray()),
                 path = "",
             };
             recode.transf += (dynamic result) =>
@@ -349,9 +352,44 @@ namespace ToolkipCAD
                     id = Guid.NewGuid().ToString(),
                     pid = _TreeView.SelectedNode.Tag.ToString(),
                     name = result.name,
-                    type = Project_type.记录
+                    type = Project_type.记录,
+                    xrecord_type=Xrecord_type.梁
                 };
-                //if (result.file != "") ; ;
+                XRecord record=new XRecord();
+                if (result.file != ""&&result.combo=="")//导入的
+                {
+                    FileInfo file = new FileInfo(result.file);
+                    string name = file.Name.Substring(0, file.Name.LastIndexOf('.'));
+                    string ext = file.Name.Substring(file.Name.LastIndexOf('.')+1,file.Name.Length- file.Name.LastIndexOf('.')-1);
+                    Drawing_Manage drawing = new Drawing_Manage
+                    {
+                        id = Guid.NewGuid().ToString(),
+                        pid = _DrawView.Nodes[0].FirstNode.Tag.ToString(),
+                        name =name,
+                        type = Drawing_type.文件,
+                        ext = ext                   
+                    };
+                    record = new XRecord
+                    {
+                        id = Guid.NewGuid().ToString(),
+                        Drawing_Manage_id=drawing.id,
+                        type=Xrecord_type.梁
+                    };
+                    _DrawView.Nodes[0].FirstNode.Nodes.Add(new TreeNode { Text=name,Tag=drawing.id});                    
+                    _HLT.Drawing_Manage_Tree.Add(drawing);
+                }
+                if (result.file == "" && result.combo != "")//基于图纸的
+                {
+                    record = new XRecord
+                    {
+                        id = Guid.NewGuid().ToString(),
+                        Drawing_Manage_id = result.combo,
+                        type = Xrecord_type.梁
+                    };
+                }
+                if (_HLT.XRecords == null) _HLT.XRecords = new List<XRecord> { record };
+                else _HLT.XRecords.Add(record);
+                project.xrecord_id = record.id;
                 _HLT.Project_Manage_Tree.Add(project);
                 TreeNode node = new TreeNode();
                 node.Tag = project.id;
@@ -372,18 +410,35 @@ namespace ToolkipCAD
             recode.Tag = new
             {
                 name = project.name,
-                oner = _HLT.Drawing_Manage_Tree,
+                oner = new List<Drawing_Manage>(_HLT.Drawing_Manage_Tree.ToArray()),
                 path = "",
             };
             recode.transf += (dynamic result) =>
             {
                 project.name = result.name;
-                /*++++++++++图纸管理操作++++++++++++++*/
-
-
-
-
-
+                XRecord record = _HLT.XRecords.Find(x=>x.id==project.xrecord_id);
+                if (result.file != "")
+                {
+                    FileInfo file = new FileInfo(result.file);
+                    string name = file.Name.Substring(0, file.Name.LastIndexOf('.'));
+                    string ext = file.Name.Substring(file.Name.LastIndexOf('.') + 1, file.Name.Length - file.Name.LastIndexOf('.') - 1);
+                    //Drawing_Manage drawing = _HLT.Drawing_Manage_Tree.Find(x=>x.id==record.Drawing_Manage_id);
+                    Drawing_Manage drawing = new Drawing_Manage
+                    {
+                        id=Guid.NewGuid().ToString(),
+                        pid= _DrawView.Nodes[0].FirstNode.Tag.ToString(),
+                        type=Drawing_type.文件,
+                        name=name,
+                        ext=ext
+                    };
+                    record.Drawing_Manage_id = drawing.id;
+                    _HLT.Drawing_Manage_Tree.Add(drawing);
+                    _DrawView.Nodes[0].FirstNode.Nodes.Add(new TreeNode { Text = name, Tag = drawing.id });
+                }
+                if (result.combo != "")
+                {
+                    record.Drawing_Manage_id = result.combo;
+                }
                 _TreeView.SelectedNode.Text = result.name;
             };
             recode.ShowDialog();
@@ -404,11 +459,13 @@ namespace ToolkipCAD
         {
             if (_DrawView.SelectedNode != null)
             {
-                ReNameDialog reName = new ReNameDialog();
-                reName.Text = "重命名";
+                ReNameDialog reName = new ReNameDialog
+                {
+                    Text = "重命名"
+                };
                 reName.transf += ((string result) =>
                 {
-                    string id = _TreeView.SelectedNode.Tag.ToString();
+                    string id = _DrawView.SelectedNode.Tag.ToString();
                     Drawing_Manage drawing = _HLT.Drawing_Manage_Tree.Find(x => x.id == id);
                     drawing.name = result;
                     _DrawView.SelectedNode.Text = result;
@@ -426,8 +483,10 @@ namespace ToolkipCAD
                     string id = _TreeView.SelectedNode.Tag.ToString();
                     Project_Manage project = _HLT.Project_Manage_Tree.Find(x => x.id == id);
                     if (project.type != Project_type.记录) return "";
+                    XRecord record = _HLT.XRecords.Find(x=>x.id==project.xrecord_id);
+                    Drawing_Manage drawing = _HLT.Drawing_Manage_Tree.Find(x=>x.id==record.Drawing_Manage_id);
                     dynamic Propath = Program.MainForm.Tag;
-                    string file = $@"{Propath.path}\src\{project.name}.dwg";
+                    string file = $@"{Propath.path}\src\{drawing.name}.dwg";
                     if (!File.Exists(file)) return "";
                     return file;
                 }
@@ -435,7 +494,6 @@ namespace ToolkipCAD
             return "";
         }
         //右键菜单，不同类型对应不同菜单
-
         #region 节点递归加载/删除 2020/08/18
         public void Addnode(ref TreeView treeView1)
         {
@@ -523,8 +581,8 @@ namespace ToolkipCAD
         void Copy_Click(object sender, EventArgs e) => CopyItem();//复制
         void Rename_Click(object sender, EventArgs e) => RenameForItem();//重命名
 
-        void Draw_Rename_Click(object sender, EventArgs e) { }//图纸重命名
-        void Draw_Delete_Click(object sender, EventArgs e) { }//图纸删除
+        void Draw_Rename_Click(object sender, EventArgs e) => DrawRename();//图纸重命名
+        void Draw_Delete_Click(object sender, EventArgs e) => DrawDelete();//图纸删除
         #endregion
     }
 }

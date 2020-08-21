@@ -13,7 +13,7 @@ namespace ToolkipCAD
         public string Project_path { get; set; }//项目目录
         public List<Project_Manage> Project_Manage_Tree { get; set; }  //项目管理树结构
         public List<Drawing_Manage> Drawing_Manage_Tree { get; set; }  //图纸管理树结构
-        public List<XRecord> XRecords { get; set; }  //记录
+        public List<XRecord> XRecords { get; set; }//记录
     }
     public class Project_Manage   //项目管理结构
     {
@@ -77,13 +77,14 @@ namespace ToolkipCAD
     public class XRecord  //针对一张图纸识别、计算等一切数据的记录
     {
         public string id { get; set; }  //12位 GUID
+        public string Drawing_Manage_id { get; set; }  //基于哪张图纸
         public Xrecord_type type { get; set; }   //1--梁   2--板  3--柱  4--墙  5--其它
         public string json { get; set; } //存详细记录数据，包括梁数据 Beam_XRrecord等        
     }
 
     public class Beam_XRrecord
     {
-        public string Drawing_Manage_id { get; set; }  //基于哪张图纸
+       //public string Drawing_Manage_id { get; set; }  //基于哪张图纸
         //设置数据
         public string Concrete_type { get; set; }  //默认混凝土等级
         public string Rebar_type { get; set; }     //默认主筋等级

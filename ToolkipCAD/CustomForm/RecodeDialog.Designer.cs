@@ -37,6 +37,8 @@
             this.input_recode = new System.Windows.Forms.TextBox();
             this.inputdwg_path = new System.Windows.Forms.TextBox();
             this.btn_select = new System.Windows.Forms.Button();
+            this.import_panel = new System.Windows.Forms.Panel();
+            this.import_panel.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -56,6 +58,7 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(184, 20);
             this.comboBox1.TabIndex = 1;
+            this.comboBox1.TextChanged += new System.EventHandler(this.comboBox1_TextChanged);
             // 
             // btn_ok
             // 
@@ -70,7 +73,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(37, 97);
+            this.label2.Location = new System.Drawing.Point(12, 13);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(35, 12);
             this.label2.TabIndex = 0;
@@ -104,7 +107,7 @@
             // 
             // inputdwg_path
             // 
-            this.inputdwg_path.Location = new System.Drawing.Point(80, 92);
+            this.inputdwg_path.Location = new System.Drawing.Point(55, 8);
             this.inputdwg_path.Name = "inputdwg_path";
             this.inputdwg_path.ReadOnly = true;
             this.inputdwg_path.Size = new System.Drawing.Size(144, 21);
@@ -112,7 +115,7 @@
             // 
             // btn_select
             // 
-            this.btn_select.Location = new System.Drawing.Point(230, 91);
+            this.btn_select.Location = new System.Drawing.Point(205, 7);
             this.btn_select.Name = "btn_select";
             this.btn_select.Size = new System.Drawing.Size(34, 23);
             this.btn_select.TabIndex = 2;
@@ -120,19 +123,27 @@
             this.btn_select.UseVisualStyleBackColor = true;
             this.btn_select.Click += new System.EventHandler(this.btn_select_Click);
             // 
+            // import_panel
+            // 
+            this.import_panel.Controls.Add(this.inputdwg_path);
+            this.import_panel.Controls.Add(this.label2);
+            this.import_panel.Controls.Add(this.btn_select);
+            this.import_panel.Location = new System.Drawing.Point(27, 79);
+            this.import_panel.Name = "import_panel";
+            this.import_panel.Size = new System.Drawing.Size(238, 32);
+            this.import_panel.TabIndex = 4;
+            // 
             // RecodeDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(277, 171);
-            this.Controls.Add(this.inputdwg_path);
+            this.ClientSize = new System.Drawing.Size(277, 168);
+            this.Controls.Add(this.import_panel);
             this.Controls.Add(this.input_recode);
             this.Controls.Add(this.btn_cancel);
-            this.Controls.Add(this.btn_select);
             this.Controls.Add(this.btn_ok);
             this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
             this.MaximizeBox = false;
@@ -143,6 +154,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "创建记录";
             this.Load += new System.EventHandler(this.RecodeDialog_Load);
+            this.import_panel.ResumeLayout(false);
+            this.import_panel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -159,5 +172,6 @@
         private System.Windows.Forms.TextBox input_recode;
         private System.Windows.Forms.TextBox inputdwg_path;
         private System.Windows.Forms.Button btn_select;
+        private System.Windows.Forms.Panel import_panel;
     }
 }

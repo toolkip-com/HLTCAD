@@ -35,6 +35,7 @@
             this.tab_project = new System.Windows.Forms.TabPage();
             this.tree_project = new System.Windows.Forms.TreeView();
             this.tab_resource = new System.Windows.Forms.TabPage();
+            this.tree_drawing = new System.Windows.Forms.TreeView();
             this.label1 = new System.Windows.Forms.Label();
             this.axMxDrawX1 = new AxMxDrawXLib.AxMxDrawX();
             this.重命名ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,7 +51,6 @@
             this.删除ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.复制ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.编辑ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tree_drawing = new System.Windows.Forms.TreeView();
             this.PR_Panel.SuspendLayout();
             this.tab_Proandresource.SuspendLayout();
             this.tab_project.SuspendLayout();
@@ -110,6 +110,14 @@
             this.tab_resource.TabIndex = 1;
             this.tab_resource.Text = "资源管理";
             this.tab_resource.UseVisualStyleBackColor = true;
+            // 
+            // tree_drawing
+            // 
+            this.tree_drawing.Location = new System.Drawing.Point(3, 4);
+            this.tree_drawing.Name = "tree_drawing";
+            this.tree_drawing.Size = new System.Drawing.Size(217, 598);
+            this.tree_drawing.TabIndex = 1;
+            this.tree_drawing.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tree_drawing_NodeMouseClick);
             // 
             // label1
             // 
@@ -224,14 +232,6 @@
             this.编辑ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.编辑ToolStripMenuItem.Text = "编辑";
             // 
-            // tree_drawing
-            // 
-            this.tree_drawing.Location = new System.Drawing.Point(3, 4);
-            this.tree_drawing.Name = "tree_drawing";
-            this.tree_drawing.Size = new System.Drawing.Size(217, 598);
-            this.tree_drawing.TabIndex = 1;
-            this.tree_drawing.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tree_drawing_NodeMouseClick);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -245,6 +245,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "好蓝图平面CAD";
             this.TransparencyKey = System.Drawing.Color.White;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.SizeChanged += new System.EventHandler(this.Form1_SizeChanged);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);

@@ -35,6 +35,8 @@ namespace ToolkipCAD
             axMxDrawX1.Size = new Size(Form1.ActiveForm.Width - 22-238, Form1.ActiveForm.Height - 40);
             PR_Panel.Size = new Size(238,Form1.ActiveForm.Height);
             PR_Panel.Location = new Point(axMxDrawX1.Size.Width, 0);
+            tab_Proandresource.Height = PR_Panel.Height - 22;
+            tree_project.Height = tab_Proandresource.Height-75;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -42,7 +44,7 @@ namespace ToolkipCAD
             //加载自定义的菜单栏
             axMxDrawX1.Iniset = "./mxmenu.mnu";
             axMxDrawX1.Call("Mx_ReLoadMenu", $@"{Directory.GetCurrentDirectory()}\mxmenu.mnu");
-            axMxDrawX1.LoadToolBar("Toolkip_toolbar.mxt",true);
+            //axMxDrawX1.LoadToolBar("Toolkip_toolbar.mxt",true);
             axMxDrawX1.OpenDwgFile(@"D:\Program Files (x86)\MXDraw\MxDraw52\Bin\vc100\管道安装大样图.dwg");
             //TreeView测试
             //tree_project.Nodes.Add("测试项目");//根节点
@@ -166,6 +168,7 @@ namespace ToolkipCAD
 
         private void tree_drawing_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
+            //MessageBox.Show(tree_drawing.Nodes[0].FirstNode.Text);
             tree_drawing.SelectedNode = e.Node;
             if (e.Node.Level != 2) return;
             if (e.Button == MouseButtons.Right)
@@ -173,6 +176,16 @@ namespace ToolkipCAD
                 ContextMenuStrip contextMenuStrip_drawing = _TestData.CreateDrawMenu();
                 contextMenuStrip_drawing.Show(tree_drawing,e.X,e.Y);
                 return;
+            }
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (this.Tag != null)
+            {
+                DialogResult result = MessageBox.Show("确认退出程序","提示",MessageBoxButtons.OKCancel);
+                if (result == DialogResult.OK) e.Cancel=false;
+                else e.Cancel=true;
             }
         }
     }

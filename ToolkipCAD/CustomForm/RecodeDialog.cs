@@ -43,18 +43,19 @@ namespace ToolkipCAD.CustomForm
             {
                 if (input_recode.Text != "")
                 {
+                    if (inputdwg_path.Text == "" && comboBox1.Text == "") return;
                     //copy文件
                     if(inputdwg_path.Text!="")
                     {
                         dynamic Propath=Program.MainForm.Tag;
-                        //FileInfo file = new FileInfo(inputdwg_path.Text);
-                        File.Copy(inputdwg_path.Text,$@"{Propath.path}\src\{input_recode.Text}.dwg",true);
+                        FileInfo file = new FileInfo(inputdwg_path.Text);
+                        File.Copy(inputdwg_path.Text,$@"{Propath.path}\src\{file.Name}",true);
                     }
                     //委托传值
                     transf(new
                     {
                         name = input_recode.Text,
-                        combo = comboBox1.SelectedItem,
+                        combo = comboBox1.SelectedValue,
                         file = inputdwg_path.Text
                     });
                     this.Close();
@@ -75,13 +76,31 @@ namespace ToolkipCAD.CustomForm
                 dynamic edit = (dynamic)this.Tag;
                 input_recode.Text = edit.name;
                 List<Drawing_Manage> drawing_s = edit.oner;
-                foreach (var item in drawing_s)
+                drawing_s.Insert(0,new Drawing_Manage
                 {
-                    //if(item.type==Drawing_type.文件)
-                    comboBox1.Items.Add(item.name);
-                }
-                if (comboBox1.Items.Count>0)
-                comboBox1.SelectedIndex = 0;
+                    id="",
+                    pid="",
+                    name="导入",
+                    type=Drawing_type.文件
+                });
+                comboBox1.DataSource = drawing_s.Where(x => x.type == Drawing_type.文件).ToList();
+                comboBox1.ValueMember = "id";
+                comboBox1.DisplayMember = "name";
+                if (comboBox1.Items.Count > 0)
+                    comboBox1.SelectedIndex = 0;
+                    
+            }
+        }
+
+        private void comboBox1_TextChanged(object sender, EventArgs e)
+        {
+            //导入还是基于图纸
+            if (comboBox1.Text == "导入")
+                import_panel.Visible = true;
+            else
+            {
+                inputdwg_path.Text = "";
+                import_panel.Visible = false;
             }
         }
     }

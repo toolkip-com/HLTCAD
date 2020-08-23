@@ -166,4 +166,11 @@ namespace ToolkipCAD
         public double Se { get; set; }  //箍筋加密区间距
     }
 
+
+    public class GRecord   //资源下的构造类型文件
+    {
+        string name { get; set; } //构造方案的名称
+        string json { get; set; } //记录配置设置
+    }
+
 }

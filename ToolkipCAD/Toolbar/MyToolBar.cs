@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using ToolkipCAD.CustomForm;
 using System.Xml.Serialization;
 using System.IO;
+using System.Threading;
 
 namespace ToolkipCAD.Toolbar
 {
@@ -97,12 +98,12 @@ namespace ToolkipCAD.Toolbar
                 {
                     beam.Hide();
                     axMxDrawX1.MxKeyUp += AxMxDrawX1_MxKeyUp;
+                    
                 }
                 return "";
             };
             beam.Show();
         }
-
         private void AxMxDrawX1_MxKeyUp(object sender, _DMxDrawXEvents_MxKeyUpEvent e)
         {
             //按下回车
@@ -111,8 +112,14 @@ namespace ToolkipCAD.Toolbar
                 axMxDrawX1.MxKeyUp -= AxMxDrawX1_MxKeyUp;
                 MxDrawSelectionSet selectionSet = new MxDrawSelectionSet();
                 MxDrawResbuf filter = new MxDrawResbuf();
-                selectionSet.CurrentSelect(filter);
-                MessageBox.Show(selectionSet.Count.ToString());
+                selectionSet.Select2(MCAD_McSelect.mcSelectionImpliedSelectSelect, null, null, filter);
+                //MessageBox.Show(selectionSet.Count.ToString());
+                List<long> list = new List<long>();
+                for (int i = 0; i < selectionSet.Count; i++)
+                {
+                    list.Add(selectionSet.Item(i).ObjectID);
+                }
+                PublicValue = list;
             }
         }
 

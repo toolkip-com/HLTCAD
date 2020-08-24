@@ -15,6 +15,7 @@ namespace ToolkipCAD
         //与主窗体交互的委托
         public delegate object TransForm(Object param);
         public event TransForm transf;
+        private Beam_XRrecord beam;
         public beam_smart()
         {
             InitializeComponent();
@@ -43,7 +44,7 @@ namespace ToolkipCAD
         private void select_range_SelectedIndexChanged(object sender, EventArgs e)
         {
             //识别范围
-            object Kven;
+            dynamic Kven;
             if (select_range.Text == "窗口")
             {
                 Kven = transf("select_range");
@@ -51,6 +52,7 @@ namespace ToolkipCAD
                 {
                     select_range.Text = "显示";
                     select_range.Tag = Kven;
+                    beam.pto = new List<Point3d> { new Point3d { X=Kven.Lx,Y=Kven.Ly}, new Point3d { X = Kven.Rx, Y = Kven.Ry } };
                     return;
                 }
             }
@@ -64,7 +66,7 @@ namespace ToolkipCAD
                 object Kven = transf("change_line");
                 if (Kven != null)
                 {
-
+                    
                 }
             }
         }

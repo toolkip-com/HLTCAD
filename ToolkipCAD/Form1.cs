@@ -45,11 +45,11 @@ namespace ToolkipCAD
             axMxDrawX1.Iniset = "./mxmenu.mnu";
             axMxDrawX1.Call("Mx_ReLoadMenu", $@"{Directory.GetCurrentDirectory()}\mxmenu.mnu");
             //axMxDrawX1.LoadToolBar("Toolkip_toolbar.mxt",true);
-            axMxDrawX1.OpenDwgFile(@"D:\Program Files (x86)\MXDraw\MxDraw52\Bin\vc100\管道安装大样图.dwg");
+            axMxDrawX1.OpenDwgFile(@"D:\好蓝图平面CAD钢筋\测试\试验图纸\S-2#-05一层梁平法施工图.dwg");
             //TreeView测试
             //tree_project.Nodes.Add("测试项目");//根节点
             _TestData = new Project_Tree(ref tree_project,ref tree_drawing);
-            bar_state = new MyToolBar(ref _TestData);
+            bar_state = new MyToolBar(ref _TestData,ref axMxDrawX1);
             //_TestData.StructTree();            
         }
 
@@ -57,10 +57,6 @@ namespace ToolkipCAD
         {
             bar_state.state = !bar_state.state;
             bar_state.id = e.iCommandId;
-            //通过命令id执行命令
-            //如果是保存项目
-            //if(e.iCommandId==1004)
-            //bar_state.T1004(_TestData.GetTreeData());
 
             bar_state.CommandRun( e.iCommandId);
         }

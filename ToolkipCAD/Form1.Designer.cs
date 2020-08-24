@@ -37,7 +37,6 @@
             this.tab_resource = new System.Windows.Forms.TabPage();
             this.tree_drawing = new System.Windows.Forms.TreeView();
             this.label1 = new System.Windows.Forms.Label();
-            this.axMxDrawX1 = new AxMxDrawXLib.AxMxDrawX();
             this.重命名ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.删除ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.resource_contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -51,13 +50,14 @@
             this.删除ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.复制ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.编辑ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.axMxDrawX1 = new AxMxDrawXLib.AxMxDrawX();
             this.PR_Panel.SuspendLayout();
             this.tab_Proandresource.SuspendLayout();
             this.tab_project.SuspendLayout();
             this.tab_resource.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.axMxDrawX1)).BeginInit();
             this.resource_contextMenuStrip1.SuspendLayout();
             this.project_contextMenuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.axMxDrawX1)).BeginInit();
             this.SuspendLayout();
             // 
             // PR_Panel
@@ -93,6 +93,7 @@
             // 
             // tree_project
             // 
+            this.tree_project.Font = new System.Drawing.Font("宋体", 10F);
             this.tree_project.Location = new System.Drawing.Point(3, 6);
             this.tree_project.Name = "tree_project";
             this.tree_project.Size = new System.Drawing.Size(217, 598);
@@ -113,6 +114,7 @@
             // 
             // tree_drawing
             // 
+            this.tree_drawing.Font = new System.Drawing.Font("宋体", 10F);
             this.tree_drawing.Location = new System.Drawing.Point(3, 4);
             this.tree_drawing.Name = "tree_drawing";
             this.tree_drawing.Size = new System.Drawing.Size(217, 598);
@@ -130,18 +132,6 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "项目及资源管理";
             this.label1.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // axMxDrawX1
-            // 
-            this.axMxDrawX1.Enabled = true;
-            this.axMxDrawX1.Location = new System.Drawing.Point(0, 0);
-            this.axMxDrawX1.Name = "axMxDrawX1";
-            this.axMxDrawX1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axMxDrawX1.OcxState")));
-            this.axMxDrawX1.Size = new System.Drawing.Size(1152, 658);
-            this.axMxDrawX1.TabIndex = 4;
-            this.axMxDrawX1.ImplementCommandEvent += new AxMxDrawXLib._DMxDrawXEvents_ImplementCommandEventEventHandler(this.axMxDrawX1_ImplementCommandEvent);
-            this.axMxDrawX1.MxKeyUp += new AxMxDrawXLib._DMxDrawXEvents_MxKeyUpEventHandler(this.axMxDrawX1_MxKeyUp_1);
-            this.axMxDrawX1.InitComplete += new System.EventHandler(this.axMxDrawX1_InitComplete);
             // 
             // 重命名ToolStripMenuItem1
             // 
@@ -232,6 +222,18 @@
             this.编辑ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.编辑ToolStripMenuItem.Text = "编辑";
             // 
+            // axMxDrawX1
+            // 
+            this.axMxDrawX1.Enabled = true;
+            this.axMxDrawX1.Location = new System.Drawing.Point(0, 0);
+            this.axMxDrawX1.Name = "axMxDrawX1";
+            this.axMxDrawX1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axMxDrawX1.OcxState")));
+            this.axMxDrawX1.Size = new System.Drawing.Size(1152, 658);
+            this.axMxDrawX1.TabIndex = 4;
+            this.axMxDrawX1.ImplementCommandEvent += new AxMxDrawXLib._DMxDrawXEvents_ImplementCommandEventEventHandler(this.axMxDrawX1_ImplementCommandEvent);
+            this.axMxDrawX1.MxKeyUp += new AxMxDrawXLib._DMxDrawXEvents_MxKeyUpEventHandler(this.axMxDrawX1_MxKeyUp_1);
+            this.axMxDrawX1.InitComplete += new System.EventHandler(this.axMxDrawX1_InitComplete);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -254,9 +256,9 @@
             this.tab_Proandresource.ResumeLayout(false);
             this.tab_project.ResumeLayout(false);
             this.tab_resource.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.axMxDrawX1)).EndInit();
             this.resource_contextMenuStrip1.ResumeLayout(false);
             this.project_contextMenuStrip1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.axMxDrawX1)).EndInit();
             this.ResumeLayout(false);
 
         }

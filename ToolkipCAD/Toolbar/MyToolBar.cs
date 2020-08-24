@@ -17,9 +17,12 @@ namespace ToolkipCAD.Toolbar
         public bool state { get; set; }//按钮状态
         public int id { get; set; }//命令ID
         private Project_Tree _Tree;
-        public MyToolBar(ref Project_Tree _Tree)
+        private AxMxDrawX axMxDrawX1;
+        private object PublicValue;
+        public MyToolBar(ref Project_Tree _Tree,ref AxMxDrawX axMxDrawX)
         {
             this._Tree = _Tree;
+            this.axMxDrawX1 = axMxDrawX;
         }
         public void CommandRun(short Cid)
         {
@@ -41,9 +44,77 @@ namespace ToolkipCAD.Toolbar
                 case 1005://退出项目
                     T1005();
                     break;
+                case 1006://梁批量识别
+                    T1006();
+                    break;
+                case 1007:
+                    T1007();
+                    break;
             }
         }
 
+        private void T1007()
+        {
+            //获取选区内实体
+            MxDrawSelectionSet selectionSet = new MxDrawSelectionSet();
+            MxDrawUtility mxUtility = new MxDrawUtility();
+            //点取范围左上角位置
+            MxDrawPoint point1 = (MxDrawPoint)mxUtility.GetPoint(null, "点取范围左上角位置...");
+            if (point1 == null) return;
+            //点取范围右下角位置
+            MxDrawPoint point2 = (MxDrawPoint)mxUtility.GetPoint(null, "点取范围右下角位置...");
+            if (point2 == null) return;
+            MxDrawResbuf resbuf = new MxDrawResbuf();
+            selectionSet.Select(MCAD_McSelect.mcSelectionSetCrossing,point1,point2,resbuf);
+            for (int i = 0; i < selectionSet.Count; i++)
+            {
+                axMxDrawX1.AddCurrentSelect(selectionSet.Item(i).ObjectID, false, false);
+            }
+            PublicValue = new
+            {
+                Lx=point1.x,
+                Ly=point1.y,
+                Rx=point2.x,
+                Ry=point2.y
+            };
+            return;
+        }
+        
+        private void T1006()
+        {
+            //梁批量识别 看着容易，做起来难^v^
+            beam_smart beam = new beam_smart();
+            beam.transf += (object param) => {
+                string kven = param.ToString();
+                if (kven == "select_range")//选择范围
+                {
+                    beam.Hide();
+                    axMxDrawX1.SendStringToExecute("TK_PLSB_select");
+                    beam.Show();
+                    return PublicValue;
+                }
+                if (kven == "change_line")//梁
+                {
+                    beam.Hide();
+                    axMxDrawX1.MxKeyUp += AxMxDrawX1_MxKeyUp;
+                }
+                return "";
+            };
+            beam.Show();
+        }
+
+        private void AxMxDrawX1_MxKeyUp(object sender, _DMxDrawXEvents_MxKeyUpEvent e)
+        {
+            //按下回车
+            if (e.lVk == (int)Keys.Enter)
+            {
+                axMxDrawX1.MxKeyUp -= AxMxDrawX1_MxKeyUp;
+                MxDrawSelectionSet selectionSet = new MxDrawSelectionSet();
+                MxDrawResbuf filter = new MxDrawResbuf();
+                selectionSet.CurrentSelect(filter);
+                MessageBox.Show(selectionSet.Count.ToString());
+            }
+        }
 
         private void T1002()
         {

@@ -45,7 +45,7 @@ namespace ToolkipCAD
             axMxDrawX1.Iniset = "./mxmenu.mnu";
             axMxDrawX1.Call("Mx_ReLoadMenu", $@"{Directory.GetCurrentDirectory()}\mxmenu.mnu");
             //axMxDrawX1.LoadToolBar("Toolkip_toolbar.mxt",true);
-            axMxDrawX1.OpenDwgFile(@"D:\好蓝图平面CAD钢筋\测试\试验图纸\S-2#-05一层梁平法施工图.dwg");
+            axMxDrawX1.OpenDwgFile(@"D:\好蓝图平面CAD钢筋\测试\试验图纸\S-2#-08屋面层梁平法施工图.dwg");
             //TreeView测试
             //tree_project.Nodes.Add("测试项目");//根节点
             _TestData = new Project_Tree(ref tree_project,ref tree_drawing);
@@ -166,7 +166,7 @@ namespace ToolkipCAD
         {
             //MessageBox.Show(tree_drawing.Nodes[0].FirstNode.Text);
             tree_drawing.SelectedNode = e.Node;
-            if (e.Node.Level != 2) return;
+            //if (e.Node.Level != 2) return;
             if (e.Button == MouseButtons.Right)
             {                      
                 ContextMenuStrip contextMenuStrip_drawing = _TestData.CreateDrawMenu();

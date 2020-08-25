@@ -171,6 +171,13 @@ namespace ToolkipCAD
                 name = "图纸",
                 type = Drawing_type.资源类型
             });
+            drawing.Add(new Drawing_Manage
+            {
+                id = Guid.NewGuid().ToString(),
+                pid = drawing[0].id,
+                name = "构造方案",
+                type = Drawing_type.构造配置
+            });
             _HLT.Project_Manage_Tree = project;
             _HLT.Drawing_Manage_Tree = drawing;
             this._TreeView.Nodes.Clear();
@@ -250,14 +257,34 @@ namespace ToolkipCAD
         //创建子项菜单(图纸)
         public ContextMenuStrip CreateDrawMenu()
         {
-            ContextMenuStrip contextMenu = new ContextMenuStrip();
+            
             string id = _DrawView.SelectedNode.Tag.ToString();
-            ToolStripMenuItem Rename = new ToolStripMenuItem("重命名");
-            Rename.Click += new EventHandler(Draw_Rename_Click);
-            ToolStripMenuItem Delete = new ToolStripMenuItem("删除");
-            Delete.Click += new EventHandler(Draw_Delete_Click);
-            contextMenu.Items.Add(Rename);
-            contextMenu.Items.Add(Delete);
+            Drawing_Manage drawing = _HLT.Drawing_Manage_Tree.Find(x=>x.id==id);
+            ContextMenuStrip contextMenu = new ContextMenuStrip();
+            if (drawing.type == Drawing_type.文件)
+            {
+                ToolStripMenuItem Rename = new ToolStripMenuItem("重命名");
+                Rename.Click += new EventHandler(Draw_Rename_Click);
+                ToolStripMenuItem Delete = new ToolStripMenuItem("删除");
+                Delete.Click += new EventHandler(Draw_Delete_Click);
+                contextMenu.Items.Add(Rename);
+                contextMenu.Items.Add(Delete);
+            }
+            if (drawing.type == Drawing_type.构造配置)
+            {
+                ToolStripMenuItem CreateNew = new ToolStripMenuItem("新建");
+                CreateNew.Click += new EventHandler(Draw_CreateNew_Click);
+                ToolStripMenuItem EditItem = new ToolStripMenuItem("编辑");
+                //EditItem.Click += new EventHandler(Draw_Delete_Click);
+                ToolStripMenuItem ReNameItem = new ToolStripMenuItem("重命名");
+                ReNameItem.Click += new EventHandler(Draw_Rename_Click);
+                ToolStripMenuItem RemoveItem = new ToolStripMenuItem("删除");
+                RemoveItem.Click += new EventHandler(Draw_Delete_Click);
+                contextMenu.Items.Add(CreateNew);
+                contextMenu.Items.Add(EditItem); 
+                contextMenu.Items.Add(ReNameItem);
+                contextMenu.Items.Add(RemoveItem);
+            }
             return contextMenu;
         }
         //新建子项
@@ -473,6 +500,12 @@ namespace ToolkipCAD
                 reName.ShowDialog();
             }
         }
+        //新建构造
+        public void DrawCreateStruct()
+        {
+            GouzaoRecord record = new GouzaoRecord();
+            record.Show();
+        }
         //记录的点击事件
         public string RecodeClick()
         {
@@ -580,9 +613,10 @@ namespace ToolkipCAD
         void Delete_Click(object sender, EventArgs e) => DeleteItem();//删除
         void Copy_Click(object sender, EventArgs e) => CopyItem();//复制
         void Rename_Click(object sender, EventArgs e) => RenameForItem();//重命名
-
         void Draw_Rename_Click(object sender, EventArgs e) => DrawRename();//图纸重命名
         void Draw_Delete_Click(object sender, EventArgs e) => DrawDelete();//图纸删除
+
+        void Draw_CreateNew_Click(object sender, EventArgs e) => DrawCreateStruct();//新建构造
         #endregion
     }
 }

@@ -50,7 +50,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.combox_Gjcy = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.Line_box = new System.Windows.Forms.TextBox();
+            this.over_box = new System.Windows.Forms.TextBox();
             this.check_gj = new System.Windows.Forms.CheckBox();
             this.combox_Lgj = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -166,6 +166,7 @@
             this.wiff_Get.Size = new System.Drawing.Size(96, 20);
             this.wiff_Get.TabIndex = 2;
             this.wiff_Get.Text = "显示";
+            this.wiff_Get.SelectedIndexChanged += new System.EventHandler(this.wiff_Get_SelectedIndexChanged);
             // 
             // label15
             // 
@@ -199,6 +200,7 @@
             this.Msg_Get.Size = new System.Drawing.Size(96, 20);
             this.Msg_Get.TabIndex = 1;
             this.Msg_Get.Text = "显示";
+            this.Msg_Get.SelectedIndexChanged += new System.EventHandler(this.Msg_Get_SelectedIndexChanged);
             // 
             // label5
             // 
@@ -238,7 +240,7 @@
             this.groupBox4.Controls.Add(this.label12);
             this.groupBox4.Controls.Add(this.combox_Gjcy);
             this.groupBox4.Controls.Add(this.label11);
-            this.groupBox4.Controls.Add(this.Line_box);
+            this.groupBox4.Controls.Add(this.over_box);
             this.groupBox4.Controls.Add(this.check_gj);
             this.groupBox4.Controls.Add(this.combox_Lgj);
             this.groupBox4.Controls.Add(this.label10);
@@ -262,7 +264,7 @@
             this.combox_peizhi.FormattingEnabled = true;
             this.combox_peizhi.Location = new System.Drawing.Point(125, 215);
             this.combox_peizhi.Name = "combox_peizhi";
-            this.combox_peizhi.Size = new System.Drawing.Size(122, 20);
+            this.combox_peizhi.Size = new System.Drawing.Size(125, 20);
             this.combox_peizhi.TabIndex = 14;
             // 
             // label14
@@ -288,7 +290,7 @@
             "特一级"});
             this.combox_kzdj.Location = new System.Drawing.Point(125, 183);
             this.combox_kzdj.Name = "combox_kzdj";
-            this.combox_kzdj.Size = new System.Drawing.Size(122, 20);
+            this.combox_kzdj.Size = new System.Drawing.Size(125, 20);
             this.combox_kzdj.TabIndex = 12;
             this.combox_kzdj.Text = "四级";
             // 
@@ -336,12 +338,12 @@
             this.label11.TabIndex = 8;
             this.label11.Text = "mm时，";
             // 
-            // Line_box
+            // over_box
             // 
-            this.Line_box.Location = new System.Drawing.Point(117, 121);
-            this.Line_box.Name = "Line_box";
-            this.Line_box.Size = new System.Drawing.Size(34, 21);
-            this.Line_box.TabIndex = 7;
+            this.over_box.Location = new System.Drawing.Point(117, 121);
+            this.over_box.Name = "over_box";
+            this.over_box.Size = new System.Drawing.Size(34, 21);
+            this.over_box.TabIndex = 7;
             // 
             // check_gj
             // 
@@ -496,6 +498,7 @@
             this.Name = "beam_smart";
             this.ShowIcon = false;
             this.Text = "梁批量识别";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.beam_smart_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -532,7 +535,7 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.ComboBox combox_Gjcy;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox Line_box;
+        private System.Windows.Forms.TextBox over_box;
         private System.Windows.Forms.CheckBox check_gj;
         private System.Windows.Forms.ComboBox combox_Lgj;
         private System.Windows.Forms.Label label10;

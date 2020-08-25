@@ -10,6 +10,7 @@ using ToolkipCAD.CustomForm;
 using System.Xml.Serialization;
 using System.IO;
 using System.Threading;
+using ToolkipCAD.fig;
 
 namespace ToolkipCAD.Toolbar
 {
@@ -20,6 +21,7 @@ namespace ToolkipCAD.Toolbar
         private Project_Tree _Tree;
         private AxMxDrawX axMxDrawX1;
         private object PublicValue;
+        private string BeamType;
         public MyToolBar(ref Project_Tree _Tree,ref AxMxDrawX axMxDrawX)
         {
             this._Tree = _Tree;
@@ -80,11 +82,13 @@ namespace ToolkipCAD.Toolbar
             };
             return;
         }
-        
+        private beam_smart beam;
         private void T1006()
         {
-            //梁批量识别 看着容易，做起来难^v^
-            beam_smart beam = new beam_smart();
+            //梁批量识别 
+            beam = new beam_smart();
+            BeamType = "";
+            beam.Tag = _Tree._HLT.Drawing_Manage_Tree;
             beam.transf += (object param) => {
                 string kven = param.ToString();
                 if (kven == "select_range")//选择范围
@@ -97,14 +101,79 @@ namespace ToolkipCAD.Toolbar
                 if (kven == "change_line")//梁
                 {
                     beam.Hide();
-                    axMxDrawX1.MxKeyUp += AxMxDrawX1_MxKeyUp;
+                    beam.beam.side_lines = new List<long>();                    
                     
+                    BeamType = "change_line";
+                }
+                if (kven == "change_dim")//标注
+                {
+                    beam.Hide();
+                    beam.beam.dim_texts = new List<long>();
+                    BeamType = "change_dim";
+                }
+                if (kven == "change_seat")//支座
+                {
+                    beam.Hide();
+                    beam.beam.seat_lines = new List<long>();
+                    BeamType = "change_seat";
                 }
                 return "";
             };
+            axMxDrawX1.MouseEvent += AxMxDrawX1_MouseEvent;
+            axMxDrawX1.MxKeyUp += AxMxDrawX1_MxKeyUp;
             beam.Show();
         }
-        private void AxMxDrawX1_MxKeyUp(object sender, _DMxDrawXEvents_MxKeyUpEvent e)
+
+        private void AxMxDrawX1_MouseEvent(object sender, _DMxDrawXEvents_MouseEventEvent e)
+        {
+            MxDrawSelectionSet mxDrawSelection;
+            MxDrawResbuf filter;
+            MxDrawPoint point;
+            if (e.lType == 2 && (Control.ModifierKeys & Keys.Control) == Keys.Control)
+            {
+                mxDrawSelection = new MxDrawSelectionSet();
+                filter = new MxDrawResbuf();
+                point = new MxDrawPoint();
+                point.x = e.dX; point.y = e.dY;
+                mxDrawSelection.SelectAtPoint(point, filter);
+                if (mxDrawSelection.Count > 0)
+                {
+                    if(BeamType == "change_line")
+                    beam.beam.side_lines.Add(mxDrawSelection.Item(0).ObjectID);
+                    if (BeamType == "change_dim")
+                        beam.beam.dim_texts.Add(mxDrawSelection.Item(0).ObjectID);
+                    if (BeamType == "change_seat")
+                        beam.beam.seat_lines.Add(mxDrawSelection.Item(0).ObjectID);
+                }
+            }
+            if (e.lType == 2)
+            {
+                dynamic pt = PublicValue;
+                MxDrawPoint sp = new MxDrawPoint { x =pt.Lx,y=pt.Ly};
+                MxDrawPoint ep = new MxDrawPoint { x = pt.Rx, y = pt.Ry };
+                mxDrawSelection = new MxDrawSelectionSet();
+                filter = new MxDrawResbuf();
+                point = new MxDrawPoint();
+                point.x = e.dX; point.y = e.dY;
+                mxDrawSelection.SelectAtPoint(point, filter);
+                if (mxDrawSelection.Count > 0)
+                {
+                    MxDrawEntity entity = mxDrawSelection.Item(0);
+                    //MessageBox.Show(entity.Layer);
+                    filter = new MxDrawResbuf();
+                    mxDrawSelection = new MxDrawSelectionSet();
+                    filter.AddStringEx(entity.Layer, 8);//过滤
+                    mxDrawSelection.Select(MCAD_McSelect.mcSelectionSetAll, sp, ep, filter);//获取此图层元素
+                    for (int i = 1; i < mxDrawSelection.Count; i++)
+                    {
+                        //选中元素
+                        axMxDrawX1.AddCurrentSelect(mxDrawSelection.Item(i).ObjectID, false, false);
+                    }
+                }
+            }           
+        }
+
+        private void AxChangeSeat(object sender, _DMxDrawXEvents_MxKeyUpEvent e)
         {
             //按下回车
             if (e.lVk == (int)Keys.Enter)
@@ -120,6 +189,50 @@ namespace ToolkipCAD.Toolbar
                     list.Add(selectionSet.Item(i).ObjectID);
                 }
                 PublicValue = list;
+                beam.beam.seat_lines = list;
+                beam.Show();
+            }
+        }
+
+        private void AxChangeDim(object sender, _DMxDrawXEvents_MxKeyUpEvent e)
+        {
+            //按下回车
+            if (e.lVk == (int)Keys.Enter)
+            {
+                axMxDrawX1.MxKeyUp -= AxMxDrawX1_MxKeyUp;
+                MxDrawSelectionSet selectionSet = new MxDrawSelectionSet();
+                MxDrawResbuf filter = new MxDrawResbuf();
+                selectionSet.Select2(MCAD_McSelect.mcSelectionImpliedSelectSelect, null, null, filter);
+                //MessageBox.Show(selectionSet.Count.ToString());
+                List<long> list = new List<long>();
+                for (int i = 0; i < selectionSet.Count; i++)
+                {
+                    list.Add(selectionSet.Item(i).ObjectID);
+                }
+                PublicValue = list;
+                beam.beam.dim_texts = list;
+                beam.Show();
+            }
+        }
+
+        private void AxMxDrawX1_MxKeyUp(object sender, _DMxDrawXEvents_MxKeyUpEvent e)
+        {
+            //按下回车
+            if (e.lVk == (int)Keys.Enter)
+            {
+                //axMxDrawX1.MxKeyUp -= AxMxDrawX1_MxKeyUp;
+                //MxDrawSelectionSet selectionSet = new MxDrawSelectionSet();
+                //MxDrawResbuf filter = new MxDrawResbuf();
+                //selectionSet.Select2(MCAD_McSelect.mcSelectionImpliedSelectSelect, null, null, filter);
+                ////MessageBox.Show(selectionSet.Count.ToString());
+                //List<long> list = new List<long>();
+                //for (int i = 0; i < selectionSet.Count; i++)
+                //{
+                //    list.Add(selectionSet.Item(i).ObjectID);
+                //}
+                //PublicValue = list;
+                //beam.beam.side_lines = list;
+                beam.Show();
             }
         }
 

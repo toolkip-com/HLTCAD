@@ -72,7 +72,9 @@ namespace ToolkipCAD
     {
         根节点,
         资源类型,
+        构造配置,
         文件
+        
     }
     public class XRecord  //针对一张图纸识别、计算等一切数据的记录
     {
@@ -84,7 +86,7 @@ namespace ToolkipCAD
 
     public class Beam_XRrecord
     {
-       //public string Drawing_Manage_id { get; set; }  //基于哪张图纸
+       public string Drawing_Manage_id { get; set; }  //基于哪张图纸
         //设置数据
         public string Concrete_type { get; set; }  //默认混凝土等级
         public string Rebar_type { get; set; }     //默认主筋等级
@@ -97,6 +99,8 @@ namespace ToolkipCAD
         public List<Point3d> pto { get; set; } //识别范围
         //梁数据
         public List<Beam> beams { get; set; }
+        public string overmm { get; set; }//超过N mm
+        public string Rebar_overmm { get; set; }//超过N mm 用箍筋
     }
     public enum Side_type
     {

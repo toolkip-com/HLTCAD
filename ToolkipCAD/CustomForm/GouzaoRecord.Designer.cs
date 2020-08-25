@@ -33,23 +33,9 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.钢筋锚固长度 = new System.Windows.Forms.TabPage();
-            this.钢筋弯芯直径 = new System.Windows.Forms.TabPage();
-            this.默认梁腰筋 = new System.Windows.Forms.TabPage();
-            this.默认梁吊筋 = new System.Windows.Forms.TabPage();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.label21 = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -64,51 +50,65 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.label27 = new System.Windows.Forms.Label();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.textBox9 = new System.Windows.Forms.TextBox();
-            this.label28 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.comboBox5 = new System.Windows.Forms.ComboBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.钢筋弯芯直径 = new System.Windows.Forms.TabPage();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.label30 = new System.Windows.Forms.Label();
+            this.textBox12 = new System.Windows.Forms.TextBox();
             this.comboBox6 = new System.Windows.Forms.ComboBox();
             this.textBox10 = new System.Windows.Forms.TextBox();
             this.textBox11 = new System.Windows.Forms.TextBox();
             this.label29 = new System.Windows.Forms.Label();
-            this.label30 = new System.Windows.Forms.Label();
-            this.textBox12 = new System.Windows.Forms.TextBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.label31 = new System.Windows.Forms.Label();
-            this.textBox13 = new System.Windows.Forms.TextBox();
-            this.textBox14 = new System.Windows.Forms.TextBox();
+            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.label28 = new System.Windows.Forms.Label();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.label27 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.默认梁腰筋 = new System.Windows.Forms.TabPage();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.button5 = new System.Windows.Forms.Button();
             this.textBox15 = new System.Windows.Forms.TextBox();
             this.textBox16 = new System.Windows.Forms.TextBox();
             this.label32 = new System.Windows.Forms.Label();
-            this.button5 = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label33 = new System.Windows.Forms.Label();
-            this.comboBox7 = new System.Windows.Forms.ComboBox();
-            this.label34 = new System.Windows.Forms.Label();
-            this.textBox17 = new System.Windows.Forms.TextBox();
-            this.comboBox8 = new System.Windows.Forms.ComboBox();
+            this.textBox14 = new System.Windows.Forms.TextBox();
+            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.label31 = new System.Windows.Forms.Label();
+            this.默认梁吊筋 = new System.Windows.Forms.TabPage();
             this.comboBox9 = new System.Windows.Forms.ComboBox();
+            this.comboBox8 = new System.Windows.Forms.ComboBox();
+            this.textBox17 = new System.Windows.Forms.TextBox();
+            this.label34 = new System.Windows.Forms.Label();
+            this.comboBox7 = new System.Windows.Forms.ComboBox();
+            this.label33 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.钢筋锚固长度.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.钢筋弯芯直径.SuspendLayout();
             this.默认梁腰筋.SuspendLayout();
-            this.默认梁吊筋.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.默认梁吊筋.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -164,199 +164,23 @@
             this.钢筋锚固长度.Text = "钢筋锚固长度";
             this.钢筋锚固长度.UseVisualStyleBackColor = true;
             // 
-            // 钢筋弯芯直径
+            // label21
             // 
-            this.钢筋弯芯直径.Controls.Add(this.checkBox1);
-            this.钢筋弯芯直径.Controls.Add(this.label30);
-            this.钢筋弯芯直径.Controls.Add(this.textBox12);
-            this.钢筋弯芯直径.Controls.Add(this.comboBox6);
-            this.钢筋弯芯直径.Controls.Add(this.textBox10);
-            this.钢筋弯芯直径.Controls.Add(this.textBox11);
-            this.钢筋弯芯直径.Controls.Add(this.label29);
-            this.钢筋弯芯直径.Controls.Add(this.comboBox3);
-            this.钢筋弯芯直径.Controls.Add(this.textBox8);
-            this.钢筋弯芯直径.Controls.Add(this.textBox9);
-            this.钢筋弯芯直径.Controls.Add(this.label28);
-            this.钢筋弯芯直径.Controls.Add(this.comboBox2);
-            this.钢筋弯芯直径.Controls.Add(this.textBox6);
-            this.钢筋弯芯直径.Controls.Add(this.textBox7);
-            this.钢筋弯芯直径.Controls.Add(this.label27);
-            this.钢筋弯芯直径.Controls.Add(this.comboBox1);
-            this.钢筋弯芯直径.Controls.Add(this.textBox5);
-            this.钢筋弯芯直径.Controls.Add(this.textBox4);
-            this.钢筋弯芯直径.Controls.Add(this.label26);
-            this.钢筋弯芯直径.Controls.Add(this.label25);
-            this.钢筋弯芯直径.Controls.Add(this.label24);
-            this.钢筋弯芯直径.Controls.Add(this.label23);
-            this.钢筋弯芯直径.Controls.Add(this.label22);
-            this.钢筋弯芯直径.Location = new System.Drawing.Point(4, 22);
-            this.钢筋弯芯直径.Name = "钢筋弯芯直径";
-            this.钢筋弯芯直径.Padding = new System.Windows.Forms.Padding(3);
-            this.钢筋弯芯直径.Size = new System.Drawing.Size(665, 307);
-            this.钢筋弯芯直径.TabIndex = 2;
-            this.钢筋弯芯直径.Text = "钢筋弯芯直径";
-            this.钢筋弯芯直径.UseVisualStyleBackColor = true;
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(19, 283);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(113, 12);
+            this.label21.TabIndex = 14;
+            this.label21.Text = "28，32，36，40，50";
             // 
-            // 默认梁腰筋
+            // button4
             // 
-            this.默认梁腰筋.Controls.Add(this.pictureBox1);
-            this.默认梁腰筋.Controls.Add(this.button5);
-            this.默认梁腰筋.Controls.Add(this.textBox15);
-            this.默认梁腰筋.Controls.Add(this.textBox16);
-            this.默认梁腰筋.Controls.Add(this.label32);
-            this.默认梁腰筋.Controls.Add(this.textBox14);
-            this.默认梁腰筋.Controls.Add(this.textBox13);
-            this.默认梁腰筋.Controls.Add(this.label31);
-            this.默认梁腰筋.Location = new System.Drawing.Point(4, 22);
-            this.默认梁腰筋.Name = "默认梁腰筋";
-            this.默认梁腰筋.Padding = new System.Windows.Forms.Padding(3);
-            this.默认梁腰筋.Size = new System.Drawing.Size(665, 307);
-            this.默认梁腰筋.TabIndex = 4;
-            this.默认梁腰筋.Text = "默认梁腰筋";
-            this.默认梁腰筋.UseVisualStyleBackColor = true;
-            // 
-            // 默认梁吊筋
-            // 
-            this.默认梁吊筋.Controls.Add(this.comboBox9);
-            this.默认梁吊筋.Controls.Add(this.comboBox8);
-            this.默认梁吊筋.Controls.Add(this.textBox17);
-            this.默认梁吊筋.Controls.Add(this.label34);
-            this.默认梁吊筋.Controls.Add(this.comboBox7);
-            this.默认梁吊筋.Controls.Add(this.label33);
-            this.默认梁吊筋.Location = new System.Drawing.Point(4, 22);
-            this.默认梁吊筋.Name = "默认梁吊筋";
-            this.默认梁吊筋.Size = new System.Drawing.Size(665, 307);
-            this.默认梁吊筋.TabIndex = 5;
-            this.默认梁吊筋.Text = "默认梁吊筋";
-            this.默认梁吊筋.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(609, 402);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "删除";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(497, 402);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "确定";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // comboBox5
-            // 
-            this.comboBox5.AutoCompleteCustomSource.AddRange(new string[] {
-            "显示",
-            "窗口"});
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Items.AddRange(new object[] {
-            "HPB300",
-            "HRB335,HRBF335",
-            "HRB400,HRBF400,RRB400",
-            "HRB500,HRBF500"});
-            this.comboBox5.Location = new System.Drawing.Point(185, 16);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(68, 20);
-            this.comboBox5.TabIndex = 10;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(142, 19);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(41, 12);
-            this.label9.TabIndex = 11;
-            this.label9.Text = "钢筋：";
-            // 
-            // comboBox4
-            // 
-            this.comboBox4.AutoCompleteCustomSource.AddRange(new string[] {
-            "显示",
-            "窗口"});
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Items.AddRange(new object[] {
-            "C15",
-            "C20",
-            "C25",
-            "C30",
-            "C35",
-            "C40",
-            "C45",
-            "C50",
-            "C55",
-            "C60",
-            "C65",
-            "C70",
-            "C75",
-            "C80"});
-            this.comboBox4.Location = new System.Drawing.Point(68, 16);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(62, 20);
-            this.comboBox4.TabIndex = 8;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(19, 19);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(53, 12);
-            this.label7.TabIndex = 9;
-            this.label7.Text = "混凝土：";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(400, 19);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(41, 12);
-            this.label2.TabIndex = 12;
-            this.label2.Text = "系数：";
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(443, 15);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(38, 21);
-            this.textBox2.TabIndex = 13;
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(530, 15);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(36, 21);
-            this.textBox3.TabIndex = 14;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(486, 19);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(41, 12);
-            this.label3.TabIndex = 15;
-            this.label3.Text = "约入：";
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(601, 14);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(44, 23);
-            this.button3.TabIndex = 16;
-            this.button3.Text = "重置";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(572, 19);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(17, 12);
-            this.label4.TabIndex = 17;
-            this.label4.Text = "mm";
+            this.button4.Location = new System.Drawing.Point(270, 15);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(44, 23);
+            this.button4.TabIndex = 19;
+            this.button4.Text = "查询";
+            this.button4.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel1
             // 
@@ -400,15 +224,6 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(624, 222);
             this.tableLayoutPanel1.TabIndex = 18;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(270, 15);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(44, 23);
-            this.button4.TabIndex = 19;
-            this.button4.Text = "查询";
-            this.button4.UseVisualStyleBackColor = true;
             // 
             // label5
             // 
@@ -536,191 +351,174 @@
             this.label20.TabIndex = 13;
             this.label20.Text = "25";
             // 
-            // label21
+            // label4
             // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(19, 283);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(113, 12);
-            this.label21.TabIndex = 14;
-            this.label21.Text = "28，32，36，40，50";
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(572, 19);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(17, 12);
+            this.label4.TabIndex = 17;
+            this.label4.Text = "mm";
             // 
-            // label22
+            // button3
             // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(36, 36);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(41, 12);
-            this.label22.TabIndex = 0;
-            this.label22.Text = "HPB300";
+            this.button3.Location = new System.Drawing.Point(601, 14);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(44, 23);
+            this.button3.TabIndex = 16;
+            this.button3.Text = "重置";
+            this.button3.UseVisualStyleBackColor = true;
             // 
-            // label23
+            // label3
             // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(36, 72);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(89, 12);
-            this.label23.TabIndex = 1;
-            this.label23.Text = "HRB335,HRBF335";
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(486, 19);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(41, 12);
+            this.label3.TabIndex = 15;
+            this.label3.Text = "约入：";
             // 
-            // label24
+            // textBox3
             // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(36, 107);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(131, 12);
-            this.label24.TabIndex = 2;
-            this.label24.Text = "HRB400,HRBF400,RRB400";
+            this.textBox3.Location = new System.Drawing.Point(530, 15);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(36, 21);
+            this.textBox3.TabIndex = 14;
             // 
-            // label25
+            // textBox2
             // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(36, 143);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(89, 12);
-            this.label25.TabIndex = 3;
-            this.label25.Text = "HRB500,HRBF500";
+            this.textBox2.Location = new System.Drawing.Point(443, 15);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(38, 21);
+            this.textBox2.TabIndex = 13;
             // 
-            // label26
+            // label2
             // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(215, 36);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(269, 12);
-            this.label26.TabIndex = 4;
-            this.label26.Text = "D=         d ，当 D>         时 D=         d";
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(400, 19);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(41, 12);
+            this.label2.TabIndex = 12;
+            this.label2.Text = "系数：";
             // 
-            // textBox4
+            // comboBox5
             // 
-            this.textBox4.Location = new System.Drawing.Point(237, 31);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(40, 21);
-            this.textBox4.TabIndex = 5;
+            this.comboBox5.AutoCompleteCustomSource.AddRange(new string[] {
+            "显示",
+            "窗口"});
+            this.comboBox5.FormattingEnabled = true;
+            this.comboBox5.Items.AddRange(new object[] {
+            "HPB300",
+            "HRB335,HRBF335",
+            "HRB400,HRBF400,RRB400",
+            "HRB500,HRBF500"});
+            this.comboBox5.Location = new System.Drawing.Point(185, 16);
+            this.comboBox5.Name = "comboBox5";
+            this.comboBox5.Size = new System.Drawing.Size(68, 20);
+            this.comboBox5.TabIndex = 10;
             // 
-            // textBox5
+            // label9
             // 
-            this.textBox5.Location = new System.Drawing.Point(428, 31);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(40, 21);
-            this.textBox5.TabIndex = 6;
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(142, 19);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(41, 12);
+            this.label9.TabIndex = 11;
+            this.label9.Text = "钢筋：";
             // 
-            // comboBox1
+            // comboBox4
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "6",
-            "8",
-            "10",
-            "12",
-            "14",
-            "16",
-            "18",
-            "20",
-            "22",
-            "25",
-            "28",
-            "32",
-            "36",
-            "40",
-            "50"});
-            this.comboBox1.Location = new System.Drawing.Point(344, 31);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(40, 20);
-            this.comboBox1.TabIndex = 7;
+            this.comboBox4.AutoCompleteCustomSource.AddRange(new string[] {
+            "显示",
+            "窗口"});
+            this.comboBox4.FormattingEnabled = true;
+            this.comboBox4.Items.AddRange(new object[] {
+            "C15",
+            "C20",
+            "C25",
+            "C30",
+            "C35",
+            "C40",
+            "C45",
+            "C50",
+            "C55",
+            "C60",
+            "C65",
+            "C70",
+            "C75",
+            "C80"});
+            this.comboBox4.Location = new System.Drawing.Point(68, 16);
+            this.comboBox4.Name = "comboBox4";
+            this.comboBox4.Size = new System.Drawing.Size(62, 20);
+            this.comboBox4.TabIndex = 8;
             // 
-            // comboBox2
+            // label7
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
-            "6",
-            "8",
-            "10",
-            "12",
-            "14",
-            "16",
-            "18",
-            "20",
-            "22",
-            "25",
-            "28",
-            "32",
-            "36",
-            "40",
-            "50"});
-            this.comboBox2.Location = new System.Drawing.Point(344, 69);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(40, 20);
-            this.comboBox2.TabIndex = 11;
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(19, 19);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(53, 12);
+            this.label7.TabIndex = 9;
+            this.label7.Text = "混凝土：";
             // 
-            // textBox6
+            // 钢筋弯芯直径
             // 
-            this.textBox6.Location = new System.Drawing.Point(428, 69);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(40, 21);
-            this.textBox6.TabIndex = 10;
+            this.钢筋弯芯直径.Controls.Add(this.checkBox1);
+            this.钢筋弯芯直径.Controls.Add(this.label30);
+            this.钢筋弯芯直径.Controls.Add(this.textBox12);
+            this.钢筋弯芯直径.Controls.Add(this.comboBox6);
+            this.钢筋弯芯直径.Controls.Add(this.textBox10);
+            this.钢筋弯芯直径.Controls.Add(this.textBox11);
+            this.钢筋弯芯直径.Controls.Add(this.label29);
+            this.钢筋弯芯直径.Controls.Add(this.comboBox3);
+            this.钢筋弯芯直径.Controls.Add(this.textBox8);
+            this.钢筋弯芯直径.Controls.Add(this.textBox9);
+            this.钢筋弯芯直径.Controls.Add(this.label28);
+            this.钢筋弯芯直径.Controls.Add(this.comboBox2);
+            this.钢筋弯芯直径.Controls.Add(this.textBox6);
+            this.钢筋弯芯直径.Controls.Add(this.textBox7);
+            this.钢筋弯芯直径.Controls.Add(this.label27);
+            this.钢筋弯芯直径.Controls.Add(this.comboBox1);
+            this.钢筋弯芯直径.Controls.Add(this.textBox5);
+            this.钢筋弯芯直径.Controls.Add(this.textBox4);
+            this.钢筋弯芯直径.Controls.Add(this.label26);
+            this.钢筋弯芯直径.Controls.Add(this.label25);
+            this.钢筋弯芯直径.Controls.Add(this.label24);
+            this.钢筋弯芯直径.Controls.Add(this.label23);
+            this.钢筋弯芯直径.Controls.Add(this.label22);
+            this.钢筋弯芯直径.Location = new System.Drawing.Point(4, 22);
+            this.钢筋弯芯直径.Name = "钢筋弯芯直径";
+            this.钢筋弯芯直径.Padding = new System.Windows.Forms.Padding(3);
+            this.钢筋弯芯直径.Size = new System.Drawing.Size(665, 307);
+            this.钢筋弯芯直径.TabIndex = 2;
+            this.钢筋弯芯直径.Text = "钢筋弯芯直径";
+            this.钢筋弯芯直径.UseVisualStyleBackColor = true;
             // 
-            // textBox7
+            // checkBox1
             // 
-            this.textBox7.Location = new System.Drawing.Point(237, 69);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(40, 21);
-            this.textBox7.TabIndex = 9;
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(38, 224);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(60, 16);
+            this.checkBox1.TabIndex = 23;
+            this.checkBox1.Text = "约入：";
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
-            // label27
+            // label30
             // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(215, 74);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(269, 12);
-            this.label27.TabIndex = 8;
-            this.label27.Text = "D=         d ，当 D>         时 D=         d";
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(152, 225);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(17, 12);
+            this.label30.TabIndex = 22;
+            this.label30.Text = "mm";
             // 
-            // comboBox3
+            // textBox12
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Items.AddRange(new object[] {
-            "6",
-            "8",
-            "10",
-            "12",
-            "14",
-            "16",
-            "18",
-            "20",
-            "22",
-            "25",
-            "28",
-            "32",
-            "36",
-            "40",
-            "50"});
-            this.comboBox3.Location = new System.Drawing.Point(344, 104);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(40, 20);
-            this.comboBox3.TabIndex = 15;
-            // 
-            // textBox8
-            // 
-            this.textBox8.Location = new System.Drawing.Point(428, 104);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(40, 21);
-            this.textBox8.TabIndex = 14;
-            // 
-            // textBox9
-            // 
-            this.textBox9.Location = new System.Drawing.Point(237, 104);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(40, 21);
-            this.textBox9.TabIndex = 13;
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(215, 109);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(269, 12);
-            this.label28.TabIndex = 12;
-            this.label28.Text = "D=         d ，当 D>         时 D=         d";
+            this.textBox12.Location = new System.Drawing.Point(101, 221);
+            this.textBox12.Name = "textBox12";
+            this.textBox12.Size = new System.Drawing.Size(36, 21);
+            this.textBox12.TabIndex = 20;
             // 
             // comboBox6
             // 
@@ -769,54 +567,218 @@
             this.label29.TabIndex = 16;
             this.label29.Text = "D=         d ，当 D>         时 D=         d";
             // 
-            // label30
+            // comboBox3
             // 
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(152, 225);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(17, 12);
-            this.label30.TabIndex = 22;
-            this.label30.Text = "mm";
+            this.comboBox3.FormattingEnabled = true;
+            this.comboBox3.Items.AddRange(new object[] {
+            "6",
+            "8",
+            "10",
+            "12",
+            "14",
+            "16",
+            "18",
+            "20",
+            "22",
+            "25",
+            "28",
+            "32",
+            "36",
+            "40",
+            "50"});
+            this.comboBox3.Location = new System.Drawing.Point(344, 104);
+            this.comboBox3.Name = "comboBox3";
+            this.comboBox3.Size = new System.Drawing.Size(40, 20);
+            this.comboBox3.TabIndex = 15;
             // 
-            // textBox12
+            // textBox8
             // 
-            this.textBox12.Location = new System.Drawing.Point(101, 221);
-            this.textBox12.Name = "textBox12";
-            this.textBox12.Size = new System.Drawing.Size(36, 21);
-            this.textBox12.TabIndex = 20;
+            this.textBox8.Location = new System.Drawing.Point(428, 104);
+            this.textBox8.Name = "textBox8";
+            this.textBox8.Size = new System.Drawing.Size(40, 21);
+            this.textBox8.TabIndex = 14;
             // 
-            // checkBox1
+            // textBox9
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(38, 224);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(60, 16);
-            this.checkBox1.TabIndex = 23;
-            this.checkBox1.Text = "约入：";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.textBox9.Location = new System.Drawing.Point(237, 104);
+            this.textBox9.Name = "textBox9";
+            this.textBox9.Size = new System.Drawing.Size(40, 21);
+            this.textBox9.TabIndex = 13;
             // 
-            // label31
+            // label28
             // 
-            this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(27, 20);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(119, 12);
-            this.label31.TabIndex = 5;
-            this.label31.Text = "梁宽b            至";
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(215, 109);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(269, 12);
+            this.label28.TabIndex = 12;
+            this.label28.Text = "D=         d ，当 D>         时 D=         d";
             // 
-            // textBox13
+            // comboBox2
             // 
-            this.textBox13.Location = new System.Drawing.Point(67, 15);
-            this.textBox13.Name = "textBox13";
-            this.textBox13.Size = new System.Drawing.Size(57, 21);
-            this.textBox13.TabIndex = 6;
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Items.AddRange(new object[] {
+            "6",
+            "8",
+            "10",
+            "12",
+            "14",
+            "16",
+            "18",
+            "20",
+            "22",
+            "25",
+            "28",
+            "32",
+            "36",
+            "40",
+            "50"});
+            this.comboBox2.Location = new System.Drawing.Point(344, 69);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(40, 20);
+            this.comboBox2.TabIndex = 11;
             // 
-            // textBox14
+            // textBox6
             // 
-            this.textBox14.Location = new System.Drawing.Point(148, 15);
-            this.textBox14.Name = "textBox14";
-            this.textBox14.Size = new System.Drawing.Size(57, 21);
-            this.textBox14.TabIndex = 7;
+            this.textBox6.Location = new System.Drawing.Point(428, 69);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(40, 21);
+            this.textBox6.TabIndex = 10;
+            // 
+            // textBox7
+            // 
+            this.textBox7.Location = new System.Drawing.Point(237, 69);
+            this.textBox7.Name = "textBox7";
+            this.textBox7.Size = new System.Drawing.Size(40, 21);
+            this.textBox7.TabIndex = 9;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(215, 74);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(269, 12);
+            this.label27.TabIndex = 8;
+            this.label27.Text = "D=         d ，当 D>         时 D=         d";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "6",
+            "8",
+            "10",
+            "12",
+            "14",
+            "16",
+            "18",
+            "20",
+            "22",
+            "25",
+            "28",
+            "32",
+            "36",
+            "40",
+            "50"});
+            this.comboBox1.Location = new System.Drawing.Point(344, 31);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(40, 20);
+            this.comboBox1.TabIndex = 7;
+            // 
+            // textBox5
+            // 
+            this.textBox5.Location = new System.Drawing.Point(428, 31);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(40, 21);
+            this.textBox5.TabIndex = 6;
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(237, 31);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(40, 21);
+            this.textBox4.TabIndex = 5;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(215, 36);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(269, 12);
+            this.label26.TabIndex = 4;
+            this.label26.Text = "D=         d ，当 D>         时 D=         d";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(36, 143);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(89, 12);
+            this.label25.TabIndex = 3;
+            this.label25.Text = "HRB500,HRBF500";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(36, 107);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(131, 12);
+            this.label24.TabIndex = 2;
+            this.label24.Text = "HRB400,HRBF400,RRB400";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(36, 72);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(89, 12);
+            this.label23.TabIndex = 1;
+            this.label23.Text = "HRB335,HRBF335";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(36, 36);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(41, 12);
+            this.label22.TabIndex = 0;
+            this.label22.Text = "HPB300";
+            // 
+            // 默认梁腰筋
+            // 
+            this.默认梁腰筋.Controls.Add(this.pictureBox1);
+            this.默认梁腰筋.Controls.Add(this.button5);
+            this.默认梁腰筋.Controls.Add(this.textBox15);
+            this.默认梁腰筋.Controls.Add(this.textBox16);
+            this.默认梁腰筋.Controls.Add(this.label32);
+            this.默认梁腰筋.Controls.Add(this.textBox14);
+            this.默认梁腰筋.Controls.Add(this.textBox13);
+            this.默认梁腰筋.Controls.Add(this.label31);
+            this.默认梁腰筋.Location = new System.Drawing.Point(4, 22);
+            this.默认梁腰筋.Name = "默认梁腰筋";
+            this.默认梁腰筋.Padding = new System.Windows.Forms.Padding(3);
+            this.默认梁腰筋.Size = new System.Drawing.Size(665, 307);
+            this.默认梁腰筋.TabIndex = 4;
+            this.默认梁腰筋.Text = "默认梁腰筋";
+            this.默认梁腰筋.UseVisualStyleBackColor = true;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.InitialImage")));
+            this.pictureBox1.Location = new System.Drawing.Point(29, 68);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(593, 209);
+            this.pictureBox1.TabIndex = 21;
+            this.pictureBox1.TabStop = false;
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(453, 13);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(44, 23);
+            this.button5.TabIndex = 20;
+            this.button5.Text = "查询";
+            this.button5.UseVisualStyleBackColor = true;
             // 
             // textBox15
             // 
@@ -841,75 +803,43 @@
             this.label32.TabIndex = 8;
             this.label32.Text = "梁高hw            至";
             // 
-            // button5
+            // textBox14
             // 
-            this.button5.Location = new System.Drawing.Point(453, 13);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(44, 23);
-            this.button5.TabIndex = 20;
-            this.button5.Text = "查询";
-            this.button5.UseVisualStyleBackColor = true;
+            this.textBox14.Location = new System.Drawing.Point(148, 15);
+            this.textBox14.Name = "textBox14";
+            this.textBox14.Size = new System.Drawing.Size(57, 21);
+            this.textBox14.TabIndex = 7;
             // 
-            // pictureBox1
+            // textBox13
             // 
-            this.pictureBox1.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.InitialImage")));
-            this.pictureBox1.Location = new System.Drawing.Point(29, 68);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(593, 209);
-            this.pictureBox1.TabIndex = 21;
-            this.pictureBox1.TabStop = false;
+            this.textBox13.Location = new System.Drawing.Point(67, 15);
+            this.textBox13.Name = "textBox13";
+            this.textBox13.Size = new System.Drawing.Size(57, 21);
+            this.textBox13.TabIndex = 6;
             // 
-            // label33
+            // label31
             // 
-            this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(29, 27);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(89, 12);
-            this.label33.TabIndex = 6;
-            this.label33.Text = "吊筋弯起角度：";
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(27, 20);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(119, 12);
+            this.label31.TabIndex = 5;
+            this.label31.Text = "梁宽b            至";
             // 
-            // comboBox7
+            // 默认梁吊筋
             // 
-            this.comboBox7.FormattingEnabled = true;
-            this.comboBox7.Items.AddRange(new object[] {
-            "60度",
-            "45度"});
-            this.comboBox7.Location = new System.Drawing.Point(125, 23);
-            this.comboBox7.Name = "comboBox7";
-            this.comboBox7.Size = new System.Drawing.Size(68, 20);
-            this.comboBox7.TabIndex = 7;
-            // 
-            // label34
-            // 
-            this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(29, 58);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(371, 12);
-            this.label34.TabIndex = 8;
-            this.label34.Text = "主次梁默认采用           根               直径           钢筋";
-            // 
-            // textBox17
-            // 
-            this.textBox17.Location = new System.Drawing.Point(125, 54);
-            this.textBox17.Name = "textBox17";
-            this.textBox17.Size = new System.Drawing.Size(45, 21);
-            this.textBox17.TabIndex = 9;
-            // 
-            // comboBox8
-            // 
-            this.comboBox8.AutoCompleteCustomSource.AddRange(new string[] {
-            "显示",
-            "窗口"});
-            this.comboBox8.FormattingEnabled = true;
-            this.comboBox8.Items.AddRange(new object[] {
-            "HPB300",
-            "HRB335,HRBF335",
-            "HRB400,HRBF400,RRB400",
-            "HRB500,HRBF500"});
-            this.comboBox8.Location = new System.Drawing.Point(202, 54);
-            this.comboBox8.Name = "comboBox8";
-            this.comboBox8.Size = new System.Drawing.Size(68, 20);
-            this.comboBox8.TabIndex = 11;
+            this.默认梁吊筋.Controls.Add(this.comboBox9);
+            this.默认梁吊筋.Controls.Add(this.comboBox8);
+            this.默认梁吊筋.Controls.Add(this.textBox17);
+            this.默认梁吊筋.Controls.Add(this.label34);
+            this.默认梁吊筋.Controls.Add(this.comboBox7);
+            this.默认梁吊筋.Controls.Add(this.label33);
+            this.默认梁吊筋.Location = new System.Drawing.Point(4, 22);
+            this.默认梁吊筋.Name = "默认梁吊筋";
+            this.默认梁吊筋.Size = new System.Drawing.Size(665, 307);
+            this.默认梁吊筋.TabIndex = 5;
+            this.默认梁吊筋.Text = "默认梁吊筋";
+            this.默认梁吊筋.UseVisualStyleBackColor = true;
             // 
             // comboBox9
             // 
@@ -935,6 +865,77 @@
             this.comboBox9.Size = new System.Drawing.Size(40, 20);
             this.comboBox9.TabIndex = 12;
             // 
+            // comboBox8
+            // 
+            this.comboBox8.AutoCompleteCustomSource.AddRange(new string[] {
+            "显示",
+            "窗口"});
+            this.comboBox8.FormattingEnabled = true;
+            this.comboBox8.Items.AddRange(new object[] {
+            "HPB300",
+            "HRB335,HRBF335",
+            "HRB400,HRBF400,RRB400",
+            "HRB500,HRBF500"});
+            this.comboBox8.Location = new System.Drawing.Point(202, 54);
+            this.comboBox8.Name = "comboBox8";
+            this.comboBox8.Size = new System.Drawing.Size(68, 20);
+            this.comboBox8.TabIndex = 11;
+            // 
+            // textBox17
+            // 
+            this.textBox17.Location = new System.Drawing.Point(125, 54);
+            this.textBox17.Name = "textBox17";
+            this.textBox17.Size = new System.Drawing.Size(45, 21);
+            this.textBox17.TabIndex = 9;
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(29, 58);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(371, 12);
+            this.label34.TabIndex = 8;
+            this.label34.Text = "主次梁默认采用           根               直径           钢筋";
+            // 
+            // comboBox7
+            // 
+            this.comboBox7.FormattingEnabled = true;
+            this.comboBox7.Items.AddRange(new object[] {
+            "60度",
+            "45度"});
+            this.comboBox7.Location = new System.Drawing.Point(125, 23);
+            this.comboBox7.Name = "comboBox7";
+            this.comboBox7.Size = new System.Drawing.Size(68, 20);
+            this.comboBox7.TabIndex = 7;
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(29, 27);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(89, 12);
+            this.label33.TabIndex = 6;
+            this.label33.Text = "吊筋弯起角度：";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(609, 402);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 7;
+            this.button2.Text = "取消";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(497, 402);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "确定";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // GouzaoRecord
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -948,19 +949,21 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "GouzaoRecord";
+            this.ShowIcon = false;
             this.Text = "构造配置方案";
+            this.TopMost = true;
             this.tabControl1.ResumeLayout(false);
             this.钢筋锚固长度.ResumeLayout(false);
             this.钢筋锚固长度.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.钢筋弯芯直径.ResumeLayout(false);
             this.钢筋弯芯直径.PerformLayout();
             this.默认梁腰筋.ResumeLayout(false);
             this.默认梁腰筋.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.默认梁吊筋.ResumeLayout(false);
             this.默认梁吊筋.PerformLayout();
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -30,8 +30,8 @@ namespace ToolkipCAD
 
         private void DataGrid_Side_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
         {
-            int index = e.Column.Index*50+200;
-            e.Column.HeaderText = index.ToString();
+            //int index = e.Column.Index*50+200;
+            //e.Column.HeaderText = index.ToString();
         }
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
@@ -170,7 +170,7 @@ namespace ToolkipCAD
             {
                 dataGrid_Side.Columns.Add(i.ToString(),i.ToString());
             }
-            for (int k = startb; k < endb; k+=50)
+            for (int k = startb; k <= endb; k+=50)
             {
                 dataGrid_Side.Rows.Add();
             }

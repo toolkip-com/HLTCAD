@@ -89,6 +89,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Drawing_tree.cs" />
+    <Compile Include="Models\GouZaoParam.cs" />
     <Compile Include="Models\HLTDataStruct.cs" />
     <Compile Include="Models\HLTElement.cs" />
     <Compile Include="Models\Project_Tree.cs" />

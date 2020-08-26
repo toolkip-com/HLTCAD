@@ -28,37 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GouzaoRecord));
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.钢筋锚固长度 = new System.Windows.Forms.TabPage();
-            this.label21 = new System.Windows.Forms.Label();
-            this.button4 = new System.Windows.Forms.Button();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
+            this.Grid_Gj = new System.Windows.Forms.DataGridView();
+            this.level4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.level3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.level2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.level1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label4 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
+            this.combo_gj = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.Combo_hnt = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.钢筋弯芯直径 = new System.Windows.Forms.TabPage();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -85,13 +72,13 @@
             this.label23 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.默认梁腰筋 = new System.Windows.Forms.TabPage();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.button5 = new System.Windows.Forms.Button();
-            this.textBox15 = new System.Windows.Forms.TextBox();
-            this.textBox16 = new System.Windows.Forms.TextBox();
+            this.dataGrid_Side = new System.Windows.Forms.DataGridView();
+            this.L_search = new System.Windows.Forms.Button();
+            this.hw_end = new System.Windows.Forms.TextBox();
+            this.hw_start = new System.Windows.Forms.TextBox();
             this.label32 = new System.Windows.Forms.Label();
-            this.textBox14 = new System.Windows.Forms.TextBox();
-            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.b_end = new System.Windows.Forms.TextBox();
+            this.b_start = new System.Windows.Forms.TextBox();
             this.label31 = new System.Windows.Forms.Label();
             this.默认梁吊筋 = new System.Windows.Forms.TabPage();
             this.comboBox9 = new System.Windows.Forms.ComboBox();
@@ -104,10 +91,10 @@
             this.button1 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.钢筋锚固长度.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Grid_Gj)).BeginInit();
             this.钢筋弯芯直径.SuspendLayout();
             this.默认梁腰筋.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGrid_Side)).BeginInit();
             this.默认梁吊筋.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -126,6 +113,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(223, 21);
             this.textBox1.TabIndex = 1;
+            this.textBox1.Text = "新建方案1";
             // 
             // tabControl1
             // 
@@ -143,18 +131,16 @@
             // 
             // 钢筋锚固长度
             // 
-            this.钢筋锚固长度.Controls.Add(this.label21);
-            this.钢筋锚固长度.Controls.Add(this.button4);
-            this.钢筋锚固长度.Controls.Add(this.tableLayoutPanel1);
+            this.钢筋锚固长度.Controls.Add(this.Grid_Gj);
             this.钢筋锚固长度.Controls.Add(this.label4);
             this.钢筋锚固长度.Controls.Add(this.button3);
             this.钢筋锚固长度.Controls.Add(this.label3);
             this.钢筋锚固长度.Controls.Add(this.textBox3);
             this.钢筋锚固长度.Controls.Add(this.textBox2);
             this.钢筋锚固长度.Controls.Add(this.label2);
-            this.钢筋锚固长度.Controls.Add(this.comboBox5);
+            this.钢筋锚固长度.Controls.Add(this.combo_gj);
             this.钢筋锚固长度.Controls.Add(this.label9);
-            this.钢筋锚固长度.Controls.Add(this.comboBox4);
+            this.钢筋锚固长度.Controls.Add(this.Combo_hnt);
             this.钢筋锚固长度.Controls.Add(this.label7);
             this.钢筋锚固长度.Location = new System.Drawing.Point(4, 22);
             this.钢筋锚固长度.Name = "钢筋锚固长度";
@@ -164,192 +150,47 @@
             this.钢筋锚固长度.Text = "钢筋锚固长度";
             this.钢筋锚固长度.UseVisualStyleBackColor = true;
             // 
-            // label21
+            // Grid_Gj
             // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(19, 283);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(113, 12);
-            this.label21.TabIndex = 14;
-            this.label21.Text = "28，32，36，40，50";
+            this.Grid_Gj.AllowUserToAddRows = false;
+            this.Grid_Gj.AllowUserToDeleteRows = false;
+            this.Grid_Gj.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.Grid_Gj.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.Grid_Gj.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.level4,
+            this.level3,
+            this.level2,
+            this.level1});
+            this.Grid_Gj.Location = new System.Drawing.Point(0, 46);
+            this.Grid_Gj.Name = "Grid_Gj";
+            this.Grid_Gj.RowTemplate.Height = 23;
+            this.Grid_Gj.Size = new System.Drawing.Size(665, 261);
+            this.Grid_Gj.TabIndex = 18;
+            this.Grid_Gj.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.Grid_Gj_RowsAdded);
             // 
-            // button4
+            // level4
             // 
-            this.button4.Location = new System.Drawing.Point(270, 15);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(44, 23);
-            this.button4.TabIndex = 19;
-            this.button4.Text = "查询";
-            this.button4.UseVisualStyleBackColor = true;
+            this.level4.DataPropertyName = "level4";
+            this.level4.HeaderText = "四级";
+            this.level4.Name = "level4";
             // 
-            // tableLayoutPanel1
+            // level3
             // 
-            this.tableLayoutPanel1.AutoScroll = true;
-            this.tableLayoutPanel1.ColumnCount = 5;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Controls.Add(this.label5, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label6, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label8, 3, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label10, 4, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label11, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label12, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.label13, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.label14, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.label15, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.label16, 0, 6);
-            this.tableLayoutPanel1.Controls.Add(this.label17, 0, 7);
-            this.tableLayoutPanel1.Controls.Add(this.label18, 0, 8);
-            this.tableLayoutPanel1.Controls.Add(this.label19, 0, 9);
-            this.tableLayoutPanel1.Controls.Add(this.label20, 0, 10);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(21, 58);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 11;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(624, 222);
-            this.tableLayoutPanel1.TabIndex = 18;
-            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
+            this.level3.DataPropertyName = "level3";
+            this.level3.HeaderText = "三级";
+            this.level3.Name = "level3";
             // 
-            // label5
+            // level2
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(102, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(29, 12);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "四级";
+            this.level2.DataPropertyName = "level2";
+            this.level2.HeaderText = "二级";
+            this.level2.Name = "level2";
             // 
-            // label6
+            // level1
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(233, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(29, 12);
-            this.label6.TabIndex = 1;
-            this.label6.Text = "三级";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(364, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(29, 12);
-            this.label8.TabIndex = 2;
-            this.label8.Text = "二级";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(495, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(29, 12);
-            this.label10.TabIndex = 3;
-            this.label10.Text = "一级";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(3, 20);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(11, 12);
-            this.label11.TabIndex = 4;
-            this.label11.Text = "6";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(3, 40);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(11, 12);
-            this.label12.TabIndex = 5;
-            this.label12.Text = "8";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(3, 60);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(17, 12);
-            this.label13.TabIndex = 6;
-            this.label13.Text = "10";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(3, 80);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(17, 12);
-            this.label14.TabIndex = 7;
-            this.label14.Text = "12";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(3, 100);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(17, 12);
-            this.label15.TabIndex = 8;
-            this.label15.Text = "14";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(3, 120);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(17, 12);
-            this.label16.TabIndex = 9;
-            this.label16.Text = "16";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(3, 140);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(17, 12);
-            this.label17.TabIndex = 10;
-            this.label17.Text = "18";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(3, 160);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(17, 12);
-            this.label18.TabIndex = 11;
-            this.label18.Text = "20";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(3, 180);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(17, 12);
-            this.label19.TabIndex = 12;
-            this.label19.Text = "22";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(3, 200);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(17, 12);
-            this.label20.TabIndex = 13;
-            this.label20.Text = "25";
+            this.level1.DataPropertyName = "level1";
+            this.level1.HeaderText = "一级";
+            this.level1.Name = "level1";
             // 
             // label4
             // 
@@ -391,6 +232,7 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(38, 21);
             this.textBox2.TabIndex = 13;
+            this.textBox2.Text = "1.0";
             // 
             // label2
             // 
@@ -401,21 +243,22 @@
             this.label2.TabIndex = 12;
             this.label2.Text = "系数：";
             // 
-            // comboBox5
+            // combo_gj
             // 
-            this.comboBox5.AutoCompleteCustomSource.AddRange(new string[] {
+            this.combo_gj.AutoCompleteCustomSource.AddRange(new string[] {
             "显示",
             "窗口"});
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Items.AddRange(new object[] {
+            this.combo_gj.FormattingEnabled = true;
+            this.combo_gj.Items.AddRange(new object[] {
             "HPB300",
             "HRB335,HRBF335",
             "HRB400,HRBF400,RRB400",
             "HRB500,HRBF500"});
-            this.comboBox5.Location = new System.Drawing.Point(185, 16);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(68, 20);
-            this.comboBox5.TabIndex = 10;
+            this.combo_gj.Location = new System.Drawing.Point(185, 16);
+            this.combo_gj.Name = "combo_gj";
+            this.combo_gj.Size = new System.Drawing.Size(152, 20);
+            this.combo_gj.TabIndex = 10;
+            this.combo_gj.Text = "HRB400,HRBF400,RRB400";
             // 
             // label9
             // 
@@ -426,13 +269,13 @@
             this.label9.TabIndex = 11;
             this.label9.Text = "钢筋：";
             // 
-            // comboBox4
+            // Combo_hnt
             // 
-            this.comboBox4.AutoCompleteCustomSource.AddRange(new string[] {
+            this.Combo_hnt.AutoCompleteCustomSource.AddRange(new string[] {
             "显示",
             "窗口"});
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Items.AddRange(new object[] {
+            this.Combo_hnt.FormattingEnabled = true;
+            this.Combo_hnt.Items.AddRange(new object[] {
             "C15",
             "C20",
             "C25",
@@ -447,10 +290,12 @@
             "C70",
             "C75",
             "C80"});
-            this.comboBox4.Location = new System.Drawing.Point(68, 16);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(62, 20);
-            this.comboBox4.TabIndex = 8;
+            this.Combo_hnt.Location = new System.Drawing.Point(68, 16);
+            this.Combo_hnt.Name = "Combo_hnt";
+            this.Combo_hnt.Size = new System.Drawing.Size(62, 20);
+            this.Combo_hnt.TabIndex = 8;
+            this.Combo_hnt.Text = "C30";
+            this.Combo_hnt.SelectedIndexChanged += new System.EventHandler(this.Combo_hnt_SelectedIndexChanged);
             // 
             // label7
             // 
@@ -746,13 +591,13 @@
             // 
             // 默认梁腰筋
             // 
-            this.默认梁腰筋.Controls.Add(this.pictureBox1);
-            this.默认梁腰筋.Controls.Add(this.button5);
-            this.默认梁腰筋.Controls.Add(this.textBox15);
-            this.默认梁腰筋.Controls.Add(this.textBox16);
+            this.默认梁腰筋.Controls.Add(this.dataGrid_Side);
+            this.默认梁腰筋.Controls.Add(this.L_search);
+            this.默认梁腰筋.Controls.Add(this.hw_end);
+            this.默认梁腰筋.Controls.Add(this.hw_start);
             this.默认梁腰筋.Controls.Add(this.label32);
-            this.默认梁腰筋.Controls.Add(this.textBox14);
-            this.默认梁腰筋.Controls.Add(this.textBox13);
+            this.默认梁腰筋.Controls.Add(this.b_end);
+            this.默认梁腰筋.Controls.Add(this.b_start);
             this.默认梁腰筋.Controls.Add(this.label31);
             this.默认梁腰筋.Location = new System.Drawing.Point(4, 22);
             this.默认梁腰筋.Name = "默认梁腰筋";
@@ -762,37 +607,41 @@
             this.默认梁腰筋.Text = "默认梁腰筋";
             this.默认梁腰筋.UseVisualStyleBackColor = true;
             // 
-            // pictureBox1
+            // dataGrid_Side
             // 
-            this.pictureBox1.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.InitialImage")));
-            this.pictureBox1.Location = new System.Drawing.Point(29, 68);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(593, 209);
-            this.pictureBox1.TabIndex = 21;
-            this.pictureBox1.TabStop = false;
+            this.dataGrid_Side.AllowUserToAddRows = false;
+            this.dataGrid_Side.AllowUserToDeleteRows = false;
+            this.dataGrid_Side.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGrid_Side.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGrid_Side.Location = new System.Drawing.Point(0, 44);
+            this.dataGrid_Side.Name = "dataGrid_Side";
+            this.dataGrid_Side.RowTemplate.Height = 23;
+            this.dataGrid_Side.Size = new System.Drawing.Size(664, 263);
+            this.dataGrid_Side.TabIndex = 21;
             // 
-            // button5
+            // L_search
             // 
-            this.button5.Location = new System.Drawing.Point(453, 13);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(44, 23);
-            this.button5.TabIndex = 20;
-            this.button5.Text = "查询";
-            this.button5.UseVisualStyleBackColor = true;
+            this.L_search.Location = new System.Drawing.Point(453, 13);
+            this.L_search.Name = "L_search";
+            this.L_search.Size = new System.Drawing.Size(44, 23);
+            this.L_search.TabIndex = 20;
+            this.L_search.Text = "查询";
+            this.L_search.UseVisualStyleBackColor = true;
+            this.L_search.Click += new System.EventHandler(this.L_search_Click);
             // 
-            // textBox15
+            // hw_end
             // 
-            this.textBox15.Location = new System.Drawing.Point(371, 15);
-            this.textBox15.Name = "textBox15";
-            this.textBox15.Size = new System.Drawing.Size(57, 21);
-            this.textBox15.TabIndex = 10;
+            this.hw_end.Location = new System.Drawing.Point(371, 15);
+            this.hw_end.Name = "hw_end";
+            this.hw_end.Size = new System.Drawing.Size(57, 21);
+            this.hw_end.TabIndex = 10;
             // 
-            // textBox16
+            // hw_start
             // 
-            this.textBox16.Location = new System.Drawing.Point(290, 15);
-            this.textBox16.Name = "textBox16";
-            this.textBox16.Size = new System.Drawing.Size(57, 21);
-            this.textBox16.TabIndex = 9;
+            this.hw_start.Location = new System.Drawing.Point(290, 15);
+            this.hw_start.Name = "hw_start";
+            this.hw_start.Size = new System.Drawing.Size(57, 21);
+            this.hw_start.TabIndex = 9;
             // 
             // label32
             // 
@@ -803,19 +652,19 @@
             this.label32.TabIndex = 8;
             this.label32.Text = "梁高hw            至";
             // 
-            // textBox14
+            // b_end
             // 
-            this.textBox14.Location = new System.Drawing.Point(148, 15);
-            this.textBox14.Name = "textBox14";
-            this.textBox14.Size = new System.Drawing.Size(57, 21);
-            this.textBox14.TabIndex = 7;
+            this.b_end.Location = new System.Drawing.Point(148, 15);
+            this.b_end.Name = "b_end";
+            this.b_end.Size = new System.Drawing.Size(57, 21);
+            this.b_end.TabIndex = 7;
             // 
-            // textBox13
+            // b_start
             // 
-            this.textBox13.Location = new System.Drawing.Point(67, 15);
-            this.textBox13.Name = "textBox13";
-            this.textBox13.Size = new System.Drawing.Size(57, 21);
-            this.textBox13.TabIndex = 6;
+            this.b_start.Location = new System.Drawing.Point(67, 15);
+            this.b_start.Name = "b_start";
+            this.b_start.Size = new System.Drawing.Size(57, 21);
+            this.b_start.TabIndex = 6;
             // 
             // label31
             // 
@@ -925,6 +774,7 @@
             this.button2.TabIndex = 7;
             this.button2.Text = "取消";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 
@@ -951,17 +801,16 @@
             this.Name = "GouzaoRecord";
             this.ShowIcon = false;
             this.Text = "构造配置方案";
-            this.TopMost = true;
+            this.Load += new System.EventHandler(this.GouzaoRecord_Load);
             this.tabControl1.ResumeLayout(false);
             this.钢筋锚固长度.ResumeLayout(false);
             this.钢筋锚固长度.PerformLayout();
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Grid_Gj)).EndInit();
             this.钢筋弯芯直径.ResumeLayout(false);
             this.钢筋弯芯直径.PerformLayout();
             this.默认梁腰筋.ResumeLayout(false);
             this.默认梁腰筋.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGrid_Side)).EndInit();
             this.默认梁吊筋.ResumeLayout(false);
             this.默认梁吊筋.PerformLayout();
             this.ResumeLayout(false);
@@ -980,9 +829,9 @@
         private System.Windows.Forms.TabPage 默认梁吊筋;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ComboBox comboBox5;
+        private System.Windows.Forms.ComboBox combo_gj;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.ComboBox Combo_hnt;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox3;
@@ -990,23 +839,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label23;
@@ -1030,19 +862,24 @@
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.TextBox textBox12;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.TextBox textBox15;
-        private System.Windows.Forms.TextBox textBox16;
+        private System.Windows.Forms.Button L_search;
+        private System.Windows.Forms.TextBox hw_end;
+        private System.Windows.Forms.TextBox hw_start;
         private System.Windows.Forms.Label label32;
-        private System.Windows.Forms.TextBox textBox14;
-        private System.Windows.Forms.TextBox textBox13;
+        private System.Windows.Forms.TextBox b_end;
+        private System.Windows.Forms.TextBox b_start;
         private System.Windows.Forms.Label label31;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ComboBox comboBox9;
         private System.Windows.Forms.ComboBox comboBox8;
         private System.Windows.Forms.TextBox textBox17;
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.ComboBox comboBox7;
         private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.DataGridView Grid_Gj;
+        private System.Windows.Forms.DataGridView dataGrid_Side;
+        private System.Windows.Forms.DataGridViewTextBoxColumn level4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn level3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn level2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn level1;
     }
 }

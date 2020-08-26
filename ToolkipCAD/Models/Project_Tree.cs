@@ -504,7 +504,14 @@ namespace ToolkipCAD
         public void DrawCreateStruct()
         {
             GouzaoRecord record = new GouzaoRecord();
-            record.Show();
+            record.ShowDialog();
+
+        }
+        //修改构造
+        public void DrawEditStruct()
+        {
+
+
         }
         //记录的点击事件
         public string RecodeClick()

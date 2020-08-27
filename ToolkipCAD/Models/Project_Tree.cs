@@ -275,7 +275,7 @@ namespace ToolkipCAD
                 ToolStripMenuItem CreateNew = new ToolStripMenuItem("新建");
                 CreateNew.Click += new EventHandler(Draw_CreateNew_Click);
                 ToolStripMenuItem EditItem = new ToolStripMenuItem("编辑");
-                //EditItem.Click += new EventHandler(Draw_Delete_Click);
+                EditItem.Click += new EventHandler(Draw_Edit_Click);
                 ToolStripMenuItem ReNameItem = new ToolStripMenuItem("重命名");
                 ReNameItem.Click += new EventHandler(Draw_Rename_Click);
                 ToolStripMenuItem RemoveItem = new ToolStripMenuItem("删除");
@@ -504,14 +504,25 @@ namespace ToolkipCAD
         public void DrawCreateStruct()
         {
             GouzaoRecord record = new GouzaoRecord();
+            string id = _DrawView.SelectedNode.Tag.ToString();
+            record.Tag = new
+            {
+                type = "",
+                id = _HLT.Drawing_Manage_Tree.Find(x=>x.id==id).id
+            };
             record.ShowDialog();
-
         }
         //修改构造
         public void DrawEditStruct()
         {
-
-
+            GouzaoRecord record = new GouzaoRecord();
+            string id = _DrawView.SelectedNode.Tag.ToString();
+            record.Tag = new
+            {
+                type = "Edit",
+                id = _HLT.Drawing_Manage_Tree.Find(x => x.id == id).id
+            };
+            record.ShowDialog();
         }
         //记录的点击事件
         public string RecodeClick()
@@ -622,8 +633,8 @@ namespace ToolkipCAD
         void Rename_Click(object sender, EventArgs e) => RenameForItem();//重命名
         void Draw_Rename_Click(object sender, EventArgs e) => DrawRename();//图纸重命名
         void Draw_Delete_Click(object sender, EventArgs e) => DrawDelete();//图纸删除
-
         void Draw_CreateNew_Click(object sender, EventArgs e) => DrawCreateStruct();//新建构造
+        void Draw_Edit_Click(object sender, EventArgs e) => DrawEditStruct();//编辑构造
         #endregion
     }
 }

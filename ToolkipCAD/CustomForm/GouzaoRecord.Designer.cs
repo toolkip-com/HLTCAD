@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.box_Name = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.钢筋锚固长度 = new System.Windows.Forms.TabPage();
             this.Grid_Gj = new System.Windows.Forms.DataGridView();
@@ -38,34 +38,34 @@
             this.level2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.level1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label4 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btn_reset = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.box_about = new System.Windows.Forms.TextBox();
+            this.box_ratio = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.combo_gj = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.Combo_hnt = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.钢筋弯芯直径 = new System.Windows.Forms.TabPage();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.t5_cc1 = new System.Windows.Forms.CheckBox();
             this.label30 = new System.Windows.Forms.Label();
-            this.textBox12 = new System.Windows.Forms.TextBox();
-            this.comboBox6 = new System.Windows.Forms.ComboBox();
-            this.textBox10 = new System.Windows.Forms.TextBox();
-            this.textBox11 = new System.Windows.Forms.TextBox();
+            this.t5_tt2 = new System.Windows.Forms.TextBox();
+            this.t4_c2 = new System.Windows.Forms.ComboBox();
+            this.t4_t3 = new System.Windows.Forms.TextBox();
+            this.t4_t1 = new System.Windows.Forms.TextBox();
             this.label29 = new System.Windows.Forms.Label();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.t3_c2 = new System.Windows.Forms.ComboBox();
+            this.t3_t3 = new System.Windows.Forms.TextBox();
+            this.t3_t1 = new System.Windows.Forms.TextBox();
             this.label28 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.t2_c2 = new System.Windows.Forms.ComboBox();
+            this.t2_t3 = new System.Windows.Forms.TextBox();
+            this.t2_t1 = new System.Windows.Forms.TextBox();
             this.label27 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.t1_c2 = new System.Windows.Forms.ComboBox();
+            this.t1_t3 = new System.Windows.Forms.TextBox();
+            this.t1_t1 = new System.Windows.Forms.TextBox();
             this.label26 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
@@ -83,12 +83,12 @@
             this.默认梁吊筋 = new System.Windows.Forms.TabPage();
             this.comboBox9 = new System.Windows.Forms.ComboBox();
             this.comboBox8 = new System.Windows.Forms.ComboBox();
-            this.textBox17 = new System.Windows.Forms.TextBox();
+            this.box_linenum = new System.Windows.Forms.TextBox();
             this.label34 = new System.Windows.Forms.Label();
-            this.comboBox7 = new System.Windows.Forms.ComboBox();
+            this.combo_ran = new System.Windows.Forms.ComboBox();
             this.label33 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.button_OK = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.钢筋锚固长度.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Grid_Gj)).BeginInit();
@@ -107,13 +107,13 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "构造配置方案名称：";
             // 
-            // textBox1
+            // box_Name
             // 
-            this.textBox1.Location = new System.Drawing.Point(133, 15);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(223, 21);
-            this.textBox1.TabIndex = 1;
-            this.textBox1.Text = "新建方案1";
+            this.box_Name.Location = new System.Drawing.Point(133, 15);
+            this.box_Name.Name = "box_Name";
+            this.box_Name.Size = new System.Drawing.Size(223, 21);
+            this.box_Name.TabIndex = 1;
+            this.box_Name.Text = "新建方案1";
             // 
             // tabControl1
             // 
@@ -133,10 +133,10 @@
             // 
             this.钢筋锚固长度.Controls.Add(this.Grid_Gj);
             this.钢筋锚固长度.Controls.Add(this.label4);
-            this.钢筋锚固长度.Controls.Add(this.button3);
+            this.钢筋锚固长度.Controls.Add(this.btn_reset);
             this.钢筋锚固长度.Controls.Add(this.label3);
-            this.钢筋锚固长度.Controls.Add(this.textBox3);
-            this.钢筋锚固长度.Controls.Add(this.textBox2);
+            this.钢筋锚固长度.Controls.Add(this.box_about);
+            this.钢筋锚固长度.Controls.Add(this.box_ratio);
             this.钢筋锚固长度.Controls.Add(this.label2);
             this.钢筋锚固长度.Controls.Add(this.combo_gj);
             this.钢筋锚固长度.Controls.Add(this.label9);
@@ -166,6 +166,7 @@
             this.Grid_Gj.RowTemplate.Height = 23;
             this.Grid_Gj.Size = new System.Drawing.Size(665, 261);
             this.Grid_Gj.TabIndex = 18;
+            this.Grid_Gj.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.Grid_Gj_CellValueChanged);
             this.Grid_Gj.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.Grid_Gj_RowsAdded);
             // 
             // level4
@@ -201,14 +202,15 @@
             this.label4.TabIndex = 17;
             this.label4.Text = "mm";
             // 
-            // button3
+            // btn_reset
             // 
-            this.button3.Location = new System.Drawing.Point(601, 14);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(44, 23);
-            this.button3.TabIndex = 16;
-            this.button3.Text = "重置";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btn_reset.Location = new System.Drawing.Point(601, 14);
+            this.btn_reset.Name = "btn_reset";
+            this.btn_reset.Size = new System.Drawing.Size(44, 23);
+            this.btn_reset.TabIndex = 16;
+            this.btn_reset.Text = "重置";
+            this.btn_reset.UseVisualStyleBackColor = true;
+            this.btn_reset.Click += new System.EventHandler(this.btn_reset_Click);
             // 
             // label3
             // 
@@ -219,20 +221,20 @@
             this.label3.TabIndex = 15;
             this.label3.Text = "约入：";
             // 
-            // textBox3
+            // box_about
             // 
-            this.textBox3.Location = new System.Drawing.Point(530, 15);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(36, 21);
-            this.textBox3.TabIndex = 14;
+            this.box_about.Location = new System.Drawing.Point(530, 15);
+            this.box_about.Name = "box_about";
+            this.box_about.Size = new System.Drawing.Size(36, 21);
+            this.box_about.TabIndex = 14;
             // 
-            // textBox2
+            // box_ratio
             // 
-            this.textBox2.Location = new System.Drawing.Point(443, 15);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(38, 21);
-            this.textBox2.TabIndex = 13;
-            this.textBox2.Text = "1.0";
+            this.box_ratio.Location = new System.Drawing.Point(443, 15);
+            this.box_ratio.Name = "box_ratio";
+            this.box_ratio.Size = new System.Drawing.Size(38, 21);
+            this.box_ratio.TabIndex = 13;
+            this.box_ratio.Text = "1.0";
             // 
             // label2
             // 
@@ -308,24 +310,24 @@
             // 
             // 钢筋弯芯直径
             // 
-            this.钢筋弯芯直径.Controls.Add(this.checkBox1);
+            this.钢筋弯芯直径.Controls.Add(this.t5_cc1);
             this.钢筋弯芯直径.Controls.Add(this.label30);
-            this.钢筋弯芯直径.Controls.Add(this.textBox12);
-            this.钢筋弯芯直径.Controls.Add(this.comboBox6);
-            this.钢筋弯芯直径.Controls.Add(this.textBox10);
-            this.钢筋弯芯直径.Controls.Add(this.textBox11);
+            this.钢筋弯芯直径.Controls.Add(this.t5_tt2);
+            this.钢筋弯芯直径.Controls.Add(this.t4_c2);
+            this.钢筋弯芯直径.Controls.Add(this.t4_t3);
+            this.钢筋弯芯直径.Controls.Add(this.t4_t1);
             this.钢筋弯芯直径.Controls.Add(this.label29);
-            this.钢筋弯芯直径.Controls.Add(this.comboBox3);
-            this.钢筋弯芯直径.Controls.Add(this.textBox8);
-            this.钢筋弯芯直径.Controls.Add(this.textBox9);
+            this.钢筋弯芯直径.Controls.Add(this.t3_c2);
+            this.钢筋弯芯直径.Controls.Add(this.t3_t3);
+            this.钢筋弯芯直径.Controls.Add(this.t3_t1);
             this.钢筋弯芯直径.Controls.Add(this.label28);
-            this.钢筋弯芯直径.Controls.Add(this.comboBox2);
-            this.钢筋弯芯直径.Controls.Add(this.textBox6);
-            this.钢筋弯芯直径.Controls.Add(this.textBox7);
+            this.钢筋弯芯直径.Controls.Add(this.t2_c2);
+            this.钢筋弯芯直径.Controls.Add(this.t2_t3);
+            this.钢筋弯芯直径.Controls.Add(this.t2_t1);
             this.钢筋弯芯直径.Controls.Add(this.label27);
-            this.钢筋弯芯直径.Controls.Add(this.comboBox1);
-            this.钢筋弯芯直径.Controls.Add(this.textBox5);
-            this.钢筋弯芯直径.Controls.Add(this.textBox4);
+            this.钢筋弯芯直径.Controls.Add(this.t1_c2);
+            this.钢筋弯芯直径.Controls.Add(this.t1_t3);
+            this.钢筋弯芯直径.Controls.Add(this.t1_t1);
             this.钢筋弯芯直径.Controls.Add(this.label26);
             this.钢筋弯芯直径.Controls.Add(this.label25);
             this.钢筋弯芯直径.Controls.Add(this.label24);
@@ -339,15 +341,15 @@
             this.钢筋弯芯直径.Text = "钢筋弯芯直径";
             this.钢筋弯芯直径.UseVisualStyleBackColor = true;
             // 
-            // checkBox1
+            // t5_cc1
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(38, 224);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(60, 16);
-            this.checkBox1.TabIndex = 23;
-            this.checkBox1.Text = "约入：";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.t5_cc1.AutoSize = true;
+            this.t5_cc1.Location = new System.Drawing.Point(38, 224);
+            this.t5_cc1.Name = "t5_cc1";
+            this.t5_cc1.Size = new System.Drawing.Size(60, 16);
+            this.t5_cc1.TabIndex = 23;
+            this.t5_cc1.Text = "约入：";
+            this.t5_cc1.UseVisualStyleBackColor = true;
             // 
             // label30
             // 
@@ -358,17 +360,17 @@
             this.label30.TabIndex = 22;
             this.label30.Text = "mm";
             // 
-            // textBox12
+            // t5_tt2
             // 
-            this.textBox12.Location = new System.Drawing.Point(101, 221);
-            this.textBox12.Name = "textBox12";
-            this.textBox12.Size = new System.Drawing.Size(36, 21);
-            this.textBox12.TabIndex = 20;
+            this.t5_tt2.Location = new System.Drawing.Point(101, 221);
+            this.t5_tt2.Name = "t5_tt2";
+            this.t5_tt2.Size = new System.Drawing.Size(36, 21);
+            this.t5_tt2.TabIndex = 20;
             // 
-            // comboBox6
+            // t4_c2
             // 
-            this.comboBox6.FormattingEnabled = true;
-            this.comboBox6.Items.AddRange(new object[] {
+            this.t4_c2.FormattingEnabled = true;
+            this.t4_c2.Items.AddRange(new object[] {
             "6",
             "8",
             "10",
@@ -384,24 +386,24 @@
             "36",
             "40",
             "50"});
-            this.comboBox6.Location = new System.Drawing.Point(344, 140);
-            this.comboBox6.Name = "comboBox6";
-            this.comboBox6.Size = new System.Drawing.Size(40, 20);
-            this.comboBox6.TabIndex = 19;
+            this.t4_c2.Location = new System.Drawing.Point(344, 140);
+            this.t4_c2.Name = "t4_c2";
+            this.t4_c2.Size = new System.Drawing.Size(40, 20);
+            this.t4_c2.TabIndex = 19;
             // 
-            // textBox10
+            // t4_t3
             // 
-            this.textBox10.Location = new System.Drawing.Point(428, 140);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(40, 21);
-            this.textBox10.TabIndex = 18;
+            this.t4_t3.Location = new System.Drawing.Point(428, 140);
+            this.t4_t3.Name = "t4_t3";
+            this.t4_t3.Size = new System.Drawing.Size(40, 21);
+            this.t4_t3.TabIndex = 18;
             // 
-            // textBox11
+            // t4_t1
             // 
-            this.textBox11.Location = new System.Drawing.Point(237, 140);
-            this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(40, 21);
-            this.textBox11.TabIndex = 17;
+            this.t4_t1.Location = new System.Drawing.Point(237, 140);
+            this.t4_t1.Name = "t4_t1";
+            this.t4_t1.Size = new System.Drawing.Size(40, 21);
+            this.t4_t1.TabIndex = 17;
             // 
             // label29
             // 
@@ -412,10 +414,10 @@
             this.label29.TabIndex = 16;
             this.label29.Text = "D=         d ，当 D>         时 D=         d";
             // 
-            // comboBox3
+            // t3_c2
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Items.AddRange(new object[] {
+            this.t3_c2.FormattingEnabled = true;
+            this.t3_c2.Items.AddRange(new object[] {
             "6",
             "8",
             "10",
@@ -431,24 +433,24 @@
             "36",
             "40",
             "50"});
-            this.comboBox3.Location = new System.Drawing.Point(344, 104);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(40, 20);
-            this.comboBox3.TabIndex = 15;
+            this.t3_c2.Location = new System.Drawing.Point(344, 104);
+            this.t3_c2.Name = "t3_c2";
+            this.t3_c2.Size = new System.Drawing.Size(40, 20);
+            this.t3_c2.TabIndex = 15;
             // 
-            // textBox8
+            // t3_t3
             // 
-            this.textBox8.Location = new System.Drawing.Point(428, 104);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(40, 21);
-            this.textBox8.TabIndex = 14;
+            this.t3_t3.Location = new System.Drawing.Point(428, 104);
+            this.t3_t3.Name = "t3_t3";
+            this.t3_t3.Size = new System.Drawing.Size(40, 21);
+            this.t3_t3.TabIndex = 14;
             // 
-            // textBox9
+            // t3_t1
             // 
-            this.textBox9.Location = new System.Drawing.Point(237, 104);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(40, 21);
-            this.textBox9.TabIndex = 13;
+            this.t3_t1.Location = new System.Drawing.Point(237, 104);
+            this.t3_t1.Name = "t3_t1";
+            this.t3_t1.Size = new System.Drawing.Size(40, 21);
+            this.t3_t1.TabIndex = 13;
             // 
             // label28
             // 
@@ -459,10 +461,10 @@
             this.label28.TabIndex = 12;
             this.label28.Text = "D=         d ，当 D>         时 D=         d";
             // 
-            // comboBox2
+            // t2_c2
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
+            this.t2_c2.FormattingEnabled = true;
+            this.t2_c2.Items.AddRange(new object[] {
             "6",
             "8",
             "10",
@@ -478,24 +480,24 @@
             "36",
             "40",
             "50"});
-            this.comboBox2.Location = new System.Drawing.Point(344, 69);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(40, 20);
-            this.comboBox2.TabIndex = 11;
+            this.t2_c2.Location = new System.Drawing.Point(344, 69);
+            this.t2_c2.Name = "t2_c2";
+            this.t2_c2.Size = new System.Drawing.Size(40, 20);
+            this.t2_c2.TabIndex = 11;
             // 
-            // textBox6
+            // t2_t3
             // 
-            this.textBox6.Location = new System.Drawing.Point(428, 69);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(40, 21);
-            this.textBox6.TabIndex = 10;
+            this.t2_t3.Location = new System.Drawing.Point(428, 69);
+            this.t2_t3.Name = "t2_t3";
+            this.t2_t3.Size = new System.Drawing.Size(40, 21);
+            this.t2_t3.TabIndex = 10;
             // 
-            // textBox7
+            // t2_t1
             // 
-            this.textBox7.Location = new System.Drawing.Point(237, 69);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(40, 21);
-            this.textBox7.TabIndex = 9;
+            this.t2_t1.Location = new System.Drawing.Point(237, 69);
+            this.t2_t1.Name = "t2_t1";
+            this.t2_t1.Size = new System.Drawing.Size(40, 21);
+            this.t2_t1.TabIndex = 9;
             // 
             // label27
             // 
@@ -506,10 +508,10 @@
             this.label27.TabIndex = 8;
             this.label27.Text = "D=         d ，当 D>         时 D=         d";
             // 
-            // comboBox1
+            // t1_c2
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.t1_c2.FormattingEnabled = true;
+            this.t1_c2.Items.AddRange(new object[] {
             "6",
             "8",
             "10",
@@ -525,24 +527,24 @@
             "36",
             "40",
             "50"});
-            this.comboBox1.Location = new System.Drawing.Point(344, 31);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(40, 20);
-            this.comboBox1.TabIndex = 7;
+            this.t1_c2.Location = new System.Drawing.Point(344, 31);
+            this.t1_c2.Name = "t1_c2";
+            this.t1_c2.Size = new System.Drawing.Size(40, 20);
+            this.t1_c2.TabIndex = 7;
             // 
-            // textBox5
+            // t1_t3
             // 
-            this.textBox5.Location = new System.Drawing.Point(428, 31);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(40, 21);
-            this.textBox5.TabIndex = 6;
+            this.t1_t3.Location = new System.Drawing.Point(428, 31);
+            this.t1_t3.Name = "t1_t3";
+            this.t1_t3.Size = new System.Drawing.Size(40, 21);
+            this.t1_t3.TabIndex = 6;
             // 
-            // textBox4
+            // t1_t1
             // 
-            this.textBox4.Location = new System.Drawing.Point(237, 31);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(40, 21);
-            this.textBox4.TabIndex = 5;
+            this.t1_t1.Location = new System.Drawing.Point(237, 31);
+            this.t1_t1.Name = "t1_t1";
+            this.t1_t1.Size = new System.Drawing.Size(40, 21);
+            this.t1_t1.TabIndex = 5;
             // 
             // label26
             // 
@@ -618,6 +620,7 @@
             this.dataGrid_Side.RowTemplate.Height = 23;
             this.dataGrid_Side.Size = new System.Drawing.Size(664, 263);
             this.dataGrid_Side.TabIndex = 21;
+            this.dataGrid_Side.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_Side_CellValueChanged);
             // 
             // L_search
             // 
@@ -679,9 +682,9 @@
             // 
             this.默认梁吊筋.Controls.Add(this.comboBox9);
             this.默认梁吊筋.Controls.Add(this.comboBox8);
-            this.默认梁吊筋.Controls.Add(this.textBox17);
+            this.默认梁吊筋.Controls.Add(this.box_linenum);
             this.默认梁吊筋.Controls.Add(this.label34);
-            this.默认梁吊筋.Controls.Add(this.comboBox7);
+            this.默认梁吊筋.Controls.Add(this.combo_ran);
             this.默认梁吊筋.Controls.Add(this.label33);
             this.默认梁吊筋.Location = new System.Drawing.Point(4, 22);
             this.默认梁吊筋.Name = "默认梁吊筋";
@@ -730,12 +733,12 @@
             this.comboBox8.Size = new System.Drawing.Size(68, 20);
             this.comboBox8.TabIndex = 11;
             // 
-            // textBox17
+            // box_linenum
             // 
-            this.textBox17.Location = new System.Drawing.Point(125, 54);
-            this.textBox17.Name = "textBox17";
-            this.textBox17.Size = new System.Drawing.Size(45, 21);
-            this.textBox17.TabIndex = 9;
+            this.box_linenum.Location = new System.Drawing.Point(125, 54);
+            this.box_linenum.Name = "box_linenum";
+            this.box_linenum.Size = new System.Drawing.Size(45, 21);
+            this.box_linenum.TabIndex = 9;
             // 
             // label34
             // 
@@ -746,16 +749,16 @@
             this.label34.TabIndex = 8;
             this.label34.Text = "主次梁默认采用           根               直径           钢筋";
             // 
-            // comboBox7
+            // combo_ran
             // 
-            this.comboBox7.FormattingEnabled = true;
-            this.comboBox7.Items.AddRange(new object[] {
+            this.combo_ran.FormattingEnabled = true;
+            this.combo_ran.Items.AddRange(new object[] {
             "60度",
             "45度"});
-            this.comboBox7.Location = new System.Drawing.Point(125, 23);
-            this.comboBox7.Name = "comboBox7";
-            this.comboBox7.Size = new System.Drawing.Size(68, 20);
-            this.comboBox7.TabIndex = 7;
+            this.combo_ran.Location = new System.Drawing.Point(125, 23);
+            this.combo_ran.Name = "combo_ran";
+            this.combo_ran.Size = new System.Drawing.Size(68, 20);
+            this.combo_ran.TabIndex = 7;
             // 
             // label33
             // 
@@ -776,15 +779,15 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // button1
+            // button_OK
             // 
-            this.button1.Location = new System.Drawing.Point(497, 402);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "确定";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button_OK.Location = new System.Drawing.Point(497, 402);
+            this.button_OK.Name = "button_OK";
+            this.button_OK.Size = new System.Drawing.Size(75, 23);
+            this.button_OK.TabIndex = 6;
+            this.button_OK.Text = "确定";
+            this.button_OK.UseVisualStyleBackColor = true;
+            this.button_OK.Click += new System.EventHandler(this.button1_Click);
             // 
             // GouzaoRecord
             // 
@@ -792,9 +795,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(698, 437);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.button_OK);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.box_Name);
             this.Controls.Add(this.label1);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -821,47 +824,47 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox box_Name;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage 钢筋锚固长度;
         private System.Windows.Forms.TabPage 钢筋弯芯直径;
         private System.Windows.Forms.TabPage 默认梁腰筋;
         private System.Windows.Forms.TabPage 默认梁吊筋;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button_OK;
         private System.Windows.Forms.ComboBox combo_gj;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox Combo_hnt;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox box_about;
+        private System.Windows.Forms.TextBox box_ratio;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btn_reset;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox t1_t3;
+        private System.Windows.Forms.TextBox t1_t1;
         private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.ComboBox comboBox6;
-        private System.Windows.Forms.TextBox textBox10;
-        private System.Windows.Forms.TextBox textBox11;
+        private System.Windows.Forms.ComboBox t4_c2;
+        private System.Windows.Forms.TextBox t4_t3;
+        private System.Windows.Forms.TextBox t4_t1;
         private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.ComboBox comboBox3;
-        private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.TextBox textBox9;
+        private System.Windows.Forms.ComboBox t3_c2;
+        private System.Windows.Forms.TextBox t3_t3;
+        private System.Windows.Forms.TextBox t3_t1;
         private System.Windows.Forms.Label label28;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.ComboBox t2_c2;
+        private System.Windows.Forms.TextBox t2_t3;
+        private System.Windows.Forms.TextBox t2_t1;
         private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.ComboBox t1_c2;
+        private System.Windows.Forms.CheckBox t5_cc1;
         private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.TextBox textBox12;
+        private System.Windows.Forms.TextBox t5_tt2;
         private System.Windows.Forms.Button L_search;
         private System.Windows.Forms.TextBox hw_end;
         private System.Windows.Forms.TextBox hw_start;
@@ -871,9 +874,9 @@
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.ComboBox comboBox9;
         private System.Windows.Forms.ComboBox comboBox8;
-        private System.Windows.Forms.TextBox textBox17;
+        private System.Windows.Forms.TextBox box_linenum;
         private System.Windows.Forms.Label label34;
-        private System.Windows.Forms.ComboBox comboBox7;
+        private System.Windows.Forms.ComboBox combo_ran;
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.DataGridView Grid_Gj;
         private System.Windows.Forms.DataGridView dataGrid_Side;

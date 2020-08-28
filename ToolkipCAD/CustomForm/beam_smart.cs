@@ -30,6 +30,12 @@ namespace ToolkipCAD
 
         private void beam_smart_Load(object sender, EventArgs e)
         {
+            if (Program.MainForm.Tag == null)
+            {
+                MessageBox.Show("请先创建/打开项目");
+                this.Close();
+                return;
+            }
             if (this.Tag != null)
             {
                 combox_peizhi.DataSource = ((List<Drawing_Manage>)this.Tag).Where(x=>x.type==Drawing_type.文件).ToList();
@@ -60,9 +66,11 @@ namespace ToolkipCAD
             beam.earth_type = combox_kzdj.Text;
             beam.Drawing_Manage_id = combox_peizhi.ValueMember;
             //保存
-            StreamWriter sw = new StreamWriter(@"D:\好蓝图平面CAD钢筋\测试\试验图纸\1.txt",false,Encoding.UTF8);
+            dynamic Ftag = Program.MainForm.Tag;
+            StreamWriter sw = new StreamWriter($@"{Ftag.path}\project\1.tte",false,Encoding.UTF8);
             sw.WriteLine(JsonConvert.SerializeObject(beam));
             sw.Close();
+            this.Close();
         }
 
         private void select_range_SelectedIndexChanged(object sender, EventArgs e)

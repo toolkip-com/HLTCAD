@@ -139,7 +139,7 @@ namespace ToolkipCAD.Toolbar
                 if (mxDrawSelection.Count > 0)
                 {
                     if(BeamType == "change_line")
-                    beam.beam.side_lines.Add(mxDrawSelection.Item(0).ObjectID);
+                        beam.beam.side_lines.Add(mxDrawSelection.Item(0).ObjectID);
                     if (BeamType == "change_dim")
                         beam.beam.dim_texts.Add(mxDrawSelection.Item(0).ObjectID);
                     if (BeamType == "change_seat")

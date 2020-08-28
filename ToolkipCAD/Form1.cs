@@ -37,6 +37,7 @@ namespace ToolkipCAD
             PR_Panel.Location = new Point(axMxDrawX1.Size.Width, 0);
             tab_Proandresource.Height = PR_Panel.Height - 22;
             tree_project.Height = tab_Proandresource.Height-75;
+            tree_drawing.Height = tab_Proandresource.Height - 75;
         }
 
         private void Form1_Load(object sender, EventArgs e)

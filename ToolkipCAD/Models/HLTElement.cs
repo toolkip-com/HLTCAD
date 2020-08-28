@@ -469,7 +469,7 @@ namespace ToolkipCAD
                     }
                 }
             }
-            return re ;
+            return re;
         }
 
         //锚固长度计算，代入混凝土类型、钢筋类型、直径、抗震等级，返回长度

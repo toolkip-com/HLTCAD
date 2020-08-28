@@ -23,6 +23,7 @@ namespace ToolkipCAD
         public GouzaoRecord()
         {
             InitializeComponent();
+            //表格的事件/属性
             this.Grid_Gj.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(DgvGradeInfoRowPostPaint);
             this.dataGrid_Side.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(SideInfoRowPostPaint);
             this.Combo_hnt.SelectedIndexChanged += Combo_hnt_SelectedIndexChanged;
@@ -31,6 +32,7 @@ namespace ToolkipCAD
             this.dataGrid_Side.TopLeftHeaderCell.Value = @"b\hw";
             this.dataGrid_Side.AutoGenerateColumns = true;
             this.dataGrid_Side.ColumnAdded += DataGrid_Side_ColumnAdded;
+
         }
 
         private void DataGrid_Side_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
@@ -149,7 +151,9 @@ namespace ToolkipCAD
                 box_linenum.Text = gouzao.T4Values.Num.ToString();
                 comboBox8.Text = gouzao.T4Values.Type;
                 comboBox9.Text = gouzao.T4Values.Diam;
-                GetWaist_Bar();
+                PushEditGrid();
+                PushEditWaist();
+                return;
             }
             GetTabOneData();
         }
@@ -197,13 +201,43 @@ namespace ToolkipCAD
         {
             this.Close();
         }
-
         private void Combo_hnt_SelectedIndexChanged(object sender, EventArgs e)
         {
             // tab1 下拉框选择事件
             GetTabOneData();
         }
         private void PushGrid1()
+        {
+            //填充tab1表格数据
+            ComputeClass compute = new ComputeClass();
+            string hnt = Combo_hnt.Text;//混凝土下拉框值
+            string gj = combo_gj.Text;//钢筋下拉框值
+            string cols = ""; int rows = 0;double vals = 0f;
+            //for (int i = 0; i < _tab1List.Count; i++)
+            {
+                for (int k = 0; k < Grid_Gj.Rows.Count; k++)
+                {
+                    for (int f = 0; f < Grid_Gj.Columns.Count; f++)
+                    {
+                        cols = Grid_Gj.Columns[f].Name;
+                        rows = ((Grid_Gj.Rows[k].Index * 2) + 6);
+                        //if (_tab1List[i].Level == (Levels)Enum.Parse(typeof(Levels), cols) && rows == _tab1List[i].MM)
+                        {
+                            vals = compute.anchoragelength(hnt,gj,rows,cols);
+                            Grid_Gj.Rows[k].Cells[f].Value = vals;
+                            _tab1List.Add(new GouZaoParam {
+                                Level = (Levels)Enum.Parse(typeof(Levels), cols),
+                                MM = rows,
+                                Concrete = hnt,
+                                Rebars = gj,
+                                Value = vals
+                            });
+                        }
+                    }
+                }
+            }
+        }
+        private void PushEditGrid()
         {
             //填充tab1表格数据
             string cols = ""; int rows = 0;
@@ -217,12 +251,12 @@ namespace ToolkipCAD
                         rows = ((Grid_Gj.Rows[k].Index * 2) + 6);
                         if (_tab1List[i].Level == (Levels)Enum.Parse(typeof(Levels), cols) && rows == _tab1List[i].MM)
                         {
-                            Grid_Gj.Rows[k].Cells[f].Value = _tab1List[i].Value;
+                            Grid_Gj.Rows[k].Cells[f].Value = _tab1List[i].Value;                           
                         }
                     }
                 }
             }
-        }       
+        }
         private void L_search_Click(object sender, EventArgs e)
         {
             try
@@ -269,7 +303,43 @@ namespace ToolkipCAD
                 }
             }
         }
-
+        private void PushEditWaist()
+        {
+            //填充tab1表格数据
+            int startb = int.Parse(b_start.Text);
+            int endb = int.Parse(b_end.Text);
+            if (endb < startb) return;
+            int starthw = int.Parse(hw_start.Text);
+            int endhw = int.Parse(hw_end.Text);
+            if (endhw < starthw) return;
+            StartIndex = startb;
+            dataGrid_Side.Columns.Clear();
+            dataGrid_Side.Rows.Clear();
+            for (int i = starthw; i <= endhw; i += 50)
+            {
+                dataGrid_Side.Columns.Add(i.ToString(), i.ToString());
+            }
+            for (int k = startb; k <= endb; k += 50)
+            {
+                dataGrid_Side.Rows.Add();
+            }
+            int cols = 0, rows = 0;
+            for (int i = 0; i < _waistList.Count; i++)
+            {
+                for (int k = 0; k < dataGrid_Side.Rows.Count; k++)
+                {
+                    for (int f = 0; f < dataGrid_Side.Columns.Count; f++)
+                    {
+                        cols = int.Parse(dataGrid_Side.Columns[f].Name);
+                        rows = dataGrid_Side.Rows[k].Index * 50 + StartIndex;
+                        if (_waistList[i].Hw == cols && rows == _waistList[i].B)
+                        {
+                            dataGrid_Side.Rows[k].Cells[f].Value = _waistList[i].Value;
+                        }
+                    }
+                }
+            }
+        }
         private void Grid_Gj_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             //修改单元格的值 tab1
@@ -278,13 +348,14 @@ namespace ToolkipCAD
             string ColName = Grid_Gj.Columns[e.ColumnIndex].Name;
             Levels lv = (Levels)Enum.Parse(typeof(Levels), ColName);
             GouZaoParam param = _tab1List.Find(x => x.Level == lv && x.MM == mm);
-            param.Value = (double)Grid_Gj.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+            if(param!=null)
+            param.Value = double.Parse(Grid_Gj.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
         }
         private void dataGrid_Side_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             //修改单元格的值 tab3
             if (e.RowIndex == -1 || e.ColumnIndex == -1) return;
-            int b = ((e.RowIndex * 2) + 6);
+            int b = ((e.RowIndex * 50) + StartIndex);
             int hw = int.Parse(dataGrid_Side.Columns[e.ColumnIndex].Name);
             Waist param = _waistList.Find(x => x.Hw == hw && x.B == b);
             if(param!=null)
@@ -297,7 +368,7 @@ namespace ToolkipCAD
                 double ratio = double.Parse(box_ratio.Text);//系数
                 double about = double.Parse(box_about.Text);//约入
                 _tab1List = _tab1List.Select(x => { x.Value *= ratio; return x; }).ToList();
-                PushGrid1();
+                PushEditGrid();
             }
             catch { }
         }
@@ -305,46 +376,31 @@ namespace ToolkipCAD
         private void GetTabOneData()
         {
             _tab1List = new List<GouZaoParam>();
-            string hnt = Combo_hnt.Text;//混凝土下拉框值
-            string gj = combo_gj.Text;//钢筋下拉框值
-            //计算
-
-
-
-
-
-
-
-
-            //添加到List---测试数据
-            _tab1List.Add(new GouZaoParam
-            {
-                Level = Levels.level4,
-                MM = 6,
-                Concrete = "C30",
-                Rebars = "HRB400",
-                Value = 123333333
-            });
-            _tab1List.Add(new GouZaoParam
-            {
-                Level = Levels.level3,
-                MM = 10,
-                Concrete = "C30",
-                Rebars = "HRB400",
-                Value = 1255
-            });
+            //string hnt = Combo_hnt.Text;//混凝土下拉框值
+            //string gj = combo_gj.Text;//钢筋下拉框值
             PushGrid1();//显示
         }
-
         private void GetWaist_Bar()
         {
             _waistList = new List<Waist>();
-            _waistList.Add(new Waist
+            ComputeClass compute = new ComputeClass();
+            int n = 0;double d = 0d;
+            int b = 0, h = 0;
+            for (int i = 0; i < dataGrid_Side.Columns.Count; i++)
             {
-                Hw = 200,
-                B = 450,
-                Value = "4φ10"
-            });
+                for (int k = 0; k < dataGrid_Side.Rows.Count; k++)
+                {
+                    h = int.Parse(dataGrid_Side.Columns[i].Name);
+                    b = ((dataGrid_Side.Rows[k].Index * 50) + StartIndex);
+                    compute.waist(b,h,ref n,ref d);
+                    _waistList.Add(new Waist
+                    {
+                        Hw = h,
+                        B = b,
+                        Value = $"{n}φ{d}"
+                    });
+                }
+            }
             PushWaist();
         }
     }

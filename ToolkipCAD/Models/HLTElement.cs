@@ -379,4 +379,117 @@ namespace ToolkipCAD
         }
     }
     
+
+    public class ComputeClass
+    {
+        public double fy(string gtype) {
+            double re = 0;
+            switch (gtype)
+            {
+                case "HPB300":
+                    re = 270;
+                    break;
+                case "HRB335,HRBF335":
+                    re = 300;
+                    break;
+                case "HRB400,HRBF400,RRB400":
+                    re = 360;
+                    break;
+                case "HRB500,HRBF500":
+                    re = 435;
+                    break;
+            }
+            return re;
+        }
+
+        public double ft(string ctype)
+        {
+            double re = 0;
+            switch (ctype)
+            {
+                case "C15":  re = 0.91; break;
+                case "C20": re =1.1; break;
+                case "C25": re = 1.27; break;
+                case "C30": re = 1.43; break;
+                case "C35": re = 1.57; break;
+                case "C40": re = 1.71; break;
+                case "C45": re = 1.8; break;
+                case "C50": re = 1.89; break;
+                case "C55": re = 1.96; break;
+                case "C60": re = 2.04; break;
+                case "C65": re = 2.09; break;
+                case "C70": re = 2.14; break;
+                case "C75": re = 2.18; break;
+                case "C80": re = 2.22; break;
+            }
+            return re;
+        }
+
+        public List<double> GetRebarDList()
+        {
+            List<double> re = new List<double>();
+            for (int i = 1; i <= 9; i++) re.Add(6 + (i - 1) * 2);
+            re.Add(25);re.Add(28);re.Add(32);re.Add(36);re.Add(40);re.Add(50);
+            return re;
+        }
+
+        //腰筋计算，代入b与h，则返回钢筋根数、直径
+        public bool waist(double b,double h,ref int n,ref double D)
+        {
+            bool re = true;
+            List<double> dlist = GetRebarDList();
+            List<double> drear = new List<double>();
+            for (int i = 0; i < dlist.Count; i++) drear.Add(Math.PI*dlist[i]*dlist[i]/4.0);
+            double n1 =Convert.ToDouble((h / 200).ToString("0.00"));  
+            double n2 = Convert.ToDouble((h / 200).ToString("0"));
+            if (n1 != n2) n2 = n2 + 1;
+            n = Convert.ToInt32(n2)*2;
+            double xas = 0.2 * b * h / 100.0;
+            if (n * dlist[dlist.Count - 1] < xas) // 如果最大钢筋都不足
+            {
+
+                double n3 = Convert.ToDouble((xas / drear[drear.Count - 1]).ToString("0.00"));
+                double n4 = Convert.ToDouble((xas / drear[drear.Count - 1]).ToString("0"));
+                double n5 = n4;
+                if (n3 != n4) n5 = n4 + 1;
+                if (n5 % 2 == 1) n5 = n5 + 1;
+                n = Convert.ToInt32(n5); D = dlist[dlist.Count - 1];
+                return true;
+            }
+            else //一般情况
+            {
+                int bg1 = 0;
+                for (int k = 0; k <= drear.Count; k++)
+                {
+                    if (n * drear[k] >= xas && bg1 == 0)
+                    {
+                        bg1 = 1;
+                        D = dlist[k];
+                        return true;
+                    }
+                }
+            }
+            return re ;
+        }
+
+        //锚固长度计算，代入混凝土类型、钢筋类型、直径、抗震等级，返回长度
+        public double anchoragelength(string ctype,string gtype,double D,string earthquake)
+        {
+            double re = 0;
+            //a*fy/ft*d
+            int ct = Convert.ToInt32(ctype.Replace("C", ""));
+            if (ct > 60) ctype = "C60";
+            double a = 0.14;
+            if (gtype == "HPB300") a = 0.16;
+            double ftv = ft(ctype);
+            double fyv = fy(gtype);
+            re = a * fyv / ftv * D;
+            re = Convert.ToDouble(re.ToString("0"));
+            return re;
+        }
+
+    }
+
+
+
 }

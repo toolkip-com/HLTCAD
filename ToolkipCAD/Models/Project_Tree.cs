@@ -274,14 +274,17 @@ namespace ToolkipCAD
             {
                 ToolStripMenuItem CreateNew = new ToolStripMenuItem("新建");
                 CreateNew.Click += new EventHandler(Draw_CreateNew_Click);
+                contextMenu.Items.Add(CreateNew);
+            }
+            if (drawing.type == Drawing_type.配置)
+            {
                 ToolStripMenuItem EditItem = new ToolStripMenuItem("编辑");
                 EditItem.Click += new EventHandler(Draw_Edit_Click);
                 ToolStripMenuItem ReNameItem = new ToolStripMenuItem("重命名");
                 ReNameItem.Click += new EventHandler(Draw_Rename_Click);
                 ToolStripMenuItem RemoveItem = new ToolStripMenuItem("删除");
                 RemoveItem.Click += new EventHandler(Draw_Delete_Click);
-                contextMenu.Items.Add(CreateNew);
-                contextMenu.Items.Add(EditItem); 
+                contextMenu.Items.Add(EditItem);
                 contextMenu.Items.Add(ReNameItem);
                 contextMenu.Items.Add(RemoveItem);
             }
@@ -508,7 +511,17 @@ namespace ToolkipCAD
             record.Tag = new
             {
                 type = "",
-                id = _HLT.Drawing_Manage_Tree.Find(x=>x.id==id).id
+            };
+            record.transf += (dynamic result) =>
+            {
+                _HLT.Drawing_Manage_Tree.Add(new Drawing_Manage
+                {
+                    id = result.id,
+                    pid = _HLT.Drawing_Manage_Tree.Find(x=>x.type==Drawing_type.构造配置).id,
+                    name=result.name,
+                    type=Drawing_type.配置,                    
+                }) ;
+                _DrawView.SelectedNode.Nodes.Add(new TreeNode { Tag=result.id,Text=result.name});
             };
             record.ShowDialog();
         }
@@ -522,6 +535,12 @@ namespace ToolkipCAD
                 type = "Edit",
                 id = _HLT.Drawing_Manage_Tree.Find(x => x.id == id).id
             };
+            record.transf += (dynamic result) =>
+              {
+                  _DrawView.SelectedNode.Text = result.name;
+                  Drawing_Manage drawing = _HLT.Drawing_Manage_Tree.Find(x=>x.id==id);
+                  drawing.name = result.name;
+              };
             record.ShowDialog();
         }
         //记录的点击事件

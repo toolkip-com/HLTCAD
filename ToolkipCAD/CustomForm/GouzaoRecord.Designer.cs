@@ -227,6 +227,7 @@
             this.box_about.Name = "box_about";
             this.box_about.Size = new System.Drawing.Size(36, 21);
             this.box_about.TabIndex = 14;
+            this.box_about.Text = "0";
             // 
             // box_ratio
             // 
@@ -390,6 +391,7 @@
             this.t4_c2.Name = "t4_c2";
             this.t4_c2.Size = new System.Drawing.Size(40, 20);
             this.t4_c2.TabIndex = 19;
+            this.t4_c2.Text = "6";
             // 
             // t4_t3
             // 
@@ -397,6 +399,7 @@
             this.t4_t3.Name = "t4_t3";
             this.t4_t3.Size = new System.Drawing.Size(40, 21);
             this.t4_t3.TabIndex = 18;
+            this.t4_t3.Text = "0";
             // 
             // t4_t1
             // 
@@ -404,6 +407,7 @@
             this.t4_t1.Name = "t4_t1";
             this.t4_t1.Size = new System.Drawing.Size(40, 21);
             this.t4_t1.TabIndex = 17;
+            this.t4_t1.Text = "0";
             // 
             // label29
             // 
@@ -437,6 +441,7 @@
             this.t3_c2.Name = "t3_c2";
             this.t3_c2.Size = new System.Drawing.Size(40, 20);
             this.t3_c2.TabIndex = 15;
+            this.t3_c2.Text = "6";
             // 
             // t3_t3
             // 
@@ -444,6 +449,7 @@
             this.t3_t3.Name = "t3_t3";
             this.t3_t3.Size = new System.Drawing.Size(40, 21);
             this.t3_t3.TabIndex = 14;
+            this.t3_t3.Text = "0";
             // 
             // t3_t1
             // 
@@ -451,6 +457,7 @@
             this.t3_t1.Name = "t3_t1";
             this.t3_t1.Size = new System.Drawing.Size(40, 21);
             this.t3_t1.TabIndex = 13;
+            this.t3_t1.Text = "0";
             // 
             // label28
             // 
@@ -484,6 +491,7 @@
             this.t2_c2.Name = "t2_c2";
             this.t2_c2.Size = new System.Drawing.Size(40, 20);
             this.t2_c2.TabIndex = 11;
+            this.t2_c2.Text = "6";
             // 
             // t2_t3
             // 
@@ -491,6 +499,7 @@
             this.t2_t3.Name = "t2_t3";
             this.t2_t3.Size = new System.Drawing.Size(40, 21);
             this.t2_t3.TabIndex = 10;
+            this.t2_t3.Text = "0";
             // 
             // t2_t1
             // 
@@ -498,6 +507,7 @@
             this.t2_t1.Name = "t2_t1";
             this.t2_t1.Size = new System.Drawing.Size(40, 21);
             this.t2_t1.TabIndex = 9;
+            this.t2_t1.Text = "0";
             // 
             // label27
             // 
@@ -531,6 +541,7 @@
             this.t1_c2.Name = "t1_c2";
             this.t1_c2.Size = new System.Drawing.Size(40, 20);
             this.t1_c2.TabIndex = 7;
+            this.t1_c2.Text = "6";
             // 
             // t1_t3
             // 
@@ -538,6 +549,7 @@
             this.t1_t3.Name = "t1_t3";
             this.t1_t3.Size = new System.Drawing.Size(40, 21);
             this.t1_t3.TabIndex = 6;
+            this.t1_t3.Text = "0";
             // 
             // t1_t1
             // 
@@ -545,6 +557,7 @@
             this.t1_t1.Name = "t1_t1";
             this.t1_t1.Size = new System.Drawing.Size(40, 21);
             this.t1_t1.TabIndex = 5;
+            this.t1_t1.Text = "0";
             // 
             // label26
             // 
@@ -739,6 +752,7 @@
             this.box_linenum.Name = "box_linenum";
             this.box_linenum.Size = new System.Drawing.Size(45, 21);
             this.box_linenum.TabIndex = 9;
+            this.box_linenum.Text = "0";
             // 
             // label34
             // 

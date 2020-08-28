@@ -73,8 +73,8 @@ namespace ToolkipCAD
         根节点,
         资源类型,
         构造配置,
-        文件
-        
+        文件,
+        配置
     }
     public class XRecord  //针对一张图纸识别、计算等一切数据的记录
     {

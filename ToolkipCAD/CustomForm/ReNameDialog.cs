@@ -34,5 +34,13 @@ namespace ToolkipCAD.CustomForm
             //取消事件
             this.Close();
         }
+
+        private void ReNameDialog_Load(object sender, EventArgs e)
+        {
+            if (this.Tag != null)
+            {
+                input_value.Text = this.Tag.ToString();
+            }
+        }
     }
 }

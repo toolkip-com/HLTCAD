@@ -321,6 +321,7 @@ namespace ToolkipCAD
             {
                 ReNameDialog reName = new ReNameDialog();
                 reName.Text = "重命名";
+                reName.Tag = _TreeView.SelectedNode.Text;
                 reName.transf += ((string result) =>
                 {
                     string id = _TreeView.SelectedNode.Tag.ToString();
@@ -425,7 +426,9 @@ namespace ToolkipCAD
                 node.Tag = project.id;
                 node.Text = project.name;
                 _TreeView.SelectedNode.Nodes.Add(node);
-
+                //Program.MainForm.axMxDrawX1.OpenDwgFile();
+                _TreeView.SelectedNode = node;
+                Program.MainForm.axMxDrawX1.OpenDwgFile(RecodeClick());
             };
             recode.ShowDialog();
         }

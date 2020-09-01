@@ -75,6 +75,7 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "重命名";
+            this.Load += new System.EventHandler(this.ReNameDialog_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

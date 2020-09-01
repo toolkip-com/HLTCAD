@@ -818,6 +818,7 @@
             this.MinimizeBox = false;
             this.Name = "GouzaoRecord";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "构造配置方案";
             this.Load += new System.EventHandler(this.GouzaoRecord_Load);
             this.tabControl1.ResumeLayout(false);

@@ -264,7 +264,6 @@
         }
 
         #endregion
-        private AxMxDrawXLib.AxMxDrawX axMxDrawX1;
         private System.Windows.Forms.Panel PR_Panel;
         private System.Windows.Forms.TabControl tab_Proandresource;
         private System.Windows.Forms.TabPage tab_project;
@@ -285,6 +284,7 @@
         private System.Windows.Forms.ToolStripMenuItem 删除ToolStripMenuItem1;
         private System.Windows.Forms.ContextMenuStrip resource_contextMenuStrip1;
         private System.Windows.Forms.TreeView tree_drawing;
+        public AxMxDrawXLib.AxMxDrawX axMxDrawX1;
     }
 }
 

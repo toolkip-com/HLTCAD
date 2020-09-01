@@ -80,6 +80,12 @@
     <Compile Include="CustomForm\ReNameDialog.Designer.cs">
       <DependentUpon>ReNameDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="CustomForm\SaveAsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomForm\SaveAsDialog.Designer.cs">
+      <DependentUpon>SaveAsDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="fig\AutoResize.cs" />
     <Compile Include="fig\ValueChanges.cs" />
     <Compile Include="Form1.cs">
@@ -112,6 +118,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CustomForm\ReNameDialog.resx">
       <DependentUpon>ReNameDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomForm\SaveAsDialog.resx">
+      <DependentUpon>SaveAsDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

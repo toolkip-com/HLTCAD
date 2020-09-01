@@ -44,6 +44,9 @@ namespace ToolkipCAD.Toolbar
                 case 1004://保存项目
                     T1004();
                     break;
+                case 10041://另存为
+                    T10041();
+                    break;
                 case 1005://退出项目
                     T1005();
                     break;
@@ -54,6 +57,12 @@ namespace ToolkipCAD.Toolbar
                     T1007();
                     break;
             }
+        }
+
+        private void T10041()
+        {
+            SaveAsDialog save = new SaveAsDialog();
+            save.ShowDialog();
         }
 
         private void T1007()

@@ -497,6 +497,7 @@
             this.MinimizeBox = false;
             this.Name = "beam_smart";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "梁批量识别";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.beam_smart_Load);

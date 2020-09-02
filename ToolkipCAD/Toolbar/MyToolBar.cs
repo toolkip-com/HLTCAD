@@ -35,8 +35,7 @@ namespace ToolkipCAD.Toolbar
                     //axMxDrawX.DrawLine(1621508, -117657, 1637920, -118670);
                     break;
                 case 1002://新建项目
-                    T1002();
-                    _Tree.SaveProjectInfo(Program.MainForm.Tag);
+                    T1002();                    
                     break;
                 case 1003://打开项目
                     T1003();
@@ -257,6 +256,7 @@ namespace ToolkipCAD.Toolbar
                     name = project.name,
                     path = project.path
                 };
+                _Tree.SaveProjectInfo(Program.MainForm.Tag);
             });
             createProject.ShowDialog();
         }

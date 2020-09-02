@@ -69,6 +69,7 @@
             this.PR_Panel.Name = "PR_Panel";
             this.PR_Panel.Size = new System.Drawing.Size(238, 658);
             this.PR_Panel.TabIndex = 5;
+            this.PR_Panel.MouseLeave += new System.EventHandler(this.PR_Panel_MouseLeave);
             // 
             // tab_Proandresource
             // 
@@ -79,6 +80,8 @@
             this.tab_Proandresource.SelectedIndex = 0;
             this.tab_Proandresource.Size = new System.Drawing.Size(231, 633);
             this.tab_Proandresource.TabIndex = 2;
+            this.tab_Proandresource.MouseLeave += new System.EventHandler(this.tab_Proandresource_MouseLeave);
+            this.tab_Proandresource.Resize += new System.EventHandler(this.tab_Proandresource_Resize);
             // 
             // tab_project
             // 

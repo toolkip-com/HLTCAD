@@ -85,6 +85,7 @@
             this.select_range.AutoCompleteCustomSource.AddRange(new string[] {
             "显示",
             "窗口"});
+            this.select_range.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.select_range.FormattingEnabled = true;
             this.select_range.Items.AddRange(new object[] {
             "显示",
@@ -93,7 +94,6 @@
             this.select_range.Name = "select_range";
             this.select_range.Size = new System.Drawing.Size(96, 20);
             this.select_range.TabIndex = 1;
-            this.select_range.Text = "显示";
             this.select_range.SelectedIndexChanged += new System.EventHandler(this.select_range_SelectedIndexChanged);
             // 
             // label2
@@ -118,6 +118,7 @@
             this.Line_Get.AutoCompleteCustomSource.AddRange(new string[] {
             "显示",
             "窗口"});
+            this.Line_Get.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.Line_Get.FormattingEnabled = true;
             this.Line_Get.Items.AddRange(new object[] {
             "显示",
@@ -126,7 +127,6 @@
             this.Line_Get.Name = "Line_Get";
             this.Line_Get.Size = new System.Drawing.Size(96, 20);
             this.Line_Get.TabIndex = 1;
-            this.Line_Get.Text = "显示";
             this.Line_Get.SelectedIndexChanged += new System.EventHandler(this.Line_Get_SelectedIndexChanged);
             // 
             // label3
@@ -157,6 +157,7 @@
             this.wiff_Get.AutoCompleteCustomSource.AddRange(new string[] {
             "显示",
             "窗口"});
+            this.wiff_Get.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.wiff_Get.FormattingEnabled = true;
             this.wiff_Get.Items.AddRange(new object[] {
             "显示",
@@ -165,7 +166,6 @@
             this.wiff_Get.Name = "wiff_Get";
             this.wiff_Get.Size = new System.Drawing.Size(96, 20);
             this.wiff_Get.TabIndex = 2;
-            this.wiff_Get.Text = "显示";
             this.wiff_Get.SelectedIndexChanged += new System.EventHandler(this.wiff_Get_SelectedIndexChanged);
             // 
             // label15
@@ -191,6 +191,7 @@
             this.Msg_Get.AutoCompleteCustomSource.AddRange(new string[] {
             "显示",
             "窗口"});
+            this.Msg_Get.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.Msg_Get.FormattingEnabled = true;
             this.Msg_Get.Items.AddRange(new object[] {
             "显示",
@@ -199,7 +200,6 @@
             this.Msg_Get.Name = "Msg_Get";
             this.Msg_Get.Size = new System.Drawing.Size(96, 20);
             this.Msg_Get.TabIndex = 1;
-            this.Msg_Get.Text = "显示";
             this.Msg_Get.SelectedIndexChanged += new System.EventHandler(this.Msg_Get_SelectedIndexChanged);
             // 
             // label5
@@ -261,6 +261,7 @@
             this.combox_peizhi.AutoCompleteCustomSource.AddRange(new string[] {
             "显示",
             "窗口"});
+            this.combox_peizhi.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.combox_peizhi.FormattingEnabled = true;
             this.combox_peizhi.Location = new System.Drawing.Point(125, 215);
             this.combox_peizhi.Name = "combox_peizhi";
@@ -281,6 +282,7 @@
             this.combox_kzdj.AutoCompleteCustomSource.AddRange(new string[] {
             "显示",
             "窗口"});
+            this.combox_kzdj.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.combox_kzdj.FormattingEnabled = true;
             this.combox_kzdj.Items.AddRange(new object[] {
             "四级",
@@ -292,7 +294,6 @@
             this.combox_kzdj.Name = "combox_kzdj";
             this.combox_kzdj.Size = new System.Drawing.Size(125, 20);
             this.combox_kzdj.TabIndex = 12;
-            this.combox_kzdj.Text = "四级";
             // 
             // label13
             // 
@@ -317,6 +318,7 @@
             this.combox_Gjcy.AutoCompleteCustomSource.AddRange(new string[] {
             "显示",
             "窗口"});
+            this.combox_Gjcy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.combox_Gjcy.FormattingEnabled = true;
             this.combox_Gjcy.Items.AddRange(new object[] {
             "HPB300",
@@ -327,7 +329,6 @@
             this.combox_Gjcy.Name = "combox_Gjcy";
             this.combox_Gjcy.Size = new System.Drawing.Size(158, 20);
             this.combox_Gjcy.TabIndex = 9;
-            this.combox_Gjcy.Text = "HPB300";
             // 
             // label11
             // 
@@ -360,6 +361,7 @@
             this.combox_Lgj.AutoCompleteCustomSource.AddRange(new string[] {
             "显示",
             "窗口"});
+            this.combox_Lgj.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.combox_Lgj.FormattingEnabled = true;
             this.combox_Lgj.Items.AddRange(new object[] {
             "HPB300",
@@ -370,7 +372,6 @@
             this.combox_Lgj.Name = "combox_Lgj";
             this.combox_Lgj.Size = new System.Drawing.Size(158, 20);
             this.combox_Lgj.TabIndex = 4;
-            this.combox_Lgj.Text = "HPB300";
             // 
             // label10
             // 
@@ -386,6 +387,7 @@
             this.combox_Lzj.AutoCompleteCustomSource.AddRange(new string[] {
             "显示",
             "窗口"});
+            this.combox_Lzj.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.combox_Lzj.FormattingEnabled = true;
             this.combox_Lzj.Items.AddRange(new object[] {
             "HPB300",
@@ -396,7 +398,6 @@
             this.combox_Lzj.Name = "combox_Lzj";
             this.combox_Lzj.Size = new System.Drawing.Size(158, 20);
             this.combox_Lzj.TabIndex = 2;
-            this.combox_Lzj.Text = "HPB300";
             // 
             // label9
             // 
@@ -412,6 +413,7 @@
             this.combox_Hnt.AutoCompleteCustomSource.AddRange(new string[] {
             "显示",
             "窗口"});
+            this.combox_Hnt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.combox_Hnt.FormattingEnabled = true;
             this.combox_Hnt.Items.AddRange(new object[] {
             "C15",
@@ -432,7 +434,6 @@
             this.combox_Hnt.Name = "combox_Hnt";
             this.combox_Hnt.Size = new System.Drawing.Size(158, 20);
             this.combox_Hnt.TabIndex = 1;
-            this.combox_Hnt.Text = "C15";
             // 
             // label7
             // 

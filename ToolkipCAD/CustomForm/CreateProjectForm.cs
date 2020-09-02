@@ -25,6 +25,7 @@ namespace ToolkipCAD.CustomForm
             //选择目录按钮
             FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
             folderBrowser.SelectedPath = @"D:\好蓝图平面CAD钢筋\测试";
+            folderBrowser.ShowNewFolderButton = true;
             if (folderBrowser.ShowDialog()==DialogResult.OK)
             {
                 select_menu_path.Text = folderBrowser.SelectedPath;

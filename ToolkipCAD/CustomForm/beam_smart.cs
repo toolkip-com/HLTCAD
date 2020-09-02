@@ -70,7 +70,7 @@ namespace ToolkipCAD
             StreamWriter sw = new StreamWriter($@"{Ftag.path}\project\1.tte",false,Encoding.UTF8);
             sw.WriteLine(JsonConvert.SerializeObject(beam));
             sw.Close();
-            this.Close();
+            this.Close(); 
         }
 
         private void select_range_SelectedIndexChanged(object sender, EventArgs e)

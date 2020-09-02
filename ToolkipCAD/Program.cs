@@ -17,7 +17,7 @@ namespace ToolkipCAD
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            MainForm = new Form1();
+            MainForm = new Form1();            
             //Application.Run(new Form1());
             Application.Run(MainForm);
         }

@@ -37,10 +37,7 @@
             this.level3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.level2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.level1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label4 = new System.Windows.Forms.Label();
             this.btn_reset = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.box_about = new System.Windows.Forms.TextBox();
             this.box_ratio = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.combo_gj = new System.Windows.Forms.ComboBox();
@@ -132,10 +129,7 @@
             // 钢筋锚固长度
             // 
             this.钢筋锚固长度.Controls.Add(this.Grid_Gj);
-            this.钢筋锚固长度.Controls.Add(this.label4);
             this.钢筋锚固长度.Controls.Add(this.btn_reset);
-            this.钢筋锚固长度.Controls.Add(this.label3);
-            this.钢筋锚固长度.Controls.Add(this.box_about);
             this.钢筋锚固长度.Controls.Add(this.box_ratio);
             this.钢筋锚固长度.Controls.Add(this.label2);
             this.钢筋锚固长度.Controls.Add(this.combo_gj);
@@ -193,15 +187,6 @@
             this.level1.HeaderText = "一级";
             this.level1.Name = "level1";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(572, 19);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(17, 12);
-            this.label4.TabIndex = 17;
-            this.label4.Text = "mm";
-            // 
             // btn_reset
             // 
             this.btn_reset.Location = new System.Drawing.Point(601, 14);
@@ -212,26 +197,9 @@
             this.btn_reset.UseVisualStyleBackColor = true;
             this.btn_reset.Click += new System.EventHandler(this.btn_reset_Click);
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(486, 19);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(41, 12);
-            this.label3.TabIndex = 15;
-            this.label3.Text = "约入：";
-            // 
-            // box_about
-            // 
-            this.box_about.Location = new System.Drawing.Point(530, 15);
-            this.box_about.Name = "box_about";
-            this.box_about.Size = new System.Drawing.Size(36, 21);
-            this.box_about.TabIndex = 14;
-            this.box_about.Text = "0";
-            // 
             // box_ratio
             // 
-            this.box_ratio.Location = new System.Drawing.Point(443, 15);
+            this.box_ratio.Location = new System.Drawing.Point(555, 15);
             this.box_ratio.Name = "box_ratio";
             this.box_ratio.Size = new System.Drawing.Size(38, 21);
             this.box_ratio.TabIndex = 13;
@@ -240,7 +208,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(400, 19);
+            this.label2.Location = new System.Drawing.Point(512, 19);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(41, 12);
             this.label2.TabIndex = 12;
@@ -251,6 +219,7 @@
             this.combo_gj.AutoCompleteCustomSource.AddRange(new string[] {
             "显示",
             "窗口"});
+            this.combo_gj.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.combo_gj.FormattingEnabled = true;
             this.combo_gj.Items.AddRange(new object[] {
             "HPB300",
@@ -261,7 +230,6 @@
             this.combo_gj.Name = "combo_gj";
             this.combo_gj.Size = new System.Drawing.Size(152, 20);
             this.combo_gj.TabIndex = 10;
-            this.combo_gj.Text = "HRB400,HRBF400,RRB400";
             // 
             // label9
             // 
@@ -277,6 +245,7 @@
             this.Combo_hnt.AutoCompleteCustomSource.AddRange(new string[] {
             "显示",
             "窗口"});
+            this.Combo_hnt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.Combo_hnt.FormattingEnabled = true;
             this.Combo_hnt.Items.AddRange(new object[] {
             "C15",
@@ -297,7 +266,6 @@
             this.Combo_hnt.Name = "Combo_hnt";
             this.Combo_hnt.Size = new System.Drawing.Size(62, 20);
             this.Combo_hnt.TabIndex = 8;
-            this.Combo_hnt.Text = "C30";
             this.Combo_hnt.SelectedIndexChanged += new System.EventHandler(this.Combo_hnt_SelectedIndexChanged);
             // 
             // label7
@@ -370,6 +338,7 @@
             // 
             // t4_c2
             // 
+            this.t4_c2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.t4_c2.FormattingEnabled = true;
             this.t4_c2.Items.AddRange(new object[] {
             "6",
@@ -391,7 +360,6 @@
             this.t4_c2.Name = "t4_c2";
             this.t4_c2.Size = new System.Drawing.Size(40, 20);
             this.t4_c2.TabIndex = 19;
-            this.t4_c2.Text = "6";
             // 
             // t4_t3
             // 
@@ -420,6 +388,7 @@
             // 
             // t3_c2
             // 
+            this.t3_c2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.t3_c2.FormattingEnabled = true;
             this.t3_c2.Items.AddRange(new object[] {
             "6",
@@ -441,7 +410,6 @@
             this.t3_c2.Name = "t3_c2";
             this.t3_c2.Size = new System.Drawing.Size(40, 20);
             this.t3_c2.TabIndex = 15;
-            this.t3_c2.Text = "6";
             // 
             // t3_t3
             // 
@@ -470,6 +438,7 @@
             // 
             // t2_c2
             // 
+            this.t2_c2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.t2_c2.FormattingEnabled = true;
             this.t2_c2.Items.AddRange(new object[] {
             "6",
@@ -491,7 +460,6 @@
             this.t2_c2.Name = "t2_c2";
             this.t2_c2.Size = new System.Drawing.Size(40, 20);
             this.t2_c2.TabIndex = 11;
-            this.t2_c2.Text = "6";
             // 
             // t2_t3
             // 
@@ -520,6 +488,7 @@
             // 
             // t1_c2
             // 
+            this.t1_c2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.t1_c2.FormattingEnabled = true;
             this.t1_c2.Items.AddRange(new object[] {
             "6",
@@ -541,7 +510,6 @@
             this.t1_c2.Name = "t1_c2";
             this.t1_c2.Size = new System.Drawing.Size(40, 20);
             this.t1_c2.TabIndex = 7;
-            this.t1_c2.Text = "6";
             // 
             // t1_t3
             // 
@@ -708,6 +676,7 @@
             // 
             // comboBox9
             // 
+            this.comboBox9.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox9.FormattingEnabled = true;
             this.comboBox9.Items.AddRange(new object[] {
             "6",
@@ -735,6 +704,7 @@
             this.comboBox8.AutoCompleteCustomSource.AddRange(new string[] {
             "显示",
             "窗口"});
+            this.comboBox8.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox8.FormattingEnabled = true;
             this.comboBox8.Items.AddRange(new object[] {
             "HPB300",
@@ -765,6 +735,7 @@
             // 
             // combo_ran
             // 
+            this.combo_ran.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.combo_ran.FormattingEnabled = true;
             this.combo_ran.Items.AddRange(new object[] {
             "60度",
@@ -852,11 +823,8 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox Combo_hnt;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox box_about;
         private System.Windows.Forms.TextBox box_ratio;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btn_reset;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label24;

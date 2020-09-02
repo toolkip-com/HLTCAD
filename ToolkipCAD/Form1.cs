@@ -32,16 +32,21 @@ namespace ToolkipCAD
         {
             //大小自适应
             //asc.controlAutoSize(this);
-            axMxDrawX1.Size = new Size(Form1.ActiveForm.Width - 22-238, Form1.ActiveForm.Height - 40);
-            PR_Panel.Size = new Size(238,Form1.ActiveForm.Height);
-            PR_Panel.Location = new Point(axMxDrawX1.Size.Width, 0);
-            tab_Proandresource.Height = PR_Panel.Height - 22;
-            tree_project.Height = tab_Proandresource.Height-75;
-            tree_drawing.Height = tab_Proandresource.Height - 75;
+            try
+            {                
+                axMxDrawX1.Size = new Size(Form1.ActiveForm.Width - 22 - 238, Form1.ActiveForm.Height - 40);
+                PR_Panel.Size = new Size(238, Form1.ActiveForm.Height);
+                PR_Panel.Location = new Point(axMxDrawX1.Size.Width, 0);
+                tab_Proandresource.Height = PR_Panel.Height - 22;
+                tree_project.Height = tab_Proandresource.Height - 75;
+                tree_drawing.Height = tab_Proandresource.Height - 75;
+            }
+            catch { }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            ControlReSize reSize = new ControlReSize(PR_Panel);
             //加载自定义的菜单栏
             axMxDrawX1.Iniset = "./mxmenu.mnu";
             axMxDrawX1.Call("Mx_ReLoadMenu", $@"{Directory.GetCurrentDirectory()}\mxmenu.mnu");
@@ -184,6 +189,22 @@ namespace ToolkipCAD
                 if (result == DialogResult.OK) e.Cancel=false;
                 else e.Cancel=true;
             }
+        }
+
+        private void tab_Proandresource_MouseLeave(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void PR_Panel_MouseLeave(object sender, EventArgs e)
+        {
+            PR_Panel.Cursor = Cursors.Arrow;            
+        }
+
+        private void tab_Proandresource_Resize(object sender, EventArgs e)
+        {
+            tree_drawing.Width = tab_Proandresource.Width-20;
+            tree_project.Width = tab_Proandresource.Width-20;
         }
     }
 }

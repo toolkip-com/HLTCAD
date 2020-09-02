@@ -68,7 +68,7 @@ namespace ToolkipCAD
             t1.Concrete = Combo_hnt.Text;
             t1.Rebars = combo_gj.Text;
             t1.Ratio = double.Parse(box_ratio.Text);
-            t1.about = double.Parse(box_about.Text);
+            //t1.about = double.Parse(box_about.Text);
             t1.T1Value = _tab1List;
             if (t5_tt2.Text != "" && t5_cc1.Checked)
                 t2.MM = double.Parse(t5_tt2.Text);
@@ -104,6 +104,15 @@ namespace ToolkipCAD
 
         private void GouzaoRecord_Load(object sender, EventArgs e)
         {
+            #region 初始化下拉框 
+            Combo_hnt.SelectedIndex = 3;
+            combo_gj.SelectedIndex = 2;
+            t1_c2.SelectedIndex = 0;
+            t2_c2.SelectedIndex = 0;
+            t3_c2.SelectedIndex = 0;
+            t4_c2.SelectedIndex = 0;
+
+            #endregion
             Grid_Gj.Rows.Add(15);
             dynamic tag = this.Tag;
             if (tag.type == "Edit")
@@ -120,7 +129,7 @@ namespace ToolkipCAD
                 Combo_hnt.Text = gouzao.T1Values.Concrete;
                 combo_gj.Text = gouzao.T1Values.Rebars;
                 box_ratio.Text = gouzao.T1Values.Ratio.ToString();
-                box_about.Text = gouzao.T1Values.about.ToString();
+                //box_about.Text = gouzao.T1Values.about.ToString();
                 //2
                 List<T2Value> vals = gouzao.T2Values.Values;
                 t1_t1.Text = vals.Find(x=>x.Type== "HPB300").Value1.ToString();
@@ -366,8 +375,15 @@ namespace ToolkipCAD
             try
             {
                 double ratio = double.Parse(box_ratio.Text);//系数
-                double about = double.Parse(box_about.Text);//约入
-                _tab1List = _tab1List.Select(x => { x.Value *= ratio; return x; }).ToList();
+                //double about = double.Parse(box_about.Text);//约入
+                //约入  例:332=335,336=340,335=335
+                _tab1List = _tab1List.Select(x => {
+                    x.Value *= ratio;
+                    int k = Convert.ToInt32(x.Value % 10);
+                    if (k < 5 && k > 0) x.Value += 5 - k;
+                    if (k > 5) x.Value += 10-k;
+                    return x;                
+                }).ToList();
                 PushEditGrid();
             }
             catch { }

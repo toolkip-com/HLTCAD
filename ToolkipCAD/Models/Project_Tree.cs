@@ -142,14 +142,14 @@ namespace ToolkipCAD
             Program.MainForm.Tag = new
             {
                 name = _HLT.Project_name,
-                path = _HLT.Project_path
+                path = HltPath.Substring(0,HltPath.LastIndexOf('\\'))// _HLT.Project_path
             };
         }
         //存储新建项目信息
         public void SaveProjectInfo(dynamic info)
         {
             _HLT.Project_name = info.name;
-            _HLT.Project_path = info.path;
+            //_HLT.Project_path = info.path;
             List<Project_Manage> project = new List<Project_Manage>{ new Project_Manage
             {
                 id = Guid.NewGuid().ToString(),
@@ -261,6 +261,12 @@ namespace ToolkipCAD
             string id = _DrawView.SelectedNode.Tag.ToString();
             Drawing_Manage drawing = _HLT.Drawing_Manage_Tree.Find(x=>x.id==id);
             ContextMenuStrip contextMenu = new ContextMenuStrip();
+            if (drawing.type == Drawing_type.资源类型)
+            {
+                ToolStripMenuItem AddDrawing = new ToolStripMenuItem("添加");
+                AddDrawing.Click += new EventHandler(Draw_AddDrawing_Click);
+                contextMenu.Items.Add(AddDrawing);
+            }
             if (drawing.type == Drawing_type.文件)
             {
                 ToolStripMenuItem Rename = new ToolStripMenuItem("重命名");
@@ -483,9 +489,32 @@ namespace ToolkipCAD
             {
                 string id = _DrawView.SelectedNode.Tag.ToString();
                 Drawing_Manage drawing = _HLT.Drawing_Manage_Tree.Find(x => x.id == id);
+                dynamic pro = Program.MainForm.Tag;
+                if (File.Exists($@"{pro.path}\src\{drawing.name}.dwg"))
+                    File.Delete($@"{pro.path}\src\{drawing.name}.dwg");
                 _HLT.Drawing_Manage_Tree.Remove(drawing);
                 _DrawView.SelectedNode.Remove();
             }
+        }
+        //添加图纸
+        public void DrawAddDrawing()
+        {
+            string id=_DrawView.SelectedNode.Tag.ToString();
+            //MessageBox.Show($"id:{id},功能开发中");
+            AddDrawingDialog add = new AddDrawingDialog();
+            add.transf += (dynamic result) =>
+            {
+                string Nid = Guid.NewGuid().ToString();
+                _HLT.Drawing_Manage_Tree.Add(new Drawing_Manage { 
+                id=Nid,
+                pid=id,
+                type=Drawing_type.文件,
+                ext="dwg",
+                name=result
+                });
+                _DrawView.SelectedNode.Nodes.Add(new TreeNode { Text=result,Tag=Nid});
+            };
+            add.ShowDialog();
         }
         //重命名图纸
         public void DrawRename()
@@ -500,6 +529,10 @@ namespace ToolkipCAD
                 {
                     string id = _DrawView.SelectedNode.Tag.ToString();
                     Drawing_Manage drawing = _HLT.Drawing_Manage_Tree.Find(x => x.id == id);
+                    if (drawing.name == result) return;
+                    dynamic pro = Program.MainForm.Tag;
+                    if (File.Exists($@"{pro.path}\src\{drawing.name}.dwg"))
+                        File.Move($@"{pro.path}\src\{drawing.name}.dwg", $@"{pro.path}\src\{result}.dwg");
                     drawing.name = result;
                     _DrawView.SelectedNode.Text = result;
                 });
@@ -558,6 +591,7 @@ namespace ToolkipCAD
                     if (project.type != Project_type.记录) return "";
                     XRecord record = _HLT.XRecords.Find(x=>x.id==project.xrecord_id);
                     Drawing_Manage drawing = _HLT.Drawing_Manage_Tree.Find(x=>x.id==record.Drawing_Manage_id);
+                    if (drawing == null) return "";
                     dynamic Propath = Program.MainForm.Tag;
                     string file = $@"{Propath.path}\src\{drawing.name}.dwg";
                     if (!File.Exists(file)) return "";
@@ -653,6 +687,7 @@ namespace ToolkipCAD
         void Delete_Click(object sender, EventArgs e) => DeleteItem();//删除
         void Copy_Click(object sender, EventArgs e) => CopyItem();//复制
         void Rename_Click(object sender, EventArgs e) => RenameForItem();//重命名
+        void Draw_AddDrawing_Click(object sender, EventArgs e) => DrawAddDrawing();//图纸添加
         void Draw_Rename_Click(object sender, EventArgs e) => DrawRename();//图纸重命名
         void Draw_Delete_Click(object sender, EventArgs e) => DrawDelete();//图纸删除
         void Draw_CreateNew_Click(object sender, EventArgs e) => DrawCreateStruct();//新建构造

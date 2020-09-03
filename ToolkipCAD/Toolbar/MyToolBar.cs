@@ -66,21 +66,24 @@ namespace ToolkipCAD.Toolbar
 
         private void T1007()
         {
+           
             //获取选区内实体
-            MxDrawSelectionSet selectionSet = new MxDrawSelectionSet();
+            //MxDrawSelectionSet selectionSet = new MxDrawSelectionSet();
             MxDrawUtility mxUtility = new MxDrawUtility();
+            //axMxDrawX1.ImplementCommandEvent += AxMxDrawX1_ImplementCommandEvent;
             //点取范围左上角位置
-            MxDrawPoint point1 = (MxDrawPoint)mxUtility.GetPoint(null, "点取范围左上角位置...");
+            MxDrawPoint point1 = mxUtility.GetPoint(null, "点取范围左上角位置...");
             if (point1 == null) return;
             //点取范围右下角位置
-            MxDrawPoint point2 = (MxDrawPoint)mxUtility.GetPoint(null, "点取范围右下角位置...");
+            MxDrawPoint point2 = mxUtility.GetPoint(null, "点取范围右下角位置...");
             if (point2 == null) return;
-            MxDrawResbuf resbuf = new MxDrawResbuf();
-            selectionSet.Select(MCAD_McSelect.mcSelectionSetCrossing,point1,point2,resbuf);
-            for (int i = 0; i < selectionSet.Count; i++)
-            {
-                axMxDrawX1.AddCurrentSelect(selectionSet.Item(i).ObjectID, false, false);
-            }
+            //MxDrawResbuf resbuf = new MxDrawResbuf();
+            //selectionSet.Select(MCAD_McSelect.mcSelectionSetCrossing,point1,point2,resbuf);
+            //for (int i = 0; i < selectionSet.Count; i++)
+            //{
+            //    axMxDrawX1.AddCurrentSelect(selectionSet.Item(i).ObjectID, false, false);
+            //}
+            axMxDrawX1.ZoomWindow(point1.x,point1.y,point2.x,point2.y);
             PublicValue = new
             {
                 Lx=point1.x,
@@ -90,46 +93,67 @@ namespace ToolkipCAD.Toolbar
             };
             return;
         }
+      
         private beam_smart beam;
         private void T1006()
         {
             //梁批量识别 
             beam = new beam_smart();
-            BeamType = "";
-            beam.Tag = _Tree._HLT.Drawing_Manage_Tree;
+            BeamType = "";            
+            Project_Manage pro = _Tree.GetSelectProjectTree();
+            if ( pro.type != Project_type.记录)
+            {
+                MessageBox.Show("请选择一条记录.");
+                return;
+            }
+            Beam_XRrecord json = _Tree.GetBeamData(pro.xrecord_id) as Beam_XRrecord;
+            beam.Tag = new
+            {
+                list= _Tree._HLT.Drawing_Manage_Tree,
+                json=json
+            };
             beam.transf += (object param) => {
                 string kven = param.ToString();
                 if (kven == "select_range")//选择范围
-                {
-                    beam.Hide();
+                {                    
                     axMxDrawX1.SendStringToExecute("TK_PLSB_select");
-                    beam.Show();
                     return PublicValue;
                 }
                 if (kven == "change_line")//梁
                 {
-                    beam.Hide();
-                    beam.beam.side_lines = new List<long>();                    
-                    
+                    beam.beam.side_lines = new List<long>();                                        
                     BeamType = "change_line";
                 }
                 if (kven == "change_dim")//标注
                 {
-                    beam.Hide();
                     beam.beam.dim_texts = new List<long>();
                     BeamType = "change_dim";
                 }
                 if (kven == "change_seat")//支座
                 {
-                    beam.Hide();
                     beam.beam.seat_lines = new List<long>();
                     BeamType = "change_seat";
                 }
-                return "";
+                if(kven=="Range")//显示范围
+                {
+                    axMxDrawX1.ZoomWindow(beam.beam.pto[0].X,beam.beam.pto[0].Y,
+                        beam.beam.pto[1].X, beam.beam.pto[1].Y);
+                }
+                if(kven=="SaveData")//保存
+                {
+                    _Tree.SaveBeamData(pro.id,beam.beam);
+                }
+                return null;
             };
             axMxDrawX1.MouseEvent += AxMxDrawX1_MouseEvent;
-            axMxDrawX1.MxKeyUp += AxMxDrawX1_MxKeyUp;
+            //axMxDrawX1.MxKeyUp += AxMxDrawX1_MxKeyUp;
             beam.Show();
+            beam.FormClosed += Beam_FormClosed;
+        }
+
+        private void Beam_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            axMxDrawX1.MouseEvent -= AxMxDrawX1_MouseEvent;
         }
 
         private void AxMxDrawX1_MouseEvent(object sender, _DMxDrawXEvents_MouseEventEvent e)
@@ -144,6 +168,7 @@ namespace ToolkipCAD.Toolbar
                 point = new MxDrawPoint();
                 point.x = e.dX; point.y = e.dY;
                 mxDrawSelection.SelectAtPoint(point, filter);
+                //MessageBox.Show(mxDrawSelection.Count.ToString());
                 if (mxDrawSelection.Count > 0)
                 {
                     if(BeamType == "change_line")
@@ -154,7 +179,7 @@ namespace ToolkipCAD.Toolbar
                         beam.beam.seat_lines.Add(mxDrawSelection.Item(0).ObjectID);
                 }
             }
-            if (e.lType == 2)
+            else if (e.lType == 2 && (Control.ModifierKeys & Keys.Shift) == Keys.Shift)
             {
                 dynamic pt = PublicValue;
                 MxDrawPoint sp = new MxDrawPoint { x =pt.Lx,y=pt.Ly};
@@ -178,7 +203,8 @@ namespace ToolkipCAD.Toolbar
                         axMxDrawX1.AddCurrentSelect(mxDrawSelection.Item(i).ObjectID, false, false);
                     }
                 }
-            }           
+            }
+            //axMxDrawX1.SendStringToExecute("");
         }
 
         private void AxChangeSeat(object sender, _DMxDrawXEvents_MxKeyUpEvent e)
@@ -275,6 +301,7 @@ namespace ToolkipCAD.Toolbar
             //打开项目
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.Filter = "hlt文件(*.hlt)|*.hlt";
+            fileDialog.InitialDirectory = $@"D:\好蓝图平面CAD钢筋\测试\";
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
                 _Tree.LoadHLTTree(fileDialog.FileName);                

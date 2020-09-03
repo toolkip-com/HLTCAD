@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using MxDrawXLib;
 
 namespace ToolkipCAD
@@ -76,12 +77,14 @@ namespace ToolkipCAD
         文件,
         配置
     }
+    [XmlInclude(typeof(Beam_XRrecord))]
+    [XmlInclude(typeof(Beam))]
     public class XRecord  //针对一张图纸识别、计算等一切数据的记录
     {
         public string id { get; set; }  //12位 GUID
         public string Drawing_Manage_id { get; set; }  //基于哪张图纸
         public Xrecord_type type { get; set; }   //1--梁   2--板  3--柱  4--墙  5--其它
-        public string json { get; set; } //存详细记录数据，包括梁数据 Beam_XRrecord等        
+        public object json { get; set; } //存详细记录数据，包括梁数据 Beam_XRrecord等        
     }
 
     public class Beam_XRrecord

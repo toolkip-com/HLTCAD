@@ -88,6 +88,7 @@
             this.select_range.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.select_range.FormattingEnabled = true;
             this.select_range.Items.AddRange(new object[] {
+            "请选择",
             "显示",
             "窗口"});
             this.select_range.Location = new System.Drawing.Point(92, 25);
@@ -121,6 +122,7 @@
             this.Line_Get.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.Line_Get.FormattingEnabled = true;
             this.Line_Get.Items.AddRange(new object[] {
+            "请选择",
             "显示",
             "拾取"});
             this.Line_Get.Location = new System.Drawing.Point(92, 30);
@@ -160,6 +162,7 @@
             this.wiff_Get.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.wiff_Get.FormattingEnabled = true;
             this.wiff_Get.Items.AddRange(new object[] {
+            "请选择",
             "显示",
             "拾取"});
             this.wiff_Get.Location = new System.Drawing.Point(92, 71);
@@ -194,6 +197,7 @@
             this.Msg_Get.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.Msg_Get.FormattingEnabled = true;
             this.Msg_Get.Items.AddRange(new object[] {
+            "请选择",
             "显示",
             "拾取"});
             this.Msg_Get.Location = new System.Drawing.Point(92, 23);

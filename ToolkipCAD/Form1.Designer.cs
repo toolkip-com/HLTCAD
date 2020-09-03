@@ -272,7 +272,6 @@
         private System.Windows.Forms.TabPage tab_project;
         private System.Windows.Forms.TabPage tab_resource;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TreeView tree_project;
         private System.Windows.Forms.ContextMenuStrip project_contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem 创建楼号ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 创建楼层ToolStripMenuItem;
@@ -288,6 +287,7 @@
         private System.Windows.Forms.ContextMenuStrip resource_contextMenuStrip1;
         private System.Windows.Forms.TreeView tree_drawing;
         public AxMxDrawXLib.AxMxDrawX axMxDrawX1;
+        public System.Windows.Forms.TreeView tree_project;
     }
 }
 

@@ -201,6 +201,32 @@ namespace ToolkipCAD
         {
             return _HLT;
         }
+        //获取选择的树节点(Project)
+        public Project_Manage GetSelectProjectTree()
+        {
+            TreeNode node= _TreeView.SelectedNode;
+            if (node != null)
+            {
+                Project_Manage project= _HLT.Project_Manage_Tree.Find(x=>x.id==node.Tag.ToString());
+                return project;
+            }
+            else
+            {
+                return new Project_Manage();
+            }
+        }
+        //获取梁识别数据
+        public object GetBeamData(string id)
+        {
+            return _HLT.XRecords.Find(x => x.id == id).json;
+        }
+        //保存梁识别数据
+        public void SaveBeamData(string id,Beam_XRrecord beam)
+        {
+            Project_Manage project = _HLT.Project_Manage_Tree.Find(x=>x.id==id);
+            XRecord record = _HLT.XRecords.Find(x=>x.id==project.xrecord_id);
+            record.json = beam;
+        }
         //创建子项菜单(项目)
         public ContextMenuStrip CreateItemMenu(TreeNode node)
         {

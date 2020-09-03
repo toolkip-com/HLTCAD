@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -30,17 +31,37 @@ namespace ToolkipCAD
 
         private void beam_smart_Load(object sender, EventArgs e)
         {
-            if (Program.MainForm.Tag == null)
-            {
-                MessageBox.Show("请先创建/打开项目");
-                this.Close();
-                return;
-            }
+            select_range.SelectedIndex = 0;
+            Line_Get.SelectedIndex = 0;
+            wiff_Get.SelectedIndex = 0;
+            Msg_Get.SelectedIndex = 0;
             if (this.Tag != null)
             {
-                combox_peizhi.DataSource = ((List<Drawing_Manage>)this.Tag).Where(x=>x.type==Drawing_type.文件).ToList();
+                dynamic tag = this.Tag;
+                List<Drawing_Manage> ComboSource=((List<Drawing_Manage>)tag.list).Where(x => x.type == Drawing_type.配置).ToList();
+                combox_peizhi.DataSource = ComboSource;
                 combox_peizhi.ValueMember = "id";
                 combox_peizhi.DisplayMember = "name";
+                if (tag.json != null)
+                {
+                    beam = tag.json as Beam_XRrecord;
+                    if (beam.pto != null) { select_range.Text = "显示"; transf("Range"); }
+                    if (beam.side_lines != null) Line_Get.Text = "显示";
+                    if (beam.dim_texts != null) wiff_Get.Text = "显示";
+                    if (beam.seat_lines != null) Msg_Get.Text = "显示";
+                    combox_Hnt.Text = beam.Concrete_type;
+                    combox_Lzj.Text = beam.Rebar_type;
+                    combox_Lgj.Text = beam.Strup_type;
+                    combox_kzdj.Text = beam.earth_type;
+                    Drawing_Manage Dlist = ComboSource.Find(x => x.id == beam.Drawing_Manage_id);
+                    combox_peizhi.Text =Dlist==null?"":Dlist.name;
+                    if (beam.overmm != null)
+                    {
+                        check_gj.Checked = true;
+                        over_box.Text = beam.overmm;
+                    }
+                    if (beam.Rebar_overmm != null) combox_Gjcy.Text = beam.Rebar_overmm;
+                }
             }
         }
 
@@ -64,12 +85,13 @@ namespace ToolkipCAD
             beam.Rebar_type = combox_Lzj.Text;
             beam.Strup_type = combox_Lgj.Text;
             beam.earth_type = combox_kzdj.Text;
-            beam.Drawing_Manage_id = combox_peizhi.ValueMember;
+            beam.Drawing_Manage_id = combox_peizhi.SelectedValue!=null? combox_peizhi.SelectedValue.ToString():"";
+            transf("SaveData");
             //保存
-            dynamic Ftag = Program.MainForm.Tag;
-            StreamWriter sw = new StreamWriter($@"{Ftag.path}\project\1.tte",false,Encoding.UTF8);
-            sw.WriteLine(JsonConvert.SerializeObject(beam));
-            sw.Close();
+            //dynamic Ftag = Program.MainForm.Tag;
+            //StreamWriter sw = new StreamWriter($@"{Ftag.path}\project\1.tte",false,Encoding.UTF8);
+            //sw.WriteLine(JsonConvert.SerializeObject(beam));
+            //sw.Close();
             this.Close(); 
         }
 
@@ -82,8 +104,8 @@ namespace ToolkipCAD
                 Kven = transf("select_range");
                 if (Kven != null)
                 {
-                    select_range.Text = "显示";
-                    select_range.Tag = Kven;
+                    //select_range.Text = "显示";
+                    //select_range.Tag = Kven;
                     beam.pto = new List<Point3d> { new Point3d { X=Kven.Lx,Y=Kven.Ly}, new Point3d { X = Kven.Rx, Y = Kven.Ry } };
                     return;
                 }

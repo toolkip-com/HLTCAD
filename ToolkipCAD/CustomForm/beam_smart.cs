@@ -46,9 +46,9 @@ namespace ToolkipCAD
                 {
                     beam = tag.json as Beam_XRrecord;
                     if (beam.pto != null) { select_range.Text = "显示"; transf("Range"); }
-                    if (beam.side_lines != null) Line_Get.Text = "显示";
-                    if (beam.dim_texts != null) wiff_Get.Text = "显示";
-                    if (beam.seat_lines != null) Msg_Get.Text = "显示";
+                    //if (beam.side_lines != null) Line_Get.Text = "显示";
+                    //if (beam.dim_texts != null) wiff_Get.Text = "显示";
+                    //if (beam.seat_lines != null) Msg_Get.Text = "显示";
                     combox_Hnt.Text = beam.Concrete_type;
                     combox_Lzj.Text = beam.Rebar_type;
                     combox_Lgj.Text = beam.Strup_type;
@@ -123,6 +123,7 @@ namespace ToolkipCAD
                     Line_Get.Text = "显示";
                 }
             }
+            if (Line_Get.Text == "显示") transf("show_line");
         }
 
         private void wiff_Get_SelectedIndexChanged(object sender, EventArgs e)
@@ -136,6 +137,7 @@ namespace ToolkipCAD
                     wiff_Get.Text = "显示";
                 }
             }
+            if (wiff_Get.Text == "显示") transf("show_dims");
         }
 
         private void Msg_Get_SelectedIndexChanged(object sender, EventArgs e)
@@ -149,6 +151,7 @@ namespace ToolkipCAD
                     Msg_Get.Text = "显示";
                 }
             }
+            if (Msg_Get.Text == "显示") transf("show_seat");
         }
     }
 }

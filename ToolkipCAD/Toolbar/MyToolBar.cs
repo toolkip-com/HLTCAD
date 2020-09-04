@@ -22,7 +22,7 @@ namespace ToolkipCAD.Toolbar
         private AxMxDrawX axMxDrawX1;
         private object PublicValue;
         private string BeamType;
-        public MyToolBar(ref Project_Tree _Tree,ref AxMxDrawX axMxDrawX)
+        public MyToolBar(ref Project_Tree _Tree, ref AxMxDrawX axMxDrawX)
         {
             this._Tree = _Tree;
             this.axMxDrawX1 = axMxDrawX;
@@ -35,7 +35,7 @@ namespace ToolkipCAD.Toolbar
                     //axMxDrawX.DrawLine(1621508, -117657, 1637920, -118670);
                     break;
                 case 1002://新建项目
-                    T1002();                    
+                    T1002();
                     break;
                 case 1003://打开项目
                     T1003();
@@ -63,45 +63,75 @@ namespace ToolkipCAD.Toolbar
             SaveAsDialog save = new SaveAsDialog();
             save.ShowDialog();
         }
-
+        //选择范围
         private void T1007()
         {
-           
-            //获取选区内实体
-            //MxDrawSelectionSet selectionSet = new MxDrawSelectionSet();
-            MxDrawUtility mxUtility = new MxDrawUtility();
-            //axMxDrawX1.ImplementCommandEvent += AxMxDrawX1_ImplementCommandEvent;
-            //点取范围左上角位置
-            MxDrawPoint point1 = mxUtility.GetPoint(null, "点取范围左上角位置...");
-            if (point1 == null) return;
-            //点取范围右下角位置
-            MxDrawPoint point2 = mxUtility.GetPoint(null, "点取范围右下角位置...");
-            if (point2 == null) return;
-            //MxDrawResbuf resbuf = new MxDrawResbuf();
-            //selectionSet.Select(MCAD_McSelect.mcSelectionSetCrossing,point1,point2,resbuf);
-            //for (int i = 0; i < selectionSet.Count; i++)
-            //{
-            //    axMxDrawX1.AddCurrentSelect(selectionSet.Item(i).ObjectID, false, false);
-            //}
-            axMxDrawX1.ZoomWindow(point1.x,point1.y,point2.x,point2.y);
+            axMxDrawX1.DynWorldDraw += AxMxDrawX1_DynWorldDraw;
+            axMxDrawX1.AddLayer("tkbox");
+            MxDrawPoint pt1 = axMxDrawX1.GetPoint(false,0,0,"开始坐标...") as MxDrawPoint;
+            if (pt1 == null) return;
+            MxDrawUiPrPoint scpt = new MxDrawUiPrPoint();
+            scpt.message = "终点坐标...";
+            scpt.basePoint = pt1;
+            var spdata = scpt.InitUserDraw("SelectRangeBox");
+            spdata.SetPoint("BasePoint",pt1);
+            if (scpt.go() != MCAD_McUiPrStatus.mcOk) return;
+            spdata.Draw();
+            axMxDrawX1.ZoomWindow(pt1.x, pt1.y, spdata.DragPoint.x, spdata.DragPoint.y);
             PublicValue = new
             {
-                Lx=point1.x,
-                Ly=point1.y,
-                Rx=point2.x,
-                Ry=point2.y
+                Lx = pt1.x,
+                Ly = pt1.y,
+                Rx = spdata.DragPoint.x,
+                Ry = spdata.DragPoint.y
             };
+            MxDrawSelectionSet ss = new MxDrawSelectionSet();
+            MxDrawResbuf filter = new MxDrawResbuf();
+            filter.AddStringEx("tkbox",8);
+            ss.Select(MCAD_McSelect.mcSelectionSetAll,null,null,filter);
+            for (int i = 0; i < ss.Count; i++)
+            {
+                axMxDrawX1.Erase(ss.Item(i).ObjectID);
+            }
+            MxDrawDatabase database = axMxDrawX1.GetDatabase() as MxDrawDatabase;
+            IMxDrawLayerTableRecord layer = database.GetLayerTable().GetAt("tkbox",false);
+            if (layer != null) layer.Erase();
             return;
         }
-      
+
+        private void AxMxDrawX1_DynWorldDraw(object sender, _DMxDrawXEvents_DynWorldDrawEvent e)
+        {
+            MxDrawCustomEntity pCustomEntity = (MxDrawCustomEntity)e.pData;
+            MxDrawWorldDraw pWorldDraw = (MxDrawWorldDraw)e.pWorldDraw;
+            string sGuid = pCustomEntity.Guid;
+            pWorldDraw.Color = 255;
+            pWorldDraw.LineWidth = 1;
+            pWorldDraw.Layer = "tkbox";
+            MxDrawPoint curPoint = new MxDrawPoint();
+            pWorldDraw.SetColorIndex(200);
+            curPoint.x = e.dX;
+            curPoint.y = e.dY;
+            if (sGuid == "SelectRangeBox")
+            {
+                //与用户交互在图面上提取一个点
+                var vBasePt = pCustomEntity.GetPoint("BasePoint");
+                //绘制一个直线
+                //参数一直线的开始点x坐标，参数二直线的开始点y坐标，参数三直线的结束点x坐标，参数四直线的结束点y坐标
+                pWorldDraw.DrawLine(vBasePt.x, vBasePt.y, vBasePt.x, curPoint.y);
+                pWorldDraw.DrawLine(vBasePt.x, curPoint.y, curPoint.x, curPoint.y);
+                pWorldDraw.DrawLine(curPoint.x, curPoint.y, curPoint.x, vBasePt.y);
+                pWorldDraw.DrawLine(curPoint.x, vBasePt.y, vBasePt.x, vBasePt.y);
+            }
+        }
+
         private beam_smart beam;
         private void T1006()
         {
             //梁批量识别 
             beam = new beam_smart();
-            BeamType = "";            
+            BeamType = "";
             Project_Manage pro = _Tree.GetSelectProjectTree();
-            if ( pro.type != Project_type.记录)
+            if (pro.type != Project_type.记录)
             {
                 MessageBox.Show("请选择一条记录.");
                 return;
@@ -109,53 +139,95 @@ namespace ToolkipCAD.Toolbar
             Beam_XRrecord json = _Tree.GetBeamData(pro.xrecord_id) as Beam_XRrecord;
             beam.Tag = new
             {
-                list= _Tree._HLT.Drawing_Manage_Tree,
-                json=json
+                list = _Tree._HLT.Drawing_Manage_Tree,
+                json = json
             };
-            beam.transf += (object param) => {
+            beam.beam.side_lines = new List<string>();
+            beam.beam.dim_texts = new List<string>();
+            beam.beam.seat_lines = new List<string>();
+            beam.transf += (object param) =>
+            {
+                BeamType = "";
                 string kven = param.ToString();
+                axMxDrawX1.StopAllTwinkeEnt();
                 if (kven == "select_range")//选择范围
-                {                    
+                {
                     axMxDrawX1.SendStringToExecute("TK_PLSB_select");
                     return PublicValue;
                 }
                 if (kven == "change_line")//梁
                 {
-                    beam.beam.side_lines = new List<long>();                                        
+                    //beam.beam.side_lines = new List<string>();
+                    axMxDrawX1.MouseEvent += AxMxDrawX1_MouseEvent;
                     BeamType = "change_line";
                 }
                 if (kven == "change_dim")//标注
                 {
-                    beam.beam.dim_texts = new List<long>();
+                    //beam.beam.dim_texts = new List<string>();
+                    axMxDrawX1.MouseEvent += AxMxDrawX1_MouseEvent;
                     BeamType = "change_dim";
                 }
                 if (kven == "change_seat")//支座
                 {
-                    beam.beam.seat_lines = new List<long>();
+                    //beam.beam.seat_lines = new List<string>();
+                    axMxDrawX1.MouseEvent += AxMxDrawX1_MouseEvent;
                     BeamType = "change_seat";
                 }
-                if(kven=="Range")//显示范围
+                if (kven == "Range")//显示范围
                 {
-                    axMxDrawX1.ZoomWindow(beam.beam.pto[0].X,beam.beam.pto[0].Y,
+                    axMxDrawX1.ZoomWindow(beam.beam.pto[0].X, beam.beam.pto[0].Y,
                         beam.beam.pto[1].X, beam.beam.pto[1].Y);
                 }
-                if(kven=="SaveData")//保存
+                if (kven == "SaveData")//保存
                 {
-                    _Tree.SaveBeamData(pro.id,beam.beam);
+                    _Tree.SaveBeamData(pro.id, beam.beam);
+                }
+                if(kven.Substring(0,4)== "show")
+                {
+                    axMxDrawX1.MouseEvent -= AxMxDrawX1_MouseEvent;
+                    ShowLine(kven.Substring(5,4));
                 }
                 return null;
             };
-            axMxDrawX1.MouseEvent += AxMxDrawX1_MouseEvent;
-            //axMxDrawX1.MxKeyUp += AxMxDrawX1_MxKeyUp;
             beam.Show();
             beam.FormClosed += Beam_FormClosed;
         }
+        //显示选择集
+        private void ShowLine(string key)
+        {
+            MxDrawEntity entity ;
+            switch (key)
+            {
+                case "line":
+                    for (int i = 0; i < beam.beam.side_lines.Count; i++)
+                    {
+                        entity = axMxDrawX1.HandleToObject(beam.beam.side_lines[i]) as MxDrawEntity;
+                        axMxDrawX1.TwinkeEnt(entity.ObjectID);
+                    }
+                    break;
+                case "dims":
+                    for (int i = 0; i < beam.beam.dim_texts.Count; i++)
+                    {
+                        entity = axMxDrawX1.HandleToObject(beam.beam.dim_texts[i]) as MxDrawEntity;
+                        axMxDrawX1.TwinkeEnt(entity.ObjectID);
+                    }
+                    break;
+                case "seat":
+                    for (int i = 0; i < beam.beam.seat_lines.Count; i++)
+                    {
+                        entity = axMxDrawX1.HandleToObject(beam.beam.seat_lines[i]) as MxDrawEntity;
+                        axMxDrawX1.TwinkeEnt(entity.ObjectID);
+                    }
+                    break;
+            }
 
+        }
         private void Beam_FormClosed(object sender, FormClosedEventArgs e)
         {
             axMxDrawX1.MouseEvent -= AxMxDrawX1_MouseEvent;
+            axMxDrawX1.StopAllTwinkeEnt();
         }
-
+        //选择集
         private void AxMxDrawX1_MouseEvent(object sender, _DMxDrawXEvents_MouseEventEvent e)
         {
             MxDrawSelectionSet mxDrawSelection;
@@ -170,19 +242,45 @@ namespace ToolkipCAD.Toolbar
                 mxDrawSelection.SelectAtPoint(point, filter);
                 //MessageBox.Show(mxDrawSelection.Count.ToString());
                 if (mxDrawSelection.Count > 0)
-                {
-                    if(BeamType == "change_line")
-                        beam.beam.side_lines.Add(mxDrawSelection.Item(0).ObjectID);
+                {                   
+                    //MessageBox.Show(mxDrawSelection.Item(0).handle.ToString());
+                    axMxDrawX1.TwinkeEnt(mxDrawSelection.Item(0).ObjectID);
+                    if (BeamType == "change_line")
+                    {
+                        if (beam.beam.side_lines.Find(x => x == mxDrawSelection.Item(0).handle) == null)
+                            beam.beam.side_lines.Add(mxDrawSelection.Item(0).handle);
+                        else
+                        {
+                            axMxDrawX1.StopTwinkeEnt(mxDrawSelection.Item(0).ObjectID);
+                            beam.beam.side_lines.Remove(mxDrawSelection.Item(0).handle);
+                        }
+                    }
                     if (BeamType == "change_dim")
-                        beam.beam.dim_texts.Add(mxDrawSelection.Item(0).ObjectID);
+                    {
+                        if (beam.beam.dim_texts.Find(x => x == mxDrawSelection.Item(0).handle) == null)
+                            beam.beam.dim_texts.Add(mxDrawSelection.Item(0).handle);
+                        else
+                        {
+                            axMxDrawX1.StopTwinkeEnt(mxDrawSelection.Item(0).ObjectID);
+                            beam.beam.dim_texts.Remove(mxDrawSelection.Item(0).handle);
+                        }
+                    }
                     if (BeamType == "change_seat")
-                        beam.beam.seat_lines.Add(mxDrawSelection.Item(0).ObjectID);
+                    {
+                        if (beam.beam.seat_lines.Find(x => x == mxDrawSelection.Item(0).handle) == null)
+                            beam.beam.seat_lines.Add(mxDrawSelection.Item(0).handle);
+                        else
+                        {
+                            axMxDrawX1.StopTwinkeEnt(mxDrawSelection.Item(0).ObjectID);
+                            beam.beam.seat_lines.Remove(mxDrawSelection.Item(0).handle);
+                        }
+                    }
                 }
             }
             else if (e.lType == 2 && (Control.ModifierKeys & Keys.Shift) == Keys.Shift)
             {
                 dynamic pt = PublicValue;
-                MxDrawPoint sp = new MxDrawPoint { x =pt.Lx,y=pt.Ly};
+                MxDrawPoint sp = new MxDrawPoint { x = pt.Lx, y = pt.Ly };
                 MxDrawPoint ep = new MxDrawPoint { x = pt.Rx, y = pt.Ry };
                 mxDrawSelection = new MxDrawSelectionSet();
                 filter = new MxDrawResbuf();
@@ -207,94 +305,21 @@ namespace ToolkipCAD.Toolbar
             //axMxDrawX1.SendStringToExecute("");
         }
 
-        private void AxChangeSeat(object sender, _DMxDrawXEvents_MxKeyUpEvent e)
-        {
-            //按下回车
-            if (e.lVk == (int)Keys.Enter)
-            {
-                axMxDrawX1.MxKeyUp -= AxMxDrawX1_MxKeyUp;
-                MxDrawSelectionSet selectionSet = new MxDrawSelectionSet();
-                MxDrawResbuf filter = new MxDrawResbuf();
-                selectionSet.Select2(MCAD_McSelect.mcSelectionImpliedSelectSelect, null, null, filter);
-                //MessageBox.Show(selectionSet.Count.ToString());
-                List<long> list = new List<long>();
-                for (int i = 0; i < selectionSet.Count; i++)
-                {
-                    list.Add(selectionSet.Item(i).ObjectID);
-                }
-                PublicValue = list;
-                beam.beam.seat_lines = list;
-                beam.Show();
-            }
-        }
-
-        private void AxChangeDim(object sender, _DMxDrawXEvents_MxKeyUpEvent e)
-        {
-            //按下回车
-            if (e.lVk == (int)Keys.Enter)
-            {
-                axMxDrawX1.MxKeyUp -= AxMxDrawX1_MxKeyUp;
-                MxDrawSelectionSet selectionSet = new MxDrawSelectionSet();
-                MxDrawResbuf filter = new MxDrawResbuf();
-                selectionSet.Select2(MCAD_McSelect.mcSelectionImpliedSelectSelect, null, null, filter);
-                //MessageBox.Show(selectionSet.Count.ToString());
-                List<long> list = new List<long>();
-                for (int i = 0; i < selectionSet.Count; i++)
-                {
-                    list.Add(selectionSet.Item(i).ObjectID);
-                }
-                PublicValue = list;
-                beam.beam.dim_texts = list;
-                beam.Show();
-            }
-        }
-
-        private void AxMxDrawX1_MxKeyUp(object sender, _DMxDrawXEvents_MxKeyUpEvent e)
-        {
-            //按下回车
-            if (e.lVk == (int)Keys.Enter)
-            {
-                //axMxDrawX1.MxKeyUp -= AxMxDrawX1_MxKeyUp;
-                //MxDrawSelectionSet selectionSet = new MxDrawSelectionSet();
-                //MxDrawResbuf filter = new MxDrawResbuf();
-                //selectionSet.Select2(MCAD_McSelect.mcSelectionImpliedSelectSelect, null, null, filter);
-                ////MessageBox.Show(selectionSet.Count.ToString());
-                //List<long> list = new List<long>();
-                //for (int i = 0; i < selectionSet.Count; i++)
-                //{
-                //    list.Add(selectionSet.Item(i).ObjectID);
-                //}
-                //PublicValue = list;
-                //beam.beam.side_lines = list;
-                beam.Show();
-            }
-        }
-
         private void T1002()
         {
             //新建项目
             CreateProjectForm createProject = new CreateProjectForm();
-            createProject.transf +=((dynamic project) =>
-            {
-                Program.MainForm.Text = $"好蓝图平面CAD-[{project.name}.hlt]";
-                Program.MainForm.Tag = new
-                {
-                    name = project.name,
-                    path = project.path
-                };
-                _Tree.SaveProjectInfo(Program.MainForm.Tag);
-            });
+            createProject.transf += ((dynamic project) =>
+             {
+                 Program.MainForm.Text = $"好蓝图平面CAD-[{project.name}.hlt]";
+                 Program.MainForm.Tag = new
+                 {
+                     name = project.name,
+                     path = project.path
+                 };
+                 _Tree.SaveProjectInfo(Program.MainForm.Tag);
+             });
             createProject.ShowDialog();
-        }
-        private void CreateProS(dynamic project)
-        {
-            Program.MainForm.Text = $"好蓝图平面CAD-[{project.name}.hlt]";
-            Program.MainForm.Tag = new
-            {
-                name = project.name,
-                path = project.path
-            };
-            _Tree.SaveProjectInfo(project);
         }
         private void T1003()
         {
@@ -304,7 +329,7 @@ namespace ToolkipCAD.Toolbar
             fileDialog.InitialDirectory = $@"D:\好蓝图平面CAD钢筋\测试\";
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
-                _Tree.LoadHLTTree(fileDialog.FileName);                
+                _Tree.LoadHLTTree(fileDialog.FileName);
             }
         }
         public void T1004()
@@ -319,7 +344,7 @@ namespace ToolkipCAD.Toolbar
                 TextWriter tw = new StreamWriter(HltPath);
                 xs.Serialize(tw, _Tree._HLT);
                 tw.Close();
-                MessageBox.Show("保存成功");                
+                MessageBox.Show("保存成功");
             }
             catch (Exception ex)
             {
@@ -329,7 +354,7 @@ namespace ToolkipCAD.Toolbar
         public void T1005()
         {
             //退出项目
-            DialogResult dialogResult= MessageBox.Show("确认退出此项目", "退出", MessageBoxButtons.OKCancel);
+            DialogResult dialogResult = MessageBox.Show("确认退出此项目", "退出", MessageBoxButtons.OKCancel);
             if (DialogResult.OK == dialogResult)
             {
                 T1004();

@@ -96,9 +96,9 @@ namespace ToolkipCAD
         public string Strup_type { get; set; }     //默认箍筋等级
         public string earth_type { get; set; }     //默认抗震等级
         //选择集
-        public List<long> side_lines { get; set; }  //梁线集合
-        public List<long> seat_lines { get; set; }  //支座线集合
-        public List<long> dim_texts { get; set; }  //标注及标注线集合
+        public List<string> side_lines { get; set; }  //梁线集合
+        public List<string> seat_lines { get; set; }  //支座线集合
+        public List<string> dim_texts { get; set; }  //标注及标注线集合
         public List<Point3d> pto { get; set; } //识别范围
         //梁数据
         public List<Beam> beams { get; set; }

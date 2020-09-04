@@ -44,7 +44,7 @@ namespace ToolkipCAD
                 combox_peizhi.DisplayMember = "name";
                 if (tag.json != null)
                 {
-                    beam = tag.json as Beam_XRrecord;
+                    beam = JsonConvert.DeserializeObject<Beam_XRrecord>(tag.json); //tag.json as Beam_XRrecord;
                     if (beam.pto != null) { select_range.Text = "显示"; transf("Range"); }
                     //if (beam.side_lines != null) Line_Get.Text = "显示";
                     //if (beam.dim_texts != null) wiff_Get.Text = "显示";
@@ -68,6 +68,7 @@ namespace ToolkipCAD
         private void btn_remove_Click(object sender, EventArgs e)
         {
             this.Close();
+           
         }
 
         private void btn_OK_Click(object sender, EventArgs e)
@@ -87,11 +88,7 @@ namespace ToolkipCAD
             beam.earth_type = combox_kzdj.Text;
             beam.Drawing_Manage_id = combox_peizhi.SelectedValue!=null? combox_peizhi.SelectedValue.ToString():"";
             transf("SaveData");
-            //保存
-            //dynamic Ftag = Program.MainForm.Tag;
-            //StreamWriter sw = new StreamWriter($@"{Ftag.path}\project\1.tte",false,Encoding.UTF8);
-            //sw.WriteLine(JsonConvert.SerializeObject(beam));
-            //sw.Close();
+            
             this.Close(); 
         }
 
@@ -110,6 +107,7 @@ namespace ToolkipCAD
                     return;
                 }
             }
+            if(select_range.Text=="显示") transf("Range");
         }
 
         private void Line_Get_SelectedIndexChanged(object sender, EventArgs e)
@@ -123,7 +121,12 @@ namespace ToolkipCAD
                     Line_Get.Text = "显示";
                 }
             }
-            if (Line_Get.Text == "显示") transf("show_line");
+            if (Line_Get.Text == "显示")
+            {
+                wiff_Get.Text = "请选择";
+                Msg_Get.Text = "请选择";
+                transf("show_line");
+            }
         }
 
         private void wiff_Get_SelectedIndexChanged(object sender, EventArgs e)
@@ -137,7 +140,12 @@ namespace ToolkipCAD
                     wiff_Get.Text = "显示";
                 }
             }
-            if (wiff_Get.Text == "显示") transf("show_dims");
+            if (wiff_Get.Text == "显示")
+            {
+                Line_Get.Text = "请选择";
+                Msg_Get.Text = "请选择";
+                transf("show_dims");
+            }
         }
 
         private void Msg_Get_SelectedIndexChanged(object sender, EventArgs e)
@@ -151,7 +159,12 @@ namespace ToolkipCAD
                     Msg_Get.Text = "显示";
                 }
             }
-            if (Msg_Get.Text == "显示") transf("show_seat");
+            if (Msg_Get.Text == "显示")
+            {
+                Line_Get.Text = "请选择";
+                wiff_Get.Text = "请选择";
+                transf("show_seat");
+            }
         }
     }
 }

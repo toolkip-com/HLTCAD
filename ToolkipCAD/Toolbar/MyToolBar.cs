@@ -11,6 +11,8 @@ using System.Xml.Serialization;
 using System.IO;
 using System.Threading;
 using ToolkipCAD.fig;
+using ToolkipCAD.Models;
+using Newtonsoft.Json;
 
 namespace ToolkipCAD.Toolbar
 {
@@ -66,17 +68,19 @@ namespace ToolkipCAD.Toolbar
         //选择范围
         private void T1007()
         {
-            axMxDrawX1.DynWorldDraw += AxMxDrawX1_DynWorldDraw;
+            axMxDrawX1.DynWorldDraw += AxMxDrawX1_DynWorldDraw;//添加动态画框事件
             axMxDrawX1.AddLayer("tkbox");
             MxDrawPoint pt1 = axMxDrawX1.GetPoint(false,0,0,"开始坐标...") as MxDrawPoint;
             if (pt1 == null) return;
             MxDrawUiPrPoint scpt = new MxDrawUiPrPoint();
             scpt.message = "终点坐标...";
             scpt.basePoint = pt1;
+            scpt.setUseBasePt(false);
             var spdata = scpt.InitUserDraw("SelectRangeBox");
             spdata.SetPoint("BasePoint",pt1);
             if (scpt.go() != MCAD_McUiPrStatus.mcOk) return;
             spdata.Draw();
+            //放大
             axMxDrawX1.ZoomWindow(pt1.x, pt1.y, spdata.DragPoint.x, spdata.DragPoint.y);
             PublicValue = new
             {
@@ -85,6 +89,7 @@ namespace ToolkipCAD.Toolbar
                 Rx = spdata.DragPoint.x,
                 Ry = spdata.DragPoint.y
             };
+            //删除选择框
             MxDrawSelectionSet ss = new MxDrawSelectionSet();
             MxDrawResbuf filter = new MxDrawResbuf();
             filter.AddStringEx("tkbox",8);
@@ -93,6 +98,7 @@ namespace ToolkipCAD.Toolbar
             {
                 axMxDrawX1.Erase(ss.Item(i).ObjectID);
             }
+            //删掉画框的图层
             MxDrawDatabase database = axMxDrawX1.GetDatabase() as MxDrawDatabase;
             IMxDrawLayerTableRecord layer = database.GetLayerTable().GetAt("tkbox",false);
             if (layer != null) layer.Erase();
@@ -136,11 +142,11 @@ namespace ToolkipCAD.Toolbar
                 MessageBox.Show("请选择一条记录.");
                 return;
             }
-            Beam_XRrecord json = _Tree.GetBeamData(pro.xrecord_id) as Beam_XRrecord;
+            Beam_XRrecord json =_Tree.GetBeamData(pro.xrecord_id) as Beam_XRrecord;
             beam.Tag = new
             {
                 list = _Tree._HLT.Drawing_Manage_Tree,
-                json = json
+                json = JsonConvert.SerializeObject(json)
             };
             beam.beam.side_lines = new List<string>();
             beam.beam.dim_texts = new List<string>();

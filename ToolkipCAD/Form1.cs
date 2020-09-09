@@ -165,7 +165,10 @@ namespace ToolkipCAD
             }
             //点击记录显示图纸
             string src=_TestData.RecodeClick();
-            if(src!="") axMxDrawX1.OpenDwgFile(src);
+            if (src != "")
+            {
+                axMxDrawX1.OpenDwgFile(src);
+            }
         }
 
         private void tree_drawing_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)

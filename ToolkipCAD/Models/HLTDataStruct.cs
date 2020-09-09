@@ -131,17 +131,17 @@ namespace ToolkipCAD
         //数据存储
         public bool isStartBeam { get; set; }  //是否为首段梁
         public string pid { get; set; } //梁归属id，即连续梁的左侧梁
-        public Side_type type { get; set; } //梁类型 0主梁(KL)、1次梁(L)、2屋框梁(WKL)、3屋面次梁(WL)、4框支梁(KZL)、5连梁(LL)、6地梁(JL或DL)
+        public string type { get; set; } //梁类型 0主梁(KL)、1次梁(L)、2屋框梁(WKL)、3屋面次梁(WL)、4框支梁(KZL)、5连梁(LL)、6地梁(JL或DL)
         public string Concrete_type { get; set; }  //混凝土等级
         public string Rebar_type { get; set; }     //主筋等级
         public string Stirrup_type { get; set; }     //箍筋等级 
         public string earth_type { get; set; }     //抗震等级
         public List<Beam_Section> Sections { get; set; } //截面及标高
-        public List<Rebar_Dim> Public_Bar { get; set; } //通长钢筋
+        public List<Rebar_Dim> Public_Bar { get; set; } //通长钢筋 上
         public List<Rebar_Dim> Frame_Bar { get; set; } //架力钢筋
         public List<List<Rebar_Dim>> Left_Seat_Rebars { get; set; } //左支座钢筋 每排什么样的钢筋组合
         public List<List<Rebar_Dim>> Right_Seat_Rebars { get; set; } //右支座钢筋 每排什么样的钢筋组合
-        public List<List<Rebar_Dim>> Mid_Beam_Rebars { get; set; } //跨中钢筋 每排什么样的钢筋组合
+        public List<List<Rebar_Dim>> Mid_Beam_Rebars { get; set; } //跨中钢筋 每排什么样的钢筋组合 下
         public List<Stirrup_Dim> Stirrup_info { get; set; }  //箍筋直径与间距,采用list是为多种直径箍筋混用准备的数据结构        
         public List<Rebar_Dim> Waist_Bar { get; set; } //腰筋
         public List<Rebar_Dim> Twist_Bar { get; set; } //抗扭筋
@@ -161,6 +161,7 @@ namespace ToolkipCAD
 
     public class Rebar_Dim //主筋
     {
+        public int C { get; set; }//层
         public int n { get; set; }  //n根
         public double D { get; set; }  //直径
     }
@@ -169,8 +170,8 @@ namespace ToolkipCAD
     {
         public double D { get; set; }  //直径
         public int n { get; set; } //箍筋肢数
-        public double Sa { get; set; }  //箍筋非加密区间距
-        public double Se { get; set; }  //箍筋加密区间距
+        public double Sa { get; set; }  //箍筋非加密区间距200
+        public double Se { get; set; }  //箍筋加密区间距100
     }
 
 

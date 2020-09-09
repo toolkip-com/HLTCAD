@@ -101,13 +101,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Drawing_tree.cs" />
     <Compile Include="Models\GouZaoParam.cs" />
     <Compile Include="Models\HLTDataStruct.cs" />
     <Compile Include="Models\HLTDeserializeObject.cs" />
     <Compile Include="Models\HLTElement.cs" />
+    <Compile Include="Models\HLTSmart.cs" />
     <Compile Include="Models\Project_Tree.cs" />
-    <Compile Include="Models\TreeData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Toolbar\CommandList.cs" />

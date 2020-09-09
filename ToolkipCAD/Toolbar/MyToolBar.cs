@@ -181,6 +181,7 @@ namespace ToolkipCAD.Toolbar
                 }
                 if (kven == "Range")//显示范围
                 {
+                    if (beam.beam.pto != null)
                     axMxDrawX1.ZoomWindow(beam.beam.pto[0].X, beam.beam.pto[0].Y,
                         beam.beam.pto[1].X, beam.beam.pto[1].Y);
                 }
@@ -303,8 +304,15 @@ namespace ToolkipCAD.Toolbar
                     mxDrawSelection.Select(MCAD_McSelect.mcSelectionSetAll, sp, ep, filter);//获取此图层元素
                     for (int i = 1; i < mxDrawSelection.Count; i++)
                     {
+                        axMxDrawX1.TwinkeEnt(mxDrawSelection.Item(i).ObjectID);
+                        if (BeamType == "change_line")
+                            beam.beam.side_lines.Add(mxDrawSelection.Item(i).handle);
+                        if (BeamType == "change_dim")
+                            beam.beam.dim_texts.Add(mxDrawSelection.Item(i).handle);
+                        if (BeamType == "change_seat")
+                            beam.beam.seat_lines.Add(mxDrawSelection.Item(i).handle);
                         //选中元素
-                        axMxDrawX1.AddCurrentSelect(mxDrawSelection.Item(i).ObjectID, false, false);
+                        //axMxDrawX1.AddCurrentSelect(mxDrawSelection.Item(i).ObjectID, false, false);
                     }
                 }
             }

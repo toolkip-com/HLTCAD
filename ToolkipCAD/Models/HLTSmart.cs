@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using MxDrawXLib;
 
 namespace ToolkipCAD.Models
 {
@@ -43,7 +44,12 @@ namespace ToolkipCAD.Models
             }
             return re;
         }
+        public List<Text> SelectTextByBox(List<Text> texts,MxDrawPoint ps,Point3d pe)
+        {
+            List<Text> re = new List<Text>();
 
+            return re;
+        }
 
     }
 }

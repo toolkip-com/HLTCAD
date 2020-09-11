@@ -608,7 +608,7 @@ namespace ToolkipCAD
         //记录的点击事件
         public string RecodeClick()
         {
-            //Program.MainForm.axMxDrawX1.SaveDwgFile(Program.MainForm.axMxDrawX1.DwgFilePath);
+            Program.MainForm.axMxDrawX1.SaveDwgFile(Program.MainForm.axMxDrawX1.DwgFilePath);
             if (_TreeView.SelectedNode != null)
             {
                 if (Program.MainForm.Tag != null)

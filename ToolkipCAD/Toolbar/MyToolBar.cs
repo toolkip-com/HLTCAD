@@ -77,9 +77,11 @@ namespace ToolkipCAD.Toolbar
             scpt.basePoint = pt1;
             scpt.setUseBasePt(false);
             var spdata = scpt.InitUserDraw("SelectRangeBox");
+            axMxDrawX1.SetSysVarLong("ORTHOMODE", 0);
             spdata.SetPoint("BasePoint",pt1);
             if (scpt.go() != MCAD_McUiPrStatus.mcOk) return;
             spdata.Draw();
+            
             //放大
             axMxDrawX1.ZoomWindow(pt1.x, pt1.y, spdata.DragPoint.x, spdata.DragPoint.y);
             PublicValue = new
@@ -157,7 +159,7 @@ namespace ToolkipCAD.Toolbar
                 string kven = param.ToString();
                 axMxDrawX1.StopAllTwinkeEnt();
                 if (kven == "select_range")//选择范围
-                {
+                {                    
                     axMxDrawX1.SendStringToExecute("TK_PLSB_select");
                     return PublicValue;
                 }
@@ -286,9 +288,9 @@ namespace ToolkipCAD.Toolbar
             }
             else if (e.lType == 2 && (Control.ModifierKeys & Keys.Shift) == Keys.Shift)
             {
-                dynamic pt = PublicValue;
-                MxDrawPoint sp = new MxDrawPoint { x = pt.Lx, y = pt.Ly };
-                MxDrawPoint ep = new MxDrawPoint { x = pt.Rx, y = pt.Ry };
+                //dynamic pt = PublicValue;
+                //MxDrawPoint sp = new MxDrawPoint { x = pt.Lx, y = pt.Ly };
+                //MxDrawPoint ep = new MxDrawPoint { x = pt.Rx, y = pt.Ry };
                 mxDrawSelection = new MxDrawSelectionSet();
                 filter = new MxDrawResbuf();
                 point = new MxDrawPoint();
@@ -301,7 +303,7 @@ namespace ToolkipCAD.Toolbar
                     filter = new MxDrawResbuf();
                     mxDrawSelection = new MxDrawSelectionSet();
                     filter.AddStringEx(entity.Layer, 8);//过滤
-                    mxDrawSelection.Select(MCAD_McSelect.mcSelectionSetAll, sp, ep, filter);//获取此图层元素
+                    mxDrawSelection.Select(MCAD_McSelect.mcSelectionSetAll, null, null, filter);//获取此图层元素
                     for (int i = 1; i < mxDrawSelection.Count; i++)
                     {
                         axMxDrawX1.TwinkeEnt(mxDrawSelection.Item(i).ObjectID);

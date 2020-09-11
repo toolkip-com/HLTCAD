@@ -118,6 +118,7 @@ namespace ToolkipCAD
     public class Beam //一段梁
     {
         public string id { get; set; }  //梁编号GUID
+        public List<string> owner { get; set; }//复用项ID
         //数据采集
         public List<long> side_lines { get; set; }  //梁边线
         public List<long> left_seat_lines { get; set; }  //左支座线

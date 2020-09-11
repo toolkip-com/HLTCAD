@@ -90,9 +90,10 @@ namespace ToolkipCAD
             beam.Strup_type = combox_Lgj.Text;
             beam.earth_type = combox_kzdj.Text;
             beam.Drawing_Manage_id = combox_peizhi.SelectedValue != null ? combox_peizhi.SelectedValue.ToString() : "";
-            FillBeamStruct();
-            //transf("SaveData");            
-            //this.Close(); 
+            beam.beams = new List<Beam>();
+            FillBeamStruct();//beam识别
+            transf("SaveData"); //保存           
+            this.Close(); 
         }
 
         private void select_range_SelectedIndexChanged(object sender, EventArgs e)
@@ -219,7 +220,7 @@ namespace ToolkipCAD
                 //Program.MainForm.axMxDrawX1.DrawLine(pt2.x, pt2.y, pt2.x, pt1.y);
                 //Program.MainForm.axMxDrawX1.DrawLine(pt2.x, pt1.y, pt1.x, pt1.y);
                 select.Select(MCAD_McSelect.mcSelectionSetCrossing, pt1, pt2, new MxDrawResbuf());
-                MxDrawLine drawEntity; MxDrawPoint pst, ped;
+                MxDrawLine drawEntity; MxDrawPoint pst;
                 List<Text> text3 = new List<Text>();
                 for (int i = 0; i < select.Count; i++)
                 {
@@ -237,6 +238,7 @@ namespace ToolkipCAD
                         }, item.Position);
                         //第四步：从第三步结果中逐行用关键字匹配出参数信息
                         Beam beams = new Beam();
+                        beams.owner = new List<string>();
                         beams.Sections = new List<Beam_Section>();
                         beams.Stirrup_info = new List<Stirrup_Dim>();
                         beams.Public_Bar = new List<Rebar_Dim>();
@@ -244,6 +246,7 @@ namespace ToolkipCAD
                         beams.Waist_Bar = new List<Rebar_Dim>();
                         beams.Twist_Bar = new List<Rebar_Dim>();
                         string kval = "";
+                        
                         for (int k = 0; k < text3.Count; k++)
                         {
                             //KL14(1A) 300X400
@@ -251,6 +254,7 @@ namespace ToolkipCAD
                             if (kval != "")
                             {
                                 beams.type = kval;//(Side_type)Enum.Parse(typeof(Side_type),kval);
+                                beams.owner= GetItemAsync(text3[k].TextString);
                             }
                             //梁截面
                             kval = Regex.Match(text3[k].TextString, @"(\d{2,4}~)?(\d{2,4})(x|X)(\d{2,4})(~\d{2,4})?").Value;
@@ -415,14 +419,17 @@ namespace ToolkipCAD
                                 kval = kval.Replace("(", "");
                                 kval = kval.Replace(")", "");
                                 beams.Sections = beams.Sections.Select(x => { x.H = Convert.ToDouble(kval); return x; }).ToList();
-                            }
+                            }                            
+                            
 
                         }
                         beam.beams.Add(beams);
                     }
                 }
             }
-            #endregion
+            //其他操作
+
+            #endregion over
         }
         public string SplitStr(string str, int start, string regex)
         {
@@ -435,6 +442,33 @@ namespace ToolkipCAD
                 temp = str.Substring(start, str.IndexOf(regex[1]) - start);
             return temp;
 
+        }
+        public List<string> GetItemAsync(string kval)
+        {
+            //找到复用梁
+            List<string> vs = new List<string>();
+            MxDrawSelectionSet select = new MxDrawSelectionSet();
+            MxDrawResbuf filter = new MxDrawResbuf();
+            filter.AddStringEx("TEXT,MTEXT",5020);
+            select.Select2(MCAD_McSelect.mcSelectionSetAll,null,null,null,filter);
+            for (int i = 0; i < select.Count; i++)
+            {
+                MxDrawEntity entity = select.Item(i);
+                if (entity == null) continue;
+                if (entity.ObjectName == "McDbText")
+                {
+                    MxDrawText tx = entity as MxDrawText;
+                    if (tx.TextString == "L23(1)")
+                    {
+
+                    }
+                    if (tx.TextString.Trim()!=""&&kval.Contains(tx.TextString))
+                    {
+                        vs.Add(tx.handle);
+                    }
+                }
+            }
+            return vs;
         }
     }
 }

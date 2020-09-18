@@ -120,15 +120,15 @@ namespace ToolkipCAD
         public string id { get; set; }  //梁编号GUID
         public List<string> owner { get; set; }//复用项ID
         //数据采集
-        public List<long> side_lines { get; set; }  //梁边线
-        public List<long> left_seat_lines { get; set; }  //左支座线
-        public List<long> right_seat_lines { get; set; }  //右支座线
-        public List<long> turn_lines { get; set; }  //折梁转折线
-        public List<long> globe_dim { get; set; } //集中标注及线
-        public List<long> public_frame_dim { get; set; } //原位：通长及架力钢筋标注
-        public List<long> left_seat_dim { get; set; } //原位：左支座标注
-        public List<long> right_seat_dim { get; set; } //原位：右支座标注
-        public List<long> mid_dim { get; set; } //原位：跨中标注，含主筋、箍筋、腰筋
+        public List<string> side_lines { get; set; }  //梁边线
+        public List<string> left_seat_lines { get; set; }  //左支座线
+        public List<string> right_seat_lines { get; set; }  //右支座线
+        public List<string> turn_lines { get; set; }  //折梁转折线
+        public List<string> globe_dim { get; set; } //集中标注及线
+        public List<string> public_frame_dim { get; set; } //原位：通长及架力钢筋标注
+        public List<string> left_seat_dim { get; set; } //原位：左支座标注
+        public List<string> right_seat_dim { get; set; } //原位：右支座标注
+        public List<string> mid_dim { get; set; } //原位：跨中标注，含主筋、箍筋、腰筋
         //数据存储
         public bool isStartBeam { get; set; }  //是否为首段梁
         public string pid { get; set; } //梁归属id，即连续梁的左侧梁

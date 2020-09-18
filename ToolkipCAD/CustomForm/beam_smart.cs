@@ -92,8 +92,8 @@ namespace ToolkipCAD
             beam.Drawing_Manage_id = combox_peizhi.SelectedValue != null ? combox_peizhi.SelectedValue.ToString() : "";
             beam.beams = new List<Beam>();
             FillBeamStruct();//beam识别
-            transf("SaveData"); //保存           
-            this.Close(); 
+            //transf("SaveData"); //保存           
+            //this.Close(); 
         }
 
         private void select_range_SelectedIndexChanged(object sender, EventArgs e)
@@ -204,14 +204,14 @@ namespace ToolkipCAD
                 pt = item.Position;
                 MxDrawPoint pt1 = new MxDrawPoint
                 {
-                    x = pt.X - 2 * item.Height,
-                    y = pt.Y - 2 * item.Height,
+                    x = pt.X - 1 * item.Height,
+                    y = pt.Y - 1 * item.Height,
                     z = pt.Z
                 };
                 MxDrawPoint pt2 = new MxDrawPoint
                 {
-                    x = pt.X + 2 * item.Height,
-                    y = pt.Y + 2 * item.Height,
+                    x = pt.X + 1 * item.Height,
+                    y = pt.Y + 1 * item.Height,
                     z = pt.Z
                 };
                 //Program.MainForm.axMxDrawX1.DrawLine(pt.X, pt.Y, pt.X+1, pt.Y+1);
@@ -220,7 +220,7 @@ namespace ToolkipCAD
                 //Program.MainForm.axMxDrawX1.DrawLine(pt2.x, pt2.y, pt2.x, pt1.y);
                 //Program.MainForm.axMxDrawX1.DrawLine(pt2.x, pt1.y, pt1.x, pt1.y);
                 select.Select(MCAD_McSelect.mcSelectionSetCrossing, pt1, pt2, new MxDrawResbuf());
-                MxDrawLine drawEntity; MxDrawPoint pst;
+                MxDrawLine drawEntity; MxDrawPoint pst, ped;
                 List<Text> text3 = new List<Text>();
                 for (int i = 0; i < select.Count; i++)
                 {
@@ -228,8 +228,9 @@ namespace ToolkipCAD
                     //第三步：遍历第二步的结果，逐一按下面计算，例如第n个结果
                     if (drawEntity != null && drawEntity.ObjectName == "McDbLine")
                     {
+                        Program.MainForm.axMxDrawX1.TwinkeEnt(drawEntity.ObjectID);
                         pst = drawEntity.GetStartPoint();
-                        //ped =drawEntity.GetEndPoint();
+                        ped = drawEntity.GetEndPoint();
                         text3 = smart.SelectTextByBox(texts, new Point3d
                         {
                             X = pst.x,
@@ -246,7 +247,7 @@ namespace ToolkipCAD
                         beams.Waist_Bar = new List<Rebar_Dim>();
                         beams.Twist_Bar = new List<Rebar_Dim>();
                         string kval = "";
-                        
+
                         for (int k = 0; k < text3.Count; k++)
                         {
                             //KL14(1A) 300X400
@@ -254,7 +255,7 @@ namespace ToolkipCAD
                             if (kval != "")
                             {
                                 beams.type = kval;//(Side_type)Enum.Parse(typeof(Side_type),kval);
-                                beams.owner= GetItemAsync(text3[k].TextString);
+                                beams.owner = GetItemAsync(text3[k].TextString);
                             }
                             //梁截面
                             kval = Regex.Match(text3[k].TextString, @"(\d{2,4}~)?(\d{2,4})(x|X)(\d{2,4})(~\d{2,4})?").Value;
@@ -339,7 +340,7 @@ namespace ToolkipCAD
                                         {
                                             int c = 0;
                                             if (sp2.Count() > 1) c = f + 1;
-                                            if (v==1)
+                                            if (v == 1)
                                                 Bdim.Add(new Rebar_Dim
                                                 {
                                                     C = c,
@@ -347,12 +348,12 @@ namespace ToolkipCAD
                                                     D = Convert.ToInt32(sp3[1])
                                                 });
                                             else
-                                            beams.Public_Bar.Add(new Rebar_Dim
-                                            {
-                                                C = c,
-                                                n = Convert.ToInt32(sp3[0]),
-                                                D = Convert.ToInt32(sp3[1])
-                                            });
+                                                beams.Public_Bar.Add(new Rebar_Dim
+                                                {
+                                                    C = c,
+                                                    n = Convert.ToInt32(sp3[0]),
+                                                    D = Convert.ToInt32(sp3[1])
+                                                });
                                         }
                                         else
                                         {
@@ -419,18 +420,79 @@ namespace ToolkipCAD
                                 kval = kval.Replace("(", "");
                                 kval = kval.Replace(")", "");
                                 beams.Sections = beams.Sections.Select(x => { x.H = Convert.ToDouble(kval); return x; }).ToList();
-                            }                            
-                            
+                            }
+
 
                         }
                         beam.beams.Add(beams);
+                        beams.side_lines = new List<string>();
+                        //识别梁
+                        //1.集中标注指示线两个端点分别找到垂直距离最近的梁线，两者最近的就是第一根梁线L1
+
+                        MxDrawLine LT1;
+                        MxDrawLine L1 = GetLineForRange(drawEntity);
+                        beams.side_lines.Add(L1.handle);
+                        //L1 = Program.MainForm.axMxDrawX1.HandleToObject("61FBA") as MxDrawLine;
+                        LT1 = L1;
+                        for (int c1 = 0; c1 < 2; c1++)
+                        {
+                            //2.L1有两个点P1,P2，先从P1开始如下步骤，完了之后再P2
+                            //3.找距离P1点2000内的支座线，并且L1与支座线交点距离P1小于300,若有结果则按3.2若无结果按3.1                        
+                            L1 = LT1;
+                            Program.MainForm.axMxDrawX1.TwinkeEnt(L1.ObjectID);
+                            int cs = 0;
+                            do
+                            {
+                                if (c1 == 1)
+                                {
+                                    MxDrawPoint temp = L1.StartPoint;
+                                    L1.StartPoint = L1.EndPoint;
+                                    L1.EndPoint = temp;
+                                }
+                                MxDrawPolyline seat = GetSeatForRange(L1.EndPoint, L1.StartPoint);
+                                MxDrawLine L2 = new MxDrawLine();
+                                MxDrawLine L2s = new MxDrawLine();
+                                MxDrawLine Rline = new MxDrawLine();
+                                if (seat.handle != "0")
+                                {
+                                    //有结果3.2
+                                    L2 = GetparallelLine(L1);
+                                    Rline = GetXpoint(L1.EndPoint, L1.StartPoint, seat);
+                                    L1 = Rline;
+                                    beams.side_lines.Add(L2.handle);
+                                    beams.side_lines.Add(Rline.handle);
+                                }
+                                else
+                                {
+                                    //无结果3.1
+                                    L2s = GetMoreLine(L1);
+                                    L2 = GetparallelLine(L1);
+                                    L1 = L2s;
+                                    beams.side_lines.Add(L2s.handle);
+                                }
+                                //3.1 找到另一根梁线L2，L2的两个端点之一与P1最近且距离小于600且两线角度差别不超过2度，找到后凭L2另一个端点重复3       
+                                /*3.2 说明一段梁结束，去寻找这段梁已识别梁线的平行线，即水平距离小于梁宽的1.5倍且两线相关，
+                                再寻找与这些梁线共点且角度差别小于40度的梁线，找完写入beam；
+                                然后用3的支座线与L1求到最远相关交点P3，求与P3最近的梁线，且角度差别小于40度，用这根新梁线远端点作为P1重复3
+                                */
+                                cs++;
+                                //Program.MainForm.axMxDrawX1.StopAllTwinkeEnt();
+                                Program.MainForm.axMxDrawX1.TwinkeEnt(L1.ObjectID);
+                                Program.MainForm.axMxDrawX1.TwinkeEnt(L2s.ObjectID);
+                                Program.MainForm.axMxDrawX1.TwinkeEnt(seat.ObjectID);
+                                Program.MainForm.axMxDrawX1.TwinkeEnt(L2.ObjectID);
+                                Program.MainForm.axMxDrawX1.TwinkeEnt(Rline.ObjectID);
+                                if (cs > 10) break;
+                            } while (L1.handle != "0");
+                        }
+                        //break;
                     }
+
                 }
             }
-            //其他操作
-
             #endregion over
         }
+        //字符串截取
         public string SplitStr(string str, int start, string regex)
         {
             string temp = "0";
@@ -443,14 +505,14 @@ namespace ToolkipCAD
             return temp;
 
         }
+        //找到复用梁
         public List<string> GetItemAsync(string kval)
         {
-            //找到复用梁
             List<string> vs = new List<string>();
             MxDrawSelectionSet select = new MxDrawSelectionSet();
             MxDrawResbuf filter = new MxDrawResbuf();
-            filter.AddStringEx("TEXT,MTEXT",5020);
-            select.Select2(MCAD_McSelect.mcSelectionSetAll,null,null,null,filter);
+            filter.AddStringEx("TEXT,MTEXT", 5020);
+            select.Select2(MCAD_McSelect.mcSelectionSetAll, null, null, null, filter);
             for (int i = 0; i < select.Count; i++)
             {
                 MxDrawEntity entity = select.Item(i);
@@ -458,17 +520,264 @@ namespace ToolkipCAD
                 if (entity.ObjectName == "McDbText")
                 {
                     MxDrawText tx = entity as MxDrawText;
-                    if (tx.TextString == "L23(1)")
-                    {
-
-                    }
-                    if (tx.TextString.Trim()!=""&&kval.Contains(tx.TextString))
+                    if (tx.TextString.Trim() != "" && kval.Contains(tx.TextString))
                     {
                         vs.Add(tx.handle);
                     }
                 }
             }
             return vs;
+        }
+        //获取梁线
+        public MxDrawLine GetLineForRange(MxDrawLine et)
+        {
+            MxDrawPoint pt = et.GetStartPoint();
+            MxDrawPoint ept = et.GetEndPoint();
+            MxDrawLayerTable layer = (Program.MainForm.axMxDrawX1.GetDatabase() as MxDrawDatabase).GetLayerTable();
+            MxDrawSelectionSet collect = new MxDrawSelectionSet();
+            MxDrawResbuf filter = new MxDrawResbuf();
+            MxDrawLine entity;
+            MxDrawLine result = new MxDrawLine();
+            double distance = 100000000;
+            collect.Select(MCAD_McSelect.mcSelectionSetAll, null, null, filter);
+            for (int i = 0; i < collect.Count; i++)
+            {
+                entity = collect.Item(i) as MxDrawLine;
+                if (entity == null) continue;
+                MxDrawLayerTableRecord dd = layer.GetAt(entity.Layer);
+                if (entity.ObjectName == "McDbLine" && entity.handle != et.handle && dd.Color.colorIndex != 1)
+                {
+                    //double rs1 = MathSience.pointToLineDistance(entity.GetStartPoint(), entity.GetEndPoint(), pt.x, pt.y);
+                    //double rs2 = MathSience.pointToLineDistance(entity.GetStartPoint(), entity.GetEndPoint(), ept.x, ept.y);
+                    double rs1 = MathSience.DistanceForPointToABLine(pt.x, pt.y, entity.GetStartPoint(), entity.GetEndPoint());
+                    double rs2 = MathSience.DistanceForPointToABLine(ept.x, ept.y, entity.GetStartPoint(), entity.GetEndPoint());
+                    if (rs1 <= distance)
+                    {
+                        distance = rs1;
+                        result = entity;
+                    }
+                    if (rs2 <= distance)
+                    {
+                        distance = rs2;
+                        result = entity;
+                    }
+                }
+            }
+            return result;
+        }
+        //获取支座
+        public MxDrawPolyline GetSeatForRange(MxDrawPoint pt, MxDrawPoint spt)
+        {
+            double range1 = 2000, range2 = 300;
+            MxDrawSelectionSet collect = new MxDrawSelectionSet();
+            MxDrawResbuf filter = new MxDrawResbuf();
+            MxDrawLayerTable layer = (Program.MainForm.axMxDrawX1.GetDatabase() as MxDrawDatabase).GetLayerTable();
+            MxDrawPoint start = new MxDrawPoint
+            {
+                x = pt.x + range1,
+                y = pt.y + range1,
+                z = pt.z
+            };
+            MxDrawPoint end = new MxDrawPoint
+            {
+                x = pt.x - range1,
+                y = pt.y - range1,
+                z = pt.z
+            };
+            //Program.MainForm.axMxDrawX1.DrawLine(start.x, start.y, start.x, start.y);
+            //Program.MainForm.axMxDrawX1.DrawLine(start.x, start.y, start.x, end.y);
+            //Program.MainForm.axMxDrawX1.DrawLine(start.x, end.y, end.x, end.y);
+            //Program.MainForm.axMxDrawX1.DrawLine(end.x, end.y, end.x, start.y);
+            //Program.MainForm.axMxDrawX1.DrawLine(end.x, start.y, start.x, start.y);
+            collect.Select(MCAD_McSelect.mcSelectionSetCrossing, start, end, filter);
+            MxDrawEntity entity;
+            //MxDrawLayerTable layer = (Program.MainForm.axMxDrawX1.GetDatabase() as MxDrawDatabase).GetLayerTable();
+            //MxDrawLayerTableRecord dd;
+            for (int i = 0; i < collect.Count; i++)
+            {
+                entity = collect.Item(i);
+                if (entity == null) continue;
+                if (entity.ObjectName == "McDbPolyline")
+                {
+                    MxDrawPolyline polyline = entity as MxDrawPolyline;
+                    MxDrawLayerTableRecord dd = layer.GetAt(entity.Layer);
+                    if (dd.Color.colorIndex != 9)
+                    {
+                        MxDrawPoint st = polyline.GetStartPoint();
+                        MxDrawPoint et = polyline.GetEndPoint();
+                        if (st.x == et.x && st.y == et.y)
+                            return polyline;
+                    }
+
+
+                }
+            }
+            return new MxDrawPolyline();
+        }
+        //获取平行线
+        public MxDrawLine GetparallelLine(MxDrawLine line)
+        {
+            double range = 600, range2 = 600;
+            MxDrawPoint start = line.GetStartPoint();
+            MxDrawPoint end = line.GetEndPoint();
+            MxDrawSelectionSet select = new MxDrawSelectionSet();
+            MxDrawResbuf filter = new MxDrawResbuf();
+            MxDrawLayerTable layer = (Program.MainForm.axMxDrawX1.GetDatabase() as MxDrawDatabase).GetLayerTable();
+            double angle = MathSience.GetAngle2(start, end);
+            if (angle < 3 && angle > -2)
+                range = 0;
+            else
+                range2 = 0;
+            select.Select(MCAD_McSelect.mcSelectionSetCrossing, new MxDrawPoint
+            {
+                x = start.x - range,
+                y = start.y - range2,
+                z = start.z
+            }, new MxDrawPoint
+            {
+                x = end.x + range,
+                y = end.y + range2,
+                z = end.z
+            }, filter);
+            //Program.MainForm.axMxDrawX1.DrawLine(end.x - range, end.y - range2, end.x - range, end.y+range2);
+            //Program.MainForm.axMxDrawX1.DrawLine(end.x - range, end.y + range2, end.x + range, end.y + range2);
+            //Program.MainForm.axMxDrawX1.DrawLine(end.x + range, end.y + range2, end.x + range, end.y - range2);
+            //Program.MainForm.axMxDrawX1.DrawLine(end.x + range, end.y - range2, end.x - range, end.y - range2);
+            for (int i = 0; i < select.Count; i++)
+            {
+                MxDrawLine entity = select.Item(i) as MxDrawLine;
+                if (entity == null) continue;
+                if (select.Item(i).ObjectName == "McDbLine")
+                {
+                    MxDrawLayerTableRecord dd = layer.GetAt(entity.Layer);
+                    if (line.handle != entity.handle && dd.Color.colorIndex != 1)
+                    {
+                        if (MathSience.parallel(entity.GetStartPoint(), entity.GetEndPoint(), line.GetStartPoint(), line.GetEndPoint()))
+                        {
+                            PointF point = MathSience.point_intersection(line.GetStartPoint(), line.GetEndPoint(), entity.GetStartPoint(), entity.GetEndPoint());
+                            //if (point.X==0&&point.Y==0)
+                            {
+                                var c1 = entity.GetStartPoint();
+                                var c2 = entity.GetEndPoint();
+                                //if (MathSience.GetPointIsInLine(point, c1, c2, 2))
+                                {
+                                    return entity;
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+            return new MxDrawLine();
+        }
+        //获取相邻的梁线
+        public MxDrawLine GetMoreLine(MxDrawLine line)
+        {
+            int range = 600;
+            MxDrawSelectionSet collect = new MxDrawSelectionSet();
+            MxDrawResbuf filter = new MxDrawResbuf();
+            MxDrawPoint start = line.GetStartPoint();
+            MxDrawPoint end = line.GetEndPoint();
+            MxDrawLayerTable layer = (Program.MainForm.axMxDrawX1.GetDatabase() as MxDrawDatabase).GetLayerTable();
+            collect.Select(MCAD_McSelect.mcSelectionSetCrossing, new MxDrawPoint
+            {
+                x = end.x + range,
+                y = end.y + range,
+                z = end.z
+            }, new MxDrawPoint
+            {
+                x = end.x - range,
+                y = end.y - range,
+                z = end.z
+            }, filter);
+            //获取线判断角度<2
+            for (int i = 0; i < collect.Count; i++)
+            {
+                MxDrawLine entity = collect.Item(i) as MxDrawLine;
+                if (entity == null) continue;
+                if (entity.handle == line.handle) continue;
+                if (entity.ObjectName == "McDbLine")
+                {
+                    MxDrawLayerTableRecord cd = layer.GetAt(entity.Layer);
+                    if (cd.Color.colorIndex != 1)
+                    {
+                        double angleLine = MathSience.GetAngle(line.EndPoint, entity.StartPoint, entity.EndPoint);
+                        if (angleLine < 2)
+                        {
+                            double angle = MathSience.GetAngle2(line.GetStartPoint(), line.GetEndPoint());
+                            double angle2 = MathSience.GetAngle2(entity.GetStartPoint(), entity.GetEndPoint());
+                            if ((angle < 3 && angle > -2) || Math.Abs(Math.Round(angle)) == 180)//左右
+                            {
+                                if (angle2 < 3 && angle2 > -2)
+                                    if (MathSience.GetDistance(entity.StartPoint.x, entity.StartPoint.y, entity.EndPoint.x, entity.EndPoint.y) > 100)
+                                        return entity;
+                            }
+                            if ((angle > 80 && angle < 95) || (angle < -80 && angle > -95))//上下
+                            {
+                                if ((angle2 > 80 && angle2 < 95) || (angle2 < -80 && angle2 > -95))
+                                {
+                                    if (MathSience.GetDistance(entity.StartPoint.x, entity.StartPoint.y, entity.EndPoint.x, entity.EndPoint.y) > 100)
+                                        return entity;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return new MxDrawLine();
+        }
+        //支座与L1最远交点共点梁线
+        public MxDrawLine GetXpoint(MxDrawPoint pts, MxDrawPoint pte, MxDrawPolyline seat)
+        {
+            MxDrawPoints pty = new MxDrawPoints();
+            MxDrawSelectionSet collect = new MxDrawSelectionSet();
+            for (int i = 0; i < seat.NumVerts; i++)
+            {
+                MxDrawPoint temp1 = seat.GetPointAt(i);
+                temp1.x = Math.Round(temp1.x, 6);
+                temp1.y = Math.Round(temp1.y, 6);
+                double angle = MathSience.GetAngle2(pts, pte);
+                if ((angle < 3 && angle > -2) || Math.Round(Math.Abs(angle)) == 180)//左右
+                    if (Math.Round(pts.x, 6) != temp1.x && Math.Round(pte.x, 6) != temp1.x)
+                    {
+                        pty.Add2(temp1);
+                    }
+                if ((angle > 80 && angle < 95) || (angle < -80 && angle > -95))//上下
+                    if (Math.Round(pts.y, 6) != temp1.y && Math.Round(pte.y, 6) != temp1.y)
+                    {
+                        pty.Add2(temp1);
+                    }
+            }
+            if (pty.Count > 1)
+            {
+                PointF ptx = MathSience.point_intersection(pts, pte, pty.Item(0), pty.Item(1));
+                collect.AllSelect();
+                for (int i = 0; i < collect.Count; i++)
+                {
+                    MxDrawLine line = collect.Item(i) as MxDrawLine;
+                    if (line == null) continue;
+                    if (line.ObjectName == "McDbLine")
+                    {
+                        MxDrawPoint t1 = line.StartPoint;
+                        MxDrawPoint t2 = line.EndPoint;
+                        MxDrawPoint tp = new MxDrawPoint
+                        {
+                            x = ptx.X,
+                            y = ptx.Y
+                        };
+                        if (Math.Abs(Math.Round(t1.x) - ptx.X) < 1.5 && Math.Abs(Math.Round(t1.y) - ptx.Y) < 1.5)
+                        {
+                            return line;
+                        }
+                        else if (Math.Abs(Math.Round(t2.x) - ptx.X) < 1.5 && Math.Abs(Math.Round(t2.y) - ptx.Y) < 1.5)
+                        {
+                            return line;
+                        }
+                    }
+                }
+            }
+            return new MxDrawLine();
         }
     }
 }

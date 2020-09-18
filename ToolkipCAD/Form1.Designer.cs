@@ -234,6 +234,7 @@
             this.axMxDrawX1.Size = new System.Drawing.Size(1152, 658);
             this.axMxDrawX1.TabIndex = 4;
             this.axMxDrawX1.ImplementCommandEvent += new AxMxDrawXLib._DMxDrawXEvents_ImplementCommandEventEventHandler(this.axMxDrawX1_ImplementCommandEvent);
+            this.axMxDrawX1.MouseEvent += new AxMxDrawXLib._DMxDrawXEvents_MouseEventEventHandler(this.axMxDrawX1_MouseEvent);
             this.axMxDrawX1.MxKeyUp += new AxMxDrawXLib._DMxDrawXEvents_MxKeyUpEventHandler(this.axMxDrawX1_MxKeyUp_1);
             this.axMxDrawX1.InitComplete += new System.EventHandler(this.axMxDrawX1_InitComplete);
             // 

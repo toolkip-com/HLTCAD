@@ -24,6 +24,7 @@ namespace ToolkipCAD.Toolbar
             axMx.RegistUserCustomCommand("TK_OutObj", 1005);//退出操作
             axMx.RegistUserCustomCommand("TK_PLSB", 1006);//梁批量识别
             axMx.RegistUserCustomCommand("TK_PLSB_select", 1007);//梁批量识别-选择
+            axMx.RegistUserCustomCommand("MyTest",11);//测试命令
         }
     }
 }

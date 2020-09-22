@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
@@ -17,6 +18,7 @@ namespace ToolkipCAD
     {
         private List<GouZaoParam> _tab1List;//钢筋数组
         private List<Waist> _waistList;//腰筋数组
+        private List<T2Values2> _Bims;
         private int StartIndex = 0;
         public delegate void Transf(dynamic param);
         public event Transf transf;
@@ -24,24 +26,162 @@ namespace ToolkipCAD
         {
             InitializeComponent();
             //表格的事件/属性
-            this.Grid_Gj.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(DgvGradeInfoRowPostPaint);
+            //this.Grid_Gj.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(DgvGradeInfoRowPostPaint);
             this.dataGrid_Side.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(SideInfoRowPostPaint);
-            this.Combo_hnt.SelectedIndexChanged += Combo_hnt_SelectedIndexChanged;
-            this.combo_gj.SelectedIndexChanged += Combo_hnt_SelectedIndexChanged;
-            this.Grid_Gj.TopLeftHeaderCell.Value = @"mm\lv";
+            //this.Grid_Gj.TopLeftHeaderCell.Value = @"钢筋种类";
             this.dataGrid_Side.TopLeftHeaderCell.Value = @"b\hw";
             this.dataGrid_Side.AutoGenerateColumns = true;
             this.dataGrid_Side.ColumnAdded += DataGrid_Side_ColumnAdded;
-
+            this.rowMergaView1.ColumnAdded += RowMergaView1_ColumnAdded;//tab1列事件
+            this.rowMergaView1.CellValueChanged += RowMergaView1_CellValueChanged;//单元格编辑事件1
+            this.dataGridView1.CellValueChanged += DataGridView1_CellValueChanged;
+            StructGridView();//构建rowMergaView1
+            _Bims = new List<T2Values2>();
+            structDataGrid2();//第二个表格
         }
 
+        private void DataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 0) return;
+            Regex regex = new Regex("^[0-9]{1,4}(.[0-9]{1,3})?d?$");
+            string value = this.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+            if (regex.IsMatch(value))
+            {
+                value = value.Replace("d", "");
+                double c = Convert.ToDouble(value);
+                this.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = $"{value}d";
+                var temp = _Bims.Find(x=>x.X == e.ColumnIndex && x.Y == e.RowIndex);
+                if (temp == null)
+                {
+                    _Bims.Add(new T2Values2
+                    {
+                        CValue=this.dataGridView1.Columns[e.ColumnIndex].Name,
+                        RValue=Convert.ToDouble(this.dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString()),
+                        Value=c,
+                        X=e.ColumnIndex,
+                        Y=e.RowIndex
+                    });
+                }
+                else
+                {
+                    _Bims = _Bims.Select(x=>
+                    {
+                        if (x.X == e.ColumnIndex && x.Y == e.RowIndex)
+                        {
+                            x.Value = c;
+                        }
+                        return x;
+                    }).ToList();
+                }
+                return;
+            }
+            this.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "0d";
+        }
+        private void structDataGrid2()
+        {
+            this.dataGridView1.Rows.Add(17);
+            double[] RowHeader = {4,6,6.5,8,10,12,14,16,18,20,22,25,28,32,36,40,50 };
+            for (int i = 0; i < this.dataGridView1.Rows.Count; i++)
+            {
+                this.dataGridView1.Rows[i].Cells[0].Value = RowHeader[i];
+            }
+            this.dataGridView1.Columns[0].ReadOnly = true;
+            for (int i = 0; i < this.dataGridView1.Columns.Count; i++)
+            {
+                this.dataGridView1.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+            //this.dataGridView1.AutoResizeRowHeadersWidth(DataGridViewRowHeadersWidthSizeMode.DisableResizing);
+            this.dataGridView1.RowsDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        }
+        private void RowMergaView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            Regex regex = new Regex("^[0-9]{1,4}d?$");
+            string value = this.rowMergaView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+            if (value.Trim() != "")
+            {
+                if (regex.IsMatch(value))
+                {
+                    //if (value.IndexOf('d') == -1)
+                    {
+                        value = value.Replace("d", "");
+                        double c = Convert.ToDouble(value);
+                        this.rowMergaView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = $"{value}d";
+                        _tab1List = _tab1List.Select(x =>
+                        {
+                            if (x.x == e.ColumnIndex && x.y == e.RowIndex)
+                            {
+                                x.Value = c;
+                            }
+                            return x;
+                        }).ToList();
+                    }
+                    return;
+                }
+            }
+            this.rowMergaView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "0d";
+        }
+        private void RowMergaView1_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
+        {
+            if (e.Column.Index < 2)
+                e.Column.Width = 60;
+            else e.Column.Width = 50;
+        }
+        private void StructGridView()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("钢筋种类");
+            dt.Columns.Add("抗震等级");
+            for (int i = 20; i < 65; i += 5)
+            {
+                if (i == 60)
+                {
+                    dt.Columns.Add($">={i}");
+                    break;
+                }
+                dt.Columns.Add($"C{i}");
+            }
+            dt.Rows.Add("HPB300", "一级");
+            dt.Rows.Add("HPB300", "二级");
+            dt.Rows.Add("HPB300", "三级");
+            dt.Rows.Add("HPB300", "四级");
+            dt.Rows.Add("HRB335\nHRBF335", "一级");
+            dt.Rows.Add("HRB335\nHRBF335", "二级");
+            dt.Rows.Add("HRB335\nHRBF335", "三级");
+            dt.Rows.Add("HRB335\nHRBF335", "四级");
+            dt.Rows.Add("HRB400\nHRBF400\nRRB400", "一级");
+            dt.Rows.Add("HRB400\nHRBF400\nRRB400", "二级");
+            dt.Rows.Add("HRB400\nHRBF400\nRRB400", "三级");
+            dt.Rows.Add("HRB400\nHRBF400\nRRB400", "四级");
+            dt.Rows.Add("HRB500\nHRBF500", "一级");
+            dt.Rows.Add("HRB500\nHRBF500", "二级");
+            dt.Rows.Add("HRB500\nHRBF500", "三级");
+            dt.Rows.Add("HRB500\nHRBF500", "四级");
+
+            this.rowMergaView1.DataSource = dt;
+            this.rowMergaView1.ColumnHeadersHeight = 40;
+            this.rowMergaView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            this.rowMergaView1.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            this.rowMergaView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
+            this.rowMergaView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.rowMergaView1.MergeColumnNames.Add("钢筋种类");
+            this.rowMergaView1.Columns[0].ReadOnly = true;
+            this.rowMergaView1.Columns[1].ReadOnly = true;
+            this.rowMergaView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            this.rowMergaView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
+            this.rowMergaView1.RowTemplate.Height=25;
+            for (int i = 0; i < this.rowMergaView1.Columns.Count; i++)
+            {
+                this.rowMergaView1.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+            this.rowMergaView1.RowsDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        }
         private void DataGrid_Side_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
         {
             //int index = e.Column.Index*50+200;
             //e.Column.HeaderText = index.ToString();
             //e.Column.Name = index.ToString();
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
             //确认按钮
@@ -49,8 +189,6 @@ namespace ToolkipCAD
             //record.name = box_Name.Text;
             //JsonParam JPram = new JsonParam();
             T4Values t4 = new T4Values();
-            T2Values t2 = new T2Values();
-            T1Values t1 = new T1Values();
             T3Values t3 = new T3Values();
             //保存表格信息
             Gouzao gouzao = new Gouzao();
@@ -58,23 +196,10 @@ namespace ToolkipCAD
             dynamic edit = this.Tag;
             if (edit.type != "Edit") gouzao.TName = Guid.NewGuid().ToString();
             else gouzao.TName = edit.id;
-            List<T2Value> t2Values= new List<T2Value>
-            {
-                new T2Value{Value1=double.Parse(t1_t1.Text),Value2=double.Parse(t1_c2.Text),Value3=double.Parse(t1_t3.Text),Type="HPB300"},
-                new T2Value{Value1=double.Parse(t2_t1.Text),Value2=double.Parse(t2_c2.Text),Value3=double.Parse(t2_t3.Text),Type="HRB335,HRBF335"},
-                new T2Value{Value1=double.Parse(t3_t1.Text),Value2=double.Parse(t3_c2.Text),Value3=double.Parse(t3_t3.Text),Type="HRB400,HRBF400,RRB400"},
-                new T2Value{Value1=double.Parse(t4_t1.Text),Value2=double.Parse(t4_c2.Text),Value3=double.Parse(t4_t3.Text),Type="HRB500,HRBF500"},
-            };
-            t1.Concrete = Combo_hnt.Text;
-            t1.Rebars = combo_gj.Text;
-            t1.Ratio = double.Parse(box_ratio.Text);
-            //t1.about = double.Parse(box_about.Text);
-            t1.T1Value = _tab1List;
-            if (t5_tt2.Text != "" && t5_cc1.Checked)
-                t2.MM = double.Parse(t5_tt2.Text);
-            t2.Values = t2Values;
-            if(b_start.Text!="")
-            t3.StartB = int.Parse(b_start.Text);
+            gouzao.T1Value = _tab1List;
+            gouzao.T2Value = _Bims;
+            if (b_start.Text != "")
+                t3.StartB = int.Parse(b_start.Text);
             if (b_end.Text != "")
                 t3.EndB = int.Parse(b_end.Text);
             if (hw_start.Text != "")
@@ -86,69 +211,35 @@ namespace ToolkipCAD
             t4.Num = int.Parse(box_linenum.Text);
             t4.Type = comboBox8.Text;
             t4.Diam = comboBox9.Text;
-            gouzao.T2Values = t2;
             gouzao.T4Values = t4;
             gouzao.T3Values = t3;
-            gouzao.T1Values = t1; 
             XmlSerializer xs = new XmlSerializer(gouzao.GetType());
             TextWriter tw = new StreamWriter($@"{tag.path}\project\{gouzao.TName}.tf");
             xs.Serialize(tw, gouzao);
             tw.Close();
-            transf(new { 
-            id=gouzao.TName,
-            name= box_Name.Text
+            transf(new
+            {
+                id = gouzao.TName,
+                name = box_Name.Text
             });
             this.Close();
             //catch { MessageBox.Show("保存失败!"); }
         }
-
         private void GouzaoRecord_Load(object sender, EventArgs e)
-        {
-            #region 初始化下拉框 
-            Combo_hnt.SelectedIndex = 3;
-            combo_gj.SelectedIndex = 2;
-            t1_c2.SelectedIndex = 0;
-            t2_c2.SelectedIndex = 0;
-            t3_c2.SelectedIndex = 0;
-            t4_c2.SelectedIndex = 0;
-
-            #endregion
-            Grid_Gj.Rows.Add(15);
+        {        
             dynamic tag = this.Tag;
             if (tag.type == "Edit")
             {
-                string path=((dynamic)Program.MainForm.Tag).path;
+                string path = ((dynamic)Program.MainForm.Tag).path;
                 Gouzao gouzao = new Gouzao();
                 XmlSerializer xs = new XmlSerializer(gouzao.GetType());
                 TextReader tw = new StreamReader($@"{path}\project\{tag.id}.tf");
                 gouzao = (Gouzao)xs.Deserialize(tw);
                 tw.Close();
                 //1
-                _tab1List = gouzao.T1Values.T1Value;
+                _tab1List = gouzao.T1Value;
                 _waistList = gouzao.T3Values.waists;
-                Combo_hnt.Text = gouzao.T1Values.Concrete;
-                combo_gj.Text = gouzao.T1Values.Rebars;
-                box_ratio.Text = gouzao.T1Values.Ratio.ToString();
-                //box_about.Text = gouzao.T1Values.about.ToString();
-                //2
-                List<T2Value> vals = gouzao.T2Values.Values;
-                t1_t1.Text = vals.Find(x=>x.Type== "HPB300").Value1.ToString();
-                t1_c2.Text = vals.Find(x => x.Type == "HPB300").Value2.ToString();
-                t1_t3.Text = vals.Find(x => x.Type == "HPB300").Value3.ToString();
-
-                t2_t1.Text = vals.Find(x => x.Type == "HRB335,HRBF335").Value1.ToString();
-                t2_c2.Text = vals.Find(x => x.Type == "HRB335,HRBF335").Value2.ToString();
-                t2_t3.Text = vals.Find(x => x.Type == "HRB335,HRBF335").Value3.ToString();
-
-                t3_t1.Text = vals.Find(x => x.Type == "HRB400,HRBF400,RRB400").Value1.ToString();
-                t3_c2.Text = vals.Find(x => x.Type == "HRB400,HRBF400,RRB400").Value2.ToString();
-                t3_t3.Text = vals.Find(x => x.Type == "HRB400,HRBF400,RRB400").Value3.ToString();
-
-                t4_t1.Text = vals.Find(x => x.Type == "HRB500,HRBF500").Value1.ToString();
-                t4_c2.Text = vals.Find(x => x.Type == "HRB500,HRBF500").Value2.ToString();
-                t4_t3.Text = vals.Find(x => x.Type == "HRB500,HRBF500").Value3.ToString();
-                if (gouzao.T2Values.MM != 0) { t5_cc1.Checked = true;t5_tt2.Text = gouzao.T2Values.MM.ToString(); }
-
+                _Bims = gouzao.T2Value;                
                 //3
                 b_start.Text = gouzao.T3Values.StartB.ToString();
                 b_end.Text = gouzao.T3Values.EndB.ToString();
@@ -160,33 +251,13 @@ namespace ToolkipCAD
                 box_linenum.Text = gouzao.T4Values.Num.ToString();
                 comboBox8.Text = gouzao.T4Values.Type;
                 comboBox9.Text = gouzao.T4Values.Diam;
-                PushEditGrid();
+                LoadTab1View();
+                LoadTab2View();
                 PushEditWaist();
                 return;
             }
-            GetTabOneData();
-        }
-        private void DgvGradeInfoRowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
-        {
-            int index = 0;
-            System.Drawing.Rectangle rectangle = new System.Drawing.Rectangle(e.RowBounds.Location.X,
-               e.RowBounds.Location.Y,
-               this.Grid_Gj.RowHeadersWidth - 4,
-               e.RowBounds.Height);
-            index = ((e.RowIndex * 2) + 6);
-            if (index == 24) index = 25;
-            if (index == 32) index = 40;
-            if (index == 28) index = 32;
-            if (index == 26) index = 28;
-            if (index == 30) index = 36;
-            if (index == 34) index = 50;
-            TextRenderer.DrawText(e.Graphics, index.ToString(),
-                this.Grid_Gj.RowHeadersDefaultCellStyle.Font,
-                rectangle,
-                this.Grid_Gj.RowHeadersDefaultCellStyle.ForeColor,
-                TextFormatFlags.VerticalCenter | TextFormatFlags.Right);
-
-        }
+            CreateTab1View();
+        } 
         private void SideInfoRowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {
             int index = StartIndex;
@@ -202,69 +273,9 @@ namespace ToolkipCAD
                 TextFormatFlags.VerticalCenter | TextFormatFlags.Right);
 
         }
-        private void Grid_Gj_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
-        {
-
-        }
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-        private void Combo_hnt_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            // tab1 下拉框选择事件
-            GetTabOneData();
-        }
-        private void PushGrid1()
-        {
-            //填充tab1表格数据
-            ComputeClass compute = new ComputeClass();
-            string hnt = Combo_hnt.Text;//混凝土下拉框值
-            string gj = combo_gj.Text;//钢筋下拉框值
-            string cols = ""; int rows = 0;double vals = 0f;
-            //for (int i = 0; i < _tab1List.Count; i++)
-            {
-                for (int k = 0; k < Grid_Gj.Rows.Count; k++)
-                {
-                    for (int f = 0; f < Grid_Gj.Columns.Count; f++)
-                    {
-                        cols = Grid_Gj.Columns[f].Name;
-                        rows = ((Grid_Gj.Rows[k].Index * 2) + 6);
-                        //if (_tab1List[i].Level == (Levels)Enum.Parse(typeof(Levels), cols) && rows == _tab1List[i].MM)
-                        {
-                            vals = compute.anchoragelength(hnt,gj,rows,cols);
-                            Grid_Gj.Rows[k].Cells[f].Value = vals;
-                            _tab1List.Add(new GouZaoParam {
-                                Level = (Levels)Enum.Parse(typeof(Levels), cols),
-                                MM = rows,
-                                Concrete = hnt,
-                                Rebars = gj,
-                                Value = vals
-                            });
-                        }
-                    }
-                }
-            }
-        }
-        private void PushEditGrid()
-        {
-            //填充tab1表格数据
-            string cols = ""; int rows = 0;
-            for (int i = 0; i < _tab1List.Count; i++)
-            {
-                for (int k = 0; k < Grid_Gj.Rows.Count; k++)
-                {
-                    for (int f = 0; f < Grid_Gj.Columns.Count; f++)
-                    {
-                        cols = Grid_Gj.Columns[f].Name;
-                        rows = ((Grid_Gj.Rows[k].Index * 2) + 6);
-                        if (_tab1List[i].Level == (Levels)Enum.Parse(typeof(Levels), cols) && rows == _tab1List[i].MM)
-                        {
-                            Grid_Gj.Rows[k].Cells[f].Value = _tab1List[i].Value;                           
-                        }
-                    }
-                }
-            }
         }
         private void L_search_Click(object sender, EventArgs e)
         {
@@ -349,17 +360,6 @@ namespace ToolkipCAD
                 }
             }
         }
-        private void Grid_Gj_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            //修改单元格的值 tab1
-            if (e.RowIndex == -1 || e.ColumnIndex == -1) return;
-            int mm = ((e.RowIndex * 2) + 6);
-            string ColName = Grid_Gj.Columns[e.ColumnIndex].Name;
-            Levels lv = (Levels)Enum.Parse(typeof(Levels), ColName);
-            GouZaoParam param = _tab1List.Find(x => x.Level == lv && x.MM == mm);
-            if(param!=null)
-            param.Value = double.Parse(Grid_Gj.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
-        }
         private void dataGrid_Side_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             //修改单元格的值 tab3
@@ -367,40 +367,14 @@ namespace ToolkipCAD
             int b = ((e.RowIndex * 50) + StartIndex);
             int hw = int.Parse(dataGrid_Side.Columns[e.ColumnIndex].Name);
             Waist param = _waistList.Find(x => x.Hw == hw && x.B == b);
-            if(param!=null)
-            param.Value = dataGrid_Side.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-        }
-        private void btn_reset_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                double ratio = double.Parse(box_ratio.Text);//系数
-                //double about = double.Parse(box_about.Text);//约入
-                //约入  例:332=335,336=340,335=335
-                _tab1List = _tab1List.Select(x => {
-                    x.Value *= ratio;
-                    int k = Convert.ToInt32(x.Value % 10);
-                    if (k < 5 && k > 0) x.Value += 5 - k;
-                    if (k > 5) x.Value += 10-k;
-                    return x;                
-                }).ToList();
-                PushEditGrid();
-            }
-            catch { }
-        }
-
-        private void GetTabOneData()
-        {
-            _tab1List = new List<GouZaoParam>();
-            //string hnt = Combo_hnt.Text;//混凝土下拉框值
-            //string gj = combo_gj.Text;//钢筋下拉框值
-            PushGrid1();//显示
+            if (param != null)
+                param.Value = dataGrid_Side.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
         }
         private void GetWaist_Bar()
         {
             _waistList = new List<Waist>();
             ComputeClass compute = new ComputeClass();
-            int n = 0;double d = 0d;
+            int n = 0; double d = 0d;
             int b = 0, h = 0;
             for (int i = 0; i < dataGrid_Side.Columns.Count; i++)
             {
@@ -408,7 +382,7 @@ namespace ToolkipCAD
                 {
                     h = int.Parse(dataGrid_Side.Columns[i].Name);
                     b = ((dataGrid_Side.Rows[k].Index * 50) + StartIndex);
-                    compute.waist(b,h,ref n,ref d);
+                    compute.waist(b, h, ref n, ref d);
                     _waistList.Add(new Waist
                     {
                         Hw = h,
@@ -418,6 +392,61 @@ namespace ToolkipCAD
                 }
             }
             PushWaist();
+        }
+        //生成tab1_View
+        private void CreateTab1View()
+        {           
+            if (_tab1List == null) _tab1List = new List<GouZaoParam>();
+            ComputeClass compute = new ComputeClass();
+            for (int i = 0; i < this.rowMergaView1.Rows.Count; i++)
+            {
+                for (int k = 2; k < this.rowMergaView1.Columns.Count; k++)
+                {
+                    string ctype = this.rowMergaView1.Columns[k].Name;
+                    if (ctype == ">=60") ctype = "C60";
+                    string gtype = this.rowMergaView1.Rows[i].Cells[0].Value.ToString();
+                    string level = this.rowMergaView1.Rows[i].Cells[1].Value.ToString();
+                    if (gtype.IndexOf("\n") != -1) gtype = gtype.Replace("\n", ",");
+                    double vals = compute.anchoragelength(ctype, gtype);
+                    this.rowMergaView1.Rows[i].Cells[k].Value = $"{vals}d";
+                    _tab1List.Add(new GouZaoParam
+                    {
+                        Concrete = ctype,
+                        Rebars = gtype,
+                        Value = vals,
+                        Level = (Levels)Enum.Parse(typeof(Levels), level),
+                        x = k,
+                        y = i
+                    }); ;
+                }
+            }
+        }
+        //加载tab1_View
+        private void LoadTab1View()
+        {
+            if (_tab1List == null) _tab1List = new List<GouZaoParam>();
+            ComputeClass compute = new ComputeClass();
+            for (int i = 0; i < this.rowMergaView1.Rows.Count; i++)
+            {
+                for (int k = 2; k < this.rowMergaView1.Columns.Count; k++)
+                {
+                    string ctype = this.rowMergaView1.Columns[k].Name;
+                    if (ctype == ">=60") ctype = "C60";
+                    string gtype = this.rowMergaView1.Rows[i].Cells[0].Value.ToString();
+                    string level = this.rowMergaView1.Rows[i].Cells[1].Value.ToString();
+                    if (gtype.IndexOf("\n") != -1) gtype = gtype.Replace("\n", ",");
+                    double vals = compute.anchoragelength(ctype, gtype);
+                    this.rowMergaView1.Rows[i].Cells[k].Value = _tab1List.Find(x=>x.x==k&&x.y==i).Value;                    
+                }
+            }
+        }
+        //加载tab2_View
+        private void LoadTab2View()
+        {
+            _Bims.ForEach(x=>
+            {
+                this.dataGridView1.Rows[x.Y].Cells[x.X].Value = x.Value;
+            });              
         }
     }
 }

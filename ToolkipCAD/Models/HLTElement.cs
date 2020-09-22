@@ -472,8 +472,8 @@ namespace ToolkipCAD
             return re;
         }
 
-        //锚固长度计算，代入混凝土类型、钢筋类型、直径、抗震等级，返回长度
-        public double anchoragelength(string ctype,string gtype,double D,string earthquake)
+        //锚固长度计算，代入混凝土类型C30、钢筋类型HRB300、直径、抗震等级，返回长度
+        public double anchoragelength(string ctype,string gtype,double D=0,string earthquake=null)
         {
             double re = 0;
             //a*fy/ft*d
@@ -483,7 +483,7 @@ namespace ToolkipCAD
             if (gtype == "HPB300") a = 0.16;
             double ftv = ft(ctype);
             double fyv = fy(gtype);
-            re = a * fyv / ftv * D;
+            re = a * fyv / ftv;
             re = Convert.ToDouble(re.ToString("0"));
             return re;
         }

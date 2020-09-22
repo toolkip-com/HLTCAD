@@ -86,6 +86,12 @@
     <Compile Include="CustomForm\ReNameDialog.Designer.cs">
       <DependentUpon>ReNameDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="CustomForm\RowMergaView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomForm\RowMergaView.Designer.cs">
+      <DependentUpon>RowMergaView.cs</DependentUpon>
+    </Compile>
     <Compile Include="CustomForm\SaveAsDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -129,6 +135,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CustomForm\ReNameDialog.resx">
       <DependentUpon>ReNameDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomForm\RowMergaView.resx">
+      <DependentUpon>RowMergaView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CustomForm\SaveAsDialog.resx">
       <DependentUpon>SaveAsDialog.cs</DependentUpon>

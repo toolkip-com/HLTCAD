@@ -11,26 +11,30 @@ namespace ToolkipCAD.Models
         //public List<GouZaoParam> gouZaoParams { get; set; }
         //public List<Waist> waists { get; set; }
         //public JsonParam JsonParam { get; set; }
-        public T1Values T1Values { get; set; }
+        public List<GouZaoParam> T1Value { get; set; }
+        public List<T2Values2> T2Value { get; set; }
+        //public T1Values T1Values { get; set; }
         public T3Values T3Values { get; set; }
         public T4Values T4Values { get; set; }
-        public T2Values T2Values { get; set; }
+        //public T2Values T2Values { get; set; }
         public string TName { get; set; }
     }
     public class GouZaoParam
     {
         public Levels Level { get; set; }
         public int MM { get; set; }
-        public string Concrete { get; set; }
-        public string Rebars { get; set; }
+        public string Concrete { get; set; }//C30
+        public string Rebars { get; set; }//HRB3400
         public double Value { get; set; }
+        public int x { get; set; }
+        public int y { get; set; }
     }
     public enum Levels
     {
-        level1=1,
-        level2=2,
-        level3=3,
-        level4=4        
+        一级=1,
+        二级=2,
+        三级=3,
+        四级=4        
     }
     public class Waist
     {
@@ -48,10 +52,18 @@ namespace ToolkipCAD.Models
     public class T1Values
     {
         public List<GouZaoParam> T1Value { get; set; }
-        public string Concrete { get; set; }
-        public string Rebars { get; set; }
-        public double Ratio { get; set; }
-        public double about { get; set; }
+        //public string Concrete { get; set; }
+        //public string Rebars { get; set; }
+        //public double Ratio { get; set; }
+        //public double about { get; set; }
+    }
+    public class T2Values2
+    {
+        public string CValue { get; set; }
+        public double RValue { get; set; }
+        public double Value { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
     }
     public class T2Values
     {

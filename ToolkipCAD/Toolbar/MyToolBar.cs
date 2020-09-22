@@ -239,86 +239,108 @@ namespace ToolkipCAD.Toolbar
         //选择集
         private void AxMxDrawX1_MouseEvent(object sender, _DMxDrawXEvents_MouseEventEvent e)
         {
-            MxDrawSelectionSet mxDrawSelection;
-            MxDrawResbuf filter;
-            MxDrawPoint point;
-            if (e.lType == 2 && (Control.ModifierKeys & Keys.Control) == Keys.Control)
+            
             {
-                mxDrawSelection = new MxDrawSelectionSet();
-                filter = new MxDrawResbuf();
-                point = new MxDrawPoint();
-                point.x = e.dX; point.y = e.dY;
-                mxDrawSelection.SelectAtPoint(point, filter);
-                //MessageBox.Show(mxDrawSelection.Count.ToString());
-                if (mxDrawSelection.Count > 0)
-                {                   
-                    //MessageBox.Show(mxDrawSelection.Item(0).handle.ToString());
-                    axMxDrawX1.TwinkeEnt(mxDrawSelection.Item(0).ObjectID);
-                    if (BeamType == "change_line")
-                    {
-                        if (beam.beam.side_lines.Find(x => x == mxDrawSelection.Item(0).handle) == null)
-                            beam.beam.side_lines.Add(mxDrawSelection.Item(0).handle);
-                        else
-                        {
-                            axMxDrawX1.StopTwinkeEnt(mxDrawSelection.Item(0).ObjectID);
-                            beam.beam.side_lines.Remove(mxDrawSelection.Item(0).handle);
-                        }
-                    }
-                    if (BeamType == "change_dim")
-                    {
-                        if (beam.beam.dim_texts.Find(x => x == mxDrawSelection.Item(0).handle) == null)
-                            beam.beam.dim_texts.Add(mxDrawSelection.Item(0).handle);
-                        else
-                        {
-                            axMxDrawX1.StopTwinkeEnt(mxDrawSelection.Item(0).ObjectID);
-                            beam.beam.dim_texts.Remove(mxDrawSelection.Item(0).handle);
-                        }
-                    }
-                    if (BeamType == "change_seat")
-                    {
-                        if (beam.beam.seat_lines.Find(x => x == mxDrawSelection.Item(0).handle) == null)
-                            beam.beam.seat_lines.Add(mxDrawSelection.Item(0).handle);
-                        else
-                        {
-                            axMxDrawX1.StopTwinkeEnt(mxDrawSelection.Item(0).ObjectID);
-                            beam.beam.seat_lines.Remove(mxDrawSelection.Item(0).handle);
-                        }
-                    }
-                }
-            }
-            else if (e.lType == 2 && (Control.ModifierKeys & Keys.Shift) == Keys.Shift)
-            {
-                //dynamic pt = PublicValue;
-                //MxDrawPoint sp = new MxDrawPoint { x = pt.Lx, y = pt.Ly };
-                //MxDrawPoint ep = new MxDrawPoint { x = pt.Rx, y = pt.Ry };
-                mxDrawSelection = new MxDrawSelectionSet();
-                filter = new MxDrawResbuf();
-                point = new MxDrawPoint();
-                point.x = e.dX; point.y = e.dY;
-                mxDrawSelection.SelectAtPoint(point, filter);
-                if (mxDrawSelection.Count > 0)
+                MxDrawSelectionSet mxDrawSelection;
+                MxDrawResbuf filter;
+                MxDrawPoint point;
+                if (e.lType == 2 && (Control.ModifierKeys & Keys.Control) == Keys.Control)
                 {
-                    MxDrawEntity entity = mxDrawSelection.Item(0);
-                    //MessageBox.Show(entity.Layer);
-                    filter = new MxDrawResbuf();
                     mxDrawSelection = new MxDrawSelectionSet();
-                    filter.AddStringEx(entity.Layer, 8);//过滤
-                    mxDrawSelection.Select(MCAD_McSelect.mcSelectionSetAll, null, null, filter);//获取此图层元素
-                    for (int i = 1; i < mxDrawSelection.Count; i++)
+                    filter = new MxDrawResbuf();
+                    point = new MxDrawPoint();
+                    point.x = e.dX; point.y = e.dY;
+                    mxDrawSelection.SelectAtPoint(point, filter);
+                    //MessageBox.Show(mxDrawSelection.Count.ToString());
+                    if (mxDrawSelection.Count > 0)
                     {
-                        axMxDrawX1.TwinkeEnt(mxDrawSelection.Item(i).ObjectID);
+                        //MessageBox.Show(mxDrawSelection.Item(0).handle.ToString());
+                        axMxDrawX1.TwinkeEnt(mxDrawSelection.Item(0).ObjectID);
                         if (BeamType == "change_line")
-                            beam.beam.side_lines.Add(mxDrawSelection.Item(i).handle);
+                        {
+                            if (beam.beam.side_lines.Find(x => x == mxDrawSelection.Item(0).handle) == null)
+                                beam.beam.side_lines.Add(mxDrawSelection.Item(0).handle);
+                            else
+                            {
+                                axMxDrawX1.StopTwinkeEnt(mxDrawSelection.Item(0).ObjectID);
+                                beam.beam.side_lines.Remove(mxDrawSelection.Item(0).handle);
+                            }
+                        }
                         if (BeamType == "change_dim")
-                            beam.beam.dim_texts.Add(mxDrawSelection.Item(i).handle);
+                        {
+                            if (beam.beam.dim_texts.Find(x => x == mxDrawSelection.Item(0).handle) == null)
+                                beam.beam.dim_texts.Add(mxDrawSelection.Item(0).handle);
+                            else
+                            {
+                                axMxDrawX1.StopTwinkeEnt(mxDrawSelection.Item(0).ObjectID);
+                                beam.beam.dim_texts.Remove(mxDrawSelection.Item(0).handle);
+                            }
+                        }
                         if (BeamType == "change_seat")
-                            beam.beam.seat_lines.Add(mxDrawSelection.Item(i).handle);
-                        //选中元素
-                        //axMxDrawX1.AddCurrentSelect(mxDrawSelection.Item(i).ObjectID, false, false);
+                        {
+                            if (beam.beam.seat_lines.Find(x => x == mxDrawSelection.Item(0).handle) == null)
+                                beam.beam.seat_lines.Add(mxDrawSelection.Item(0).handle);
+                            else
+                            {
+                                axMxDrawX1.StopTwinkeEnt(mxDrawSelection.Item(0).ObjectID);
+                                beam.beam.seat_lines.Remove(mxDrawSelection.Item(0).handle);
+                            }
+                        }
                     }
                 }
-            }
-            //axMxDrawX1.SendStringToExecute("");
+                else if (e.lType == 2 && (Control.ModifierKeys & Keys.Shift) == Keys.Shift)
+                {
+                    //dynamic pt = PublicValue;
+                    //MxDrawPoint sp = new MxDrawPoint { x = pt.Lx, y = pt.Ly };
+                    //MxDrawPoint ep = new MxDrawPoint { x = pt.Rx, y = pt.Ry };
+                    mxDrawSelection = new MxDrawSelectionSet();
+                    filter = new MxDrawResbuf();
+                    point = new MxDrawPoint();
+                    point.x = e.dX; point.y = e.dY;
+                    mxDrawSelection.SelectAtPoint(point, filter);
+                    if (mxDrawSelection.Count > 0)
+                    {
+                        MxDrawEntity entity = mxDrawSelection.Item(0);
+                        //MessageBox.Show(entity.Layer);
+                        filter = new MxDrawResbuf();
+                        mxDrawSelection = new MxDrawSelectionSet();
+                        filter.AddStringEx(entity.Layer, 8);//过滤
+                        mxDrawSelection.Select(MCAD_McSelect.mcSelectionSetAll, null, null, filter);//获取此图层元素
+                        for (int i = 1; i < mxDrawSelection.Count; i++)
+                        {
+                            axMxDrawX1.TwinkeEnt(mxDrawSelection.Item(i).ObjectID);
+                            if (BeamType == "change_line")
+                                if (beam.beam.side_lines.Find(x => x == mxDrawSelection.Item(i).handle) == null)
+                                    beam.beam.side_lines.Add(mxDrawSelection.Item(i).handle);
+                                else
+                                {
+                                    axMxDrawX1.StopTwinkeEnt(mxDrawSelection.Item(i).ObjectID);
+                                    beam.beam.side_lines.Remove(mxDrawSelection.Item(i).handle);
+                                }
+                            if (BeamType == "change_dim")
+                                if (beam.beam.dim_texts.Find(x => x == mxDrawSelection.Item(i).handle) == null)
+                                    beam.beam.dim_texts.Add(mxDrawSelection.Item(i).handle);
+                                else
+                                {
+                                    axMxDrawX1.StopTwinkeEnt(mxDrawSelection.Item(i).ObjectID);
+                                    beam.beam.dim_texts.Remove(mxDrawSelection.Item(i).handle);
+                                }
+                            if (BeamType == "change_seat")
+                                if (beam.beam.seat_lines.Find(x => x == mxDrawSelection.Item(i).handle) == null)
+                                    beam.beam.seat_lines.Add(mxDrawSelection.Item(i).handle);
+                                else
+                                {
+                                    axMxDrawX1.StopTwinkeEnt(mxDrawSelection.Item(i).ObjectID);
+                                    beam.beam.seat_lines.Remove(mxDrawSelection.Item(i).handle);
+                                }
+                            //beam.beam.seat_lines.Add(mxDrawSelection.Item(i).handle);
+                            //选中元素
+                            //axMxDrawX1.AddCurrentSelect(mxDrawSelection.Item(i).ObjectID, false, false);
+                        }
+                    }
+                }
+                //axMxDrawX1.SendStringToExecute("");
+            };
         }
 
         private void T1002()

@@ -37,3 +37,4 @@ D:\好蓝图平面CAD钢筋\HLTCAD\ToolkipCAD\obj\Debug\ToolkipCAD.csproj.CopyCo
 D:\好蓝图平面CAD钢筋\HLTCAD\ToolkipCAD\obj\Debug\ToolkipCAD.CustomForm.SaveAsDialog.resources
 D:\好蓝图平面CAD钢筋\HLTCAD\ToolkipCAD\obj\Debug\ToolkipCAD.CustomForm.AddDrawingDialog.resources
 D:\好蓝图平面CAD钢筋\HLTCAD\ToolkipCAD\obj\Debug\ToolkipCAD.csprojAssemblyReference.cache
+D:\好蓝图平面CAD钢筋\HLTCAD\ToolkipCAD\obj\Debug\ToolkipCAD.CustomForm.RowMergaView.resources

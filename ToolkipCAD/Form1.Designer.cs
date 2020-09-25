@@ -97,6 +97,7 @@
             // tree_project
             // 
             this.tree_project.Font = new System.Drawing.Font("宋体", 10F);
+            this.tree_project.ItemHeight = 20;
             this.tree_project.Location = new System.Drawing.Point(3, 6);
             this.tree_project.Name = "tree_project";
             this.tree_project.Size = new System.Drawing.Size(217, 598);
@@ -118,6 +119,7 @@
             // tree_drawing
             // 
             this.tree_drawing.Font = new System.Drawing.Font("宋体", 10F);
+            this.tree_drawing.ItemHeight = 20;
             this.tree_drawing.Location = new System.Drawing.Point(3, 4);
             this.tree_drawing.Name = "tree_drawing";
             this.tree_drawing.Size = new System.Drawing.Size(217, 598);
@@ -251,7 +253,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "好蓝图平面CAD";
             this.TransparencyKey = System.Drawing.Color.White;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.SizeChanged += new System.EventHandler(this.Form1_SizeChanged);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);

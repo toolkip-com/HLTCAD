@@ -13,6 +13,7 @@ using System.Threading;
 using ToolkipCAD.fig;
 using ToolkipCAD.Models;
 using Newtonsoft.Json;
+using ToolkipCAD.Algorithm;
 
 namespace ToolkipCAD.Toolbar
 {
@@ -88,8 +89,10 @@ namespace ToolkipCAD.Toolbar
             {
                 Lx = pt1.x,
                 Ly = pt1.y,
+                Lz=pt1.z,
                 Rx = spdata.DragPoint.x,
-                Ry = spdata.DragPoint.y
+                Ry = spdata.DragPoint.y,
+                Rz=spdata.DragPoint.z
             };
             //删除选择框
             MxDrawSelectionSet ss = new MxDrawSelectionSet();
@@ -183,7 +186,7 @@ namespace ToolkipCAD.Toolbar
                 }
                 if (kven == "Range")//显示范围
                 {
-                    if (beam.beam.pto != null)
+                    if (beam.beam.pto.Count != 0)
                     axMxDrawX1.ZoomWindow(beam.beam.pto[0].X, beam.beam.pto[0].Y,
                         beam.beam.pto[1].X, beam.beam.pto[1].Y);
                 }
@@ -239,7 +242,17 @@ namespace ToolkipCAD.Toolbar
         //选择集
         private void AxMxDrawX1_MouseEvent(object sender, _DMxDrawXEvents_MouseEventEvent e)
         {
-            
+            MxDrawPoint start=new MxDrawPoint(), end=new MxDrawPoint();
+            if (PublicValue != null)
+            {
+                dynamic c = PublicValue;
+                start.x = c.Lx;
+                start.y = c.Ly;
+                start.z = c.Lz;
+                end.x = c.Rx;
+                end.y = c.Ry;
+                end.z = c.Rz;
+            }
             {
                 MxDrawSelectionSet mxDrawSelection;
                 MxDrawResbuf filter;
@@ -254,6 +267,11 @@ namespace ToolkipCAD.Toolbar
                     //MessageBox.Show(mxDrawSelection.Count.ToString());
                     if (mxDrawSelection.Count > 0)
                     {
+                        if (start.x != 0 && end.x != 0)
+                        {
+                            if(!MathSience.IsContains(point,start,end))
+                            return;
+                        }
                         //MessageBox.Show(mxDrawSelection.Item(0).handle.ToString());
                         axMxDrawX1.TwinkeEnt(mxDrawSelection.Item(0).ObjectID);
                         if (BeamType == "change_line")
@@ -304,9 +322,12 @@ namespace ToolkipCAD.Toolbar
                         //MessageBox.Show(entity.Layer);
                         filter = new MxDrawResbuf();
                         mxDrawSelection = new MxDrawSelectionSet();
-                        filter.AddStringEx(entity.Layer, 8);//过滤
-                        mxDrawSelection.Select(MCAD_McSelect.mcSelectionSetAll, null, null, filter);//获取此图层元素
-                        for (int i = 1; i < mxDrawSelection.Count; i++)
+                        filter.AddStringEx(entity.Layer, 8);//
+                        if(start.x==0)
+                            mxDrawSelection.Select(MCAD_McSelect.mcSelectionSetAll, null, null, filter);//获取此图层元素
+                        else
+                        mxDrawSelection.Select(MCAD_McSelect.mcSelectionSetWindow, start, end, filter);//获取此图层元素
+                        for (int i = 0; i < mxDrawSelection.Count; i++)
                         {
                             axMxDrawX1.TwinkeEnt(mxDrawSelection.Item(i).ObjectID);
                             if (BeamType == "change_line")
@@ -370,7 +391,7 @@ namespace ToolkipCAD.Toolbar
                 _Tree.LoadHLTTree(fileDialog.FileName);
             }
         }
-        public void T1004()
+        public void T1004(bool alert=true)
         {
             //保存项目 XML
             try
@@ -382,6 +403,7 @@ namespace ToolkipCAD.Toolbar
                 TextWriter tw = new StreamWriter(HltPath);
                 xs.Serialize(tw, _Tree._HLT);
                 tw.Close();
+                if(alert)
                 MessageBox.Show("保存成功");
             }
             catch (Exception ex)
@@ -392,10 +414,18 @@ namespace ToolkipCAD.Toolbar
         public void T1005()
         {
             //退出项目
-            DialogResult dialogResult = MessageBox.Show("确认退出此项目", "退出", MessageBoxButtons.OKCancel);
-            if (DialogResult.OK == dialogResult)
+            DialogResult dialogResult = MessageBox.Show("是否保存已修改内容", "退出", MessageBoxButtons.YesNoCancel);
+            if (DialogResult.Yes == dialogResult)
             {
-                T1004();
+                T1004(false);
+                //Program.MainForm.FormClosing -= Program.MainForm.Form1_FormClosing;
+                Program.MainForm.Close();
+                return;
+            }
+            if (DialogResult.No == dialogResult)
+            {
+                //Program.MainForm.FormClosing -= Program.MainForm.Form1_FormClosing;
+                Program.MainForm.Close();
             }
         }
     }

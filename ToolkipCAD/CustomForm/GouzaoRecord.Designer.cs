@@ -322,7 +322,7 @@
             "36",
             "40",
             "50"});
-            this.comboBox9.Location = new System.Drawing.Point(317, 54);
+            this.comboBox9.Location = new System.Drawing.Point(349, 54);
             this.comboBox9.Name = "comboBox9";
             this.comboBox9.Size = new System.Drawing.Size(40, 20);
             this.comboBox9.TabIndex = 12;
@@ -341,7 +341,7 @@
             "HRB500,HRBF500"});
             this.comboBox8.Location = new System.Drawing.Point(202, 54);
             this.comboBox8.Name = "comboBox8";
-            this.comboBox8.Size = new System.Drawing.Size(68, 20);
+            this.comboBox8.Size = new System.Drawing.Size(109, 20);
             this.comboBox8.TabIndex = 11;
             // 
             // box_linenum
@@ -357,9 +357,9 @@
             this.label34.AutoSize = true;
             this.label34.Location = new System.Drawing.Point(29, 58);
             this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(371, 12);
+            this.label34.Size = new System.Drawing.Size(395, 12);
             this.label34.TabIndex = 8;
-            this.label34.Text = "主次梁默认采用           根               直径           钢筋";
+            this.label34.Text = "主次梁默认采用           根                     直径         钢筋";
             // 
             // combo_ran
             // 

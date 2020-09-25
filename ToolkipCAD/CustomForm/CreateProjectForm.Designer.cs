@@ -51,6 +51,8 @@
             // iscreateProjectmenu
             // 
             this.iscreateProjectmenu.AutoSize = true;
+            this.iscreateProjectmenu.Checked = true;
+            this.iscreateProjectmenu.CheckState = System.Windows.Forms.CheckState.Checked;
             this.iscreateProjectmenu.Location = new System.Drawing.Point(231, 89);
             this.iscreateProjectmenu.Name = "iscreateProjectmenu";
             this.iscreateProjectmenu.Size = new System.Drawing.Size(96, 16);

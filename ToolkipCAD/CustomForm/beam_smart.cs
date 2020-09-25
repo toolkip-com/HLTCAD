@@ -13,7 +13,7 @@ using System.Windows.Forms;
 using MxDrawXLib;
 using Newtonsoft.Json;
 using ToolkipCAD.Models;
-
+using ToolkipCAD.Algorithm;
 namespace ToolkipCAD
 {
     public partial class beam_smart : Form
@@ -76,10 +76,6 @@ namespace ToolkipCAD
 
         private void btn_OK_Click(object sender, EventArgs e)
         {
-            if (check_hebin.Checked)
-            {
-
-            }
             if (check_gj.Checked)//超过N mm
             {
                 beam.overmm = over_box.Text;
@@ -91,9 +87,11 @@ namespace ToolkipCAD
             beam.earth_type = combox_kzdj.Text;
             beam.Drawing_Manage_id = combox_peizhi.SelectedValue != null ? combox_peizhi.SelectedValue.ToString() : "";
             beam.beams = new List<Beam>();
+            //Task cc = Task.Run(() => FillBeamStruct());
             FillBeamStruct();//beam识别
-            //transf("SaveData"); //保存           
-            //this.Close(); 
+            progressBar1.Value = 100;
+            transf("SaveData"); //保存 
+            this.Close();                        
         }
 
         private void select_range_SelectedIndexChanged(object sender, EventArgs e)
@@ -113,7 +111,6 @@ namespace ToolkipCAD
             }
             if (select_range.Text == "显示") transf("Range");
         }
-
         private void Line_Get_SelectedIndexChanged(object sender, EventArgs e)
         {
             //梁拾取
@@ -173,17 +170,19 @@ namespace ToolkipCAD
         private void FillBeamStruct()
         {
             #region beam
+            progressBar1.Value = 10;
             HLTSmart smart = new HLTSmart();
             //第一步：遍历所有文字，找出满足如下正则表达式的文字，即为集中标注第一行
             List<Regex> regex1 = new List<Regex> {
                 //new Regex(@"(KL|L|WKL|WL|KZL|LL|JL|DL)[-]?\d{1,4}")
-                new Regex(@"((KL|L|WKL|WL|KZL|LL|JL|DL)(\d{1,4})\([A-Z0-9]{1,4}\)\s)?(\d{1,4})X(\d{1,4})")
+                new Regex(@"((KL)(\d{1,4})\([A-Z0-9]{1,4}\)\s)?(\d{1,4})X(\d{1,4})")
                 };
             List<Text> texts = new List<Text>();
             //获取dim_text值
             MxDrawText entity;
             foreach (var item in beam.dim_texts)
             {
+                progressBar1.Value++;
                 entity = Program.MainForm.axMxDrawX1.HandleToObject(item) as MxDrawText;
                 if (entity != null)
                     texts.Add(new Text
@@ -424,7 +423,7 @@ namespace ToolkipCAD
 
 
                         }
-                        beam.beams.Add(beams);
+
                         beams.side_lines = new List<string>();
                         //识别梁
                         //1.集中标注指示线两个端点分别找到垂直距离最近的梁线，两者最近的就是第一根梁线L1
@@ -459,8 +458,10 @@ namespace ToolkipCAD
                                     L2 = GetparallelLine(L1);
                                     Rline = GetXpoint(L1.EndPoint, L1.StartPoint, seat);
                                     L1 = Rline;
-                                    beams.side_lines.Add(L2.handle);
-                                    beams.side_lines.Add(Rline.handle);
+                                    if (L2.handle != "0")
+                                        beams.side_lines.Add(L2.handle);
+                                    if (Rline.handle != "0")
+                                        beams.side_lines.Add(Rline.handle);
                                 }
                                 else
                                 {
@@ -468,7 +469,8 @@ namespace ToolkipCAD
                                     L2s = GetMoreLine(L1);
                                     L2 = GetparallelLine(L1);
                                     L1 = L2s;
-                                    beams.side_lines.Add(L2s.handle);
+                                    if (L2s.handle != "0")
+                                        beams.side_lines.Add(L2s.handle);
                                 }
                                 //3.1 找到另一根梁线L2，L2的两个端点之一与P1最近且距离小于600且两线角度差别不超过2度，找到后凭L2另一个端点重复3       
                                 /*3.2 说明一段梁结束，去寻找这段梁已识别梁线的平行线，即水平距离小于梁宽的1.5倍且两线相关，
@@ -486,11 +488,21 @@ namespace ToolkipCAD
                             } while (L1.handle != "0");
                         }
                         //break;
+                        beam.beams.Add(beams);
+                        GetSideCLine(beams.side_lines);
                     }
 
                 }
             }
             #endregion over
+            //绘制主梁中线
+            /* 0、参考附件1，将直线、弧线变成中心线，其中walllist即为搜集的结果线
+            1、循环所有直线所有的端点到其它直线端点距离，找到距离最大的两个端点，其中一个称为P1,算法从P1开始，内存记录L1
+            2、找到L1线的另一端点P2,判断所有其它线的点到P2的距离
+            2.1 当距离小于5时：内存记录L2，并将L2的P3修改等于P2,然后用P4继续步骤2
+            2.2 当没有找到距离小于5的点时，循环其它点至P2距离小于500，且目标点到L1的垂直距离小于5，且最近的一个，则找到P3，将P3修改等于P2,记录L2,然后从P4继续步骤2
+            3、将这条连续的直线用PLine画出来，宽度50，颜色黄色，图层名称：HLT_BEAM_CLINE
+            4、以上需要考虑ARC弧线 */
         }
         //字符串截取
         public string SplitStr(string str, int start, string regex)
@@ -778,6 +790,138 @@ namespace ToolkipCAD
                 }
             }
             return new MxDrawLine();
+        }
+        public void GetSideCLine(List<string> lines)
+        {
+            // 1、循环所有直线所有的端点到其它直线端点距离，找到距离最大的两个端点，
+            //其中一个称为P1,算法从P1开始，内存记录L1
+            var axMxDrawX1 = Program.MainForm.axMxDrawX1;
+            MyDrawLine start = new MyDrawLine(), end = new MyDrawLine();
+            double max = 0;
+            List<MyDrawLine> lines1 = new List<MyDrawLine>();
+            lines.ForEach(line =>
+            {
+                MxDrawLine entity = axMxDrawX1.HandleToObject(line) as MxDrawLine;
+                lines.ForEach(lin =>
+                {
+                    MxDrawLine drawLine = axMxDrawX1.HandleToObject(lin) as MxDrawLine;
+                    double len = MathSience.GetDistance(entity.StartPoint.x, entity.StartPoint.y, drawLine.EndPoint.x, drawLine.EndPoint.y);
+                    if (len > max)
+                    {
+                        max = len;
+                        start = new MyDrawLine
+                        {
+                            handle = entity.handle,
+                            Layer = entity.Layer,
+                            StartPoint = entity.StartPoint,
+                            EndPoint = entity.EndPoint
+                        };
+                        end = new MyDrawLine
+                        {
+                            handle = drawLine.handle,
+                            Layer = drawLine.Layer,
+                            StartPoint = drawLine.StartPoint,
+                            EndPoint = drawLine.EndPoint
+                        };
+                    }
+                });
+            });
+            //2、找到L1线的另一端点P2,判断所有其它线的点到P2的距离
+            //2.1 当距离小于5时：内存记录L2，并将L2的P3修改等于P2,然后用P4继续步骤2
+            bool flag = true;
+            MyDrawLine Pstart = start;
+            while (flag)
+            {
+                flag = false;
+                start.ChangePoint();
+                for (int i = 0; i < lines.Count; i++)
+                {
+                    MxDrawLine entity = axMxDrawX1.HandleToObject(lines[i]) as MxDrawLine; 
+                    if (entity.handle != start.handle)
+                    {
+                        MyDrawLine MyEntity = new MyDrawLine
+                        {
+                            handle = entity.handle,
+                            Layer = entity.Layer,
+                            StartPoint = entity.StartPoint,
+                            EndPoint = entity.EndPoint
+                        };
+                        MyEntity.ChangePoint();
+                        double c1 = MathSience.GetDistance(start.EndPoint.x, start.EndPoint.y, MyEntity.StartPoint.x, MyEntity.StartPoint.y);
+                        if (c1 <= 500)
+                        {
+                            //entity.StartPoint = start.EndPoint;
+                            MyEntity.StartPoint = start.EndPoint;
+                            start = MyEntity;
+                            flag = true;
+                            lines1.Add(MyEntity);
+                            break;
+                        }
+                    }
+                }
+                // 2.2 当没有找到距离小于5的点时，循环其它点至P2距离小于500，
+                //且目标点到L1的垂直距离小于5，且最近的一个，则找到P3，
+                //将P3修改等于P2,记录L2,然后从P4继续步骤2
+                // 3、将这条连续的直线用PLine画出来，宽度50，颜色黄色，图层名称：HLT_BEAM_CLINE
+                if (!flag)
+                {
+                    for (int i = 0; i < lines.Count; i++)
+                    {
+                        MxDrawLine entity = axMxDrawX1.HandleToObject(lines[i]) as MxDrawLine;
+                        if (entity.handle != start.handle)
+                        {
+                            MyDrawLine MyEntity = new MyDrawLine
+                            {
+                                handle = entity.handle,
+                                Layer = entity.Layer,
+                                StartPoint = entity.StartPoint,
+                                EndPoint = entity.EndPoint
+                            };
+                            MyEntity.ChangePoint();
+                            double c1 = MathSience.GetDistance(start.EndPoint.x, start.EndPoint.y, MyEntity.StartPoint.x, MyEntity.StartPoint.y);
+                            if (c1 <= 1000)
+                            {
+                                c1 = MathSience.pointToLineDistance(start.StartPoint, start.EndPoint, MyEntity.StartPoint.x, MyEntity.StartPoint.y);
+                                if (c1 < 5)
+                                {
+                                    //entity.StartPoint = start.EndPoint;                                    
+                                    start = MyEntity;
+                                    flag = true;
+                                    lines1.Add(MyEntity);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                if (flag) continue;
+                flag = false;
+            }
+
+            if (!CheckLayerExists())
+                axMxDrawX1.AddLayer("HLT_BEAM_CLINE");
+            axMxDrawX1.LayerName = "HLT_BEAM_CLINE";
+            axMxDrawX1.LineWidth = 200;
+            axMxDrawX1.DrawColor = System.Drawing.Color.Yellow;
+            //axMxDrawX1.DrawLine(Pstart.StartPoint.x,Pstart.StartPoint.y,end.EndPoint.x,end.EndPoint.y);
+            if (lines1.Count > 0)
+                //定义一个路径的开始点
+                axMxDrawX1.PathMoveTo(lines1[0].StartPoint.x, lines1[0].StartPoint.y);
+            for (int i = 0; i < lines1.Count - 1; i++)
+            {
+                //路径的一下个点               
+                //axMxDrawX1.DrawCircle(lines1[i].StartPoint.x,lines1[i].StartPoint.y,50);
+                //axMxDrawX1.DrawLine(lines1[i].StartPoint.x,lines1[i].StartPoint.y,lines1[i+1].StartPoint.x,lines1[i+1].StartPoint.y);
+                //axMxDrawX1.DrawText(lines1[i].StartPoint.x, lines1[i].StartPoint.y, (i + 1).ToString(), 5, 0, 0, 0);
+                axMxDrawX1.PathLineTo(lines1[i].StartPoint.x, lines1[i].StartPoint.y);
+            }
+            axMxDrawX1.DrawPathToPolyline();
+        }
+        private bool CheckLayerExists()
+        {
+            MxDrawDatabase database = (Program.MainForm.axMxDrawX1.GetDatabase()) as MxDrawDatabase;
+            MxDrawLayerTable layers = database.GetLayerTable();
+            return layers.Has("HLT_BEAM_CLINE");
         }
     }
 }

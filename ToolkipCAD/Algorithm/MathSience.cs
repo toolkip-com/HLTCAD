@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MxDrawXLib;
 
-namespace ToolkipCAD.Models
+namespace ToolkipCAD.Algorithm
 {
     public class MathSience
     {
@@ -203,6 +203,116 @@ namespace ToolkipCAD.Models
             return Math.Sqrt(x * x + y * y);
         }
 
+        //判断一个点是否在矩形内部
+        public static bool isInside(double x1, double y1, double x4, double y4, double x, double y)
+        {
+            //默认:1点在左上,4点在右下
+            if (x <= x1)
+            {//在矩形左侧
+                return false;
+            }
+            if (x >= x4)
+            {//在矩形右侧
+                return false;
+            }
+            if (y >= y1)
+            {//在矩形上侧
+                return false;
+            }
+            if (y <= y4)
+            {//在矩形下侧
+                return false;
+            }
+            return true;
+        }
 
+        public static bool isInside(double x1, double y1, double x4, double y4,
+                double x2, double y2, double x3, double y3, double x, double y)
+        {
+            //矩形边平行于x轴或y轴
+            if (y1 == y2)
+            {
+                return isInside(x1, y1, x4, y4, x, y);
+            }
+            //坐标变换，把矩形转成平行，所有点跟着动
+            double a = Math.Abs(y4 - y3);
+            double b = Math.Abs(x4 - x3);
+            double c = Math.Sqrt(a * a + b * b);
+            double sin = a / c;
+            double cos = b / c;
+
+            double x11 = cos * x1 + sin * y1;
+            double y11 = -x1 * sin + y1 * cos;
+            double x44 = cos * x4 + sin * y4;
+            double y44 = -x4 * sin + y4 * cos;
+            double xx = cos * x + sin * y;
+            double yy = -x * sin + y * cos;
+            //旋转完成，又变成上面一种平行的情况
+            return isInside(x11, y11, x44, y44, xx, yy);
+        }
+        #region 判断点是否在图形上
+        /// <summary>
+        /// 判断点是否在图形上
+        /// </summary>
+        /// <param name="mousePoint">鼠标坐标</param>
+        /// <param name="startPoint">起始点</param>
+        /// <param name="endPoint">终点</param>
+        /// <returns></returns>
+        public static bool IsContains(MxDrawPoint mousePoint, MxDrawPoint startPoint, MxDrawPoint endPoint)
+        {
+            bool result = false;
+            //Point middlePoint = new Point(startPoint.x, endPoint.y);
+            //左上右下
+            if (endPoint.x > startPoint.x && endPoint.y > startPoint.y)
+            {
+                if (mousePoint.x >= startPoint.x &&
+                    mousePoint.x <= endPoint.x &&
+                    mousePoint.y >= startPoint.y &&
+                    mousePoint.y <= endPoint.y)
+                {
+                    result = true;
+                }
+            }
+            //右上左下
+            else if (endPoint.x < startPoint.x && endPoint.y > startPoint.y)
+            {
+                if (mousePoint.x <= startPoint.x &&
+                    mousePoint.x >= endPoint.x &&
+                    mousePoint.y >= startPoint.y &&
+                    mousePoint.y <= endPoint.y)
+                {
+                    result = true;
+                }
+            }
+            //右下左上
+            else if (endPoint.x < startPoint.x && endPoint.y < startPoint.y)
+            {
+                if (mousePoint.x <= startPoint.x &&
+                    mousePoint.x >= endPoint.x &&
+                    mousePoint.y <= startPoint.y &&
+                    mousePoint.y >= endPoint.y)
+                {
+                    result = true;
+                }
+            }
+            //左下右上
+            else if (endPoint.x > startPoint.x && endPoint.y < startPoint.y)
+            {
+                if (mousePoint.x >= startPoint.x &&
+                    mousePoint.x <= endPoint.x &&
+                    mousePoint.y <= startPoint.y &&
+                    mousePoint.y >= endPoint.y)
+                {
+                    result = true;
+                }
+            }
+            return result;
+        }
+        #endregion
+
+        public static void GetCenterLine()
+        {
+
+        }        
     }
 }

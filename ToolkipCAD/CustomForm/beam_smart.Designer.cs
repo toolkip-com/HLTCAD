@@ -61,11 +61,14 @@
             this.label8 = new System.Windows.Forms.Label();
             this.btn_OK = new System.Windows.Forms.Button();
             this.btn_remove = new System.Windows.Forms.Button();
-            this.check_hebin = new System.Windows.Forms.CheckBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.label16 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -476,22 +479,36 @@
             this.btn_remove.UseVisualStyleBackColor = true;
             this.btn_remove.Click += new System.EventHandler(this.btn_remove_Click);
             // 
-            // check_hebin
+            // panel1
             // 
-            this.check_hebin.AutoSize = true;
-            this.check_hebin.Location = new System.Drawing.Point(12, 295);
-            this.check_hebin.Name = "check_hebin";
-            this.check_hebin.Size = new System.Drawing.Size(96, 16);
-            this.check_hebin.TabIndex = 7;
-            this.check_hebin.Text = "合并原选择集";
-            this.check_hebin.UseVisualStyleBackColor = true;
+            this.panel1.Controls.Add(this.label16);
+            this.panel1.Controls.Add(this.progressBar1);
+            this.panel1.Location = new System.Drawing.Point(17, 288);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(294, 30);
+            this.panel1.TabIndex = 6;
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(0, 8);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(225, 19);
+            this.progressBar1.TabIndex = 0;
+            // 
+            // label16
+            // 
+            this.label16.Location = new System.Drawing.Point(231, 13);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(47, 12);
+            this.label16.TabIndex = 0;
+            this.label16.Text = "label16";
             // 
             // beam_smart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(523, 335);
-            this.Controls.Add(this.check_hebin);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.btn_remove);
             this.Controls.Add(this.btn_OK);
             this.Controls.Add(this.groupBox4);
@@ -514,8 +531,8 @@
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -554,6 +571,8 @@
         private System.Windows.Forms.Button btn_remove;
         private System.Windows.Forms.ComboBox wiff_Get;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.CheckBox check_hebin;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Label label16;
     }
 }

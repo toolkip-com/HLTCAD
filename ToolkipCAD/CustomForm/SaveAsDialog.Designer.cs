@@ -108,6 +108,7 @@
             this.MinimizeBox = false;
             this.Name = "SaveAsDialog";
             this.ShowIcon = false;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = " 另存为";
             this.ResumeLayout(false);

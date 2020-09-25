@@ -551,6 +551,7 @@ namespace ToolkipCAD
                 {
                     Text = "重命名"
                 };
+                reName.Tag = _DrawView.SelectedNode.Text;
                 reName.transf += ((string result) =>
                 {
                     string id = _DrawView.SelectedNode.Tag.ToString();
@@ -595,6 +596,7 @@ namespace ToolkipCAD
             record.Tag = new
             {
                 type = "Edit",
+                name = _DrawView.SelectedNode.Text,
                 id = _HLT.Drawing_Manage_Tree.Find(x => x.id == id).id
             };
             record.transf += (dynamic result) =>
@@ -607,10 +609,10 @@ namespace ToolkipCAD
         }
         //记录的点击事件
         public string RecodeClick()
-        {
-            Program.MainForm.axMxDrawX1.SaveDwgFile(Program.MainForm.axMxDrawX1.DwgFilePath);
+        {            
             if (_TreeView.SelectedNode != null)
             {
+                Program.MainForm.axMxDrawX1.SaveDwgFile(Program.MainForm.axMxDrawX1.DwgFilePath);
                 if (Program.MainForm.Tag != null)
                 {
                     string id = _TreeView.SelectedNode.Tag.ToString();

@@ -194,8 +194,9 @@ namespace ToolkipCAD
             Gouzao gouzao = new Gouzao();
             dynamic tag = Program.MainForm.Tag;
             dynamic edit = this.Tag;
-            if (edit.type != "Edit") gouzao.TName = Guid.NewGuid().ToString();
-            else gouzao.TName = edit.id;
+            //if (edit.type != "Edit") gouzao.TName = Guid.NewGuid().ToString();
+            //else gouzao.TName = edit.id;
+            gouzao.TName = box_Name.Text;
             gouzao.T1Value = _tab1List;
             gouzao.T2Value = _Bims;
             if (b_start.Text != "")
@@ -236,6 +237,7 @@ namespace ToolkipCAD
                 TextReader tw = new StreamReader($@"{path}\project\{tag.id}.tf");
                 gouzao = (Gouzao)xs.Deserialize(tw);
                 tw.Close();
+                box_Name.Text = tag.name;
                 //1
                 _tab1List = gouzao.T1Value;
                 _waistList = gouzao.T3Values.waists;
@@ -257,6 +259,7 @@ namespace ToolkipCAD
                 return;
             }
             CreateTab1View();
+            CreateTab2View();
         } 
         private void SideInfoRowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {
@@ -439,6 +442,38 @@ namespace ToolkipCAD
                     this.rowMergaView1.Rows[i].Cells[k].Value = _tab1List.Find(x=>x.x==k&&x.y==i).Value;                    
                 }
             }
+        }
+        //生成tab2_View
+        private void CreateTab2View()
+        {
+            ComputeClass compute = new ComputeClass();
+            for (int k = 1; k < this.dataGridView1.Columns.Count; k++)
+            for (int i = 0; i < this.dataGridView1.Rows.Count; i++)
+            {
+                    double c = 0;
+                    if (k == 1)
+                    {
+                        c = Convert.ToDouble(this.dataGridView1.Rows[i].Cells[0].Value);
+                        c = compute.AbeliteSet(c);
+                        this.dataGridView1.Rows[i].Cells[k].Value = c;
+                    }
+                    if (k == 2||k==3) this.dataGridView1.Rows[i].Cells[k].Value = "10d";
+                    if(k==4) this.dataGridView1.Rows[i].Cells[k].Value = "0.35d";
+                    if (k == 5) this.dataGridView1.Rows[i].Cells[k].Value = "0.50d";
+                    if (k == 6) this.dataGridView1.Rows[i].Cells[k].Value = "0.85d";
+                    if (k == 7) this.dataGridView1.Rows[i].Cells[k].Value = "2d";
+                    if (k == 8) this.dataGridView1.Rows[i].Cells[k].Value = "2.5d";
+                    if (k == 9) this.dataGridView1.Rows[i].Cells[k].Value = "3.5d";
+
+                    //_Bims.Add(new T2Values2
+                    //{
+                    //    CValue = this.dataGridView1.Columns[k].Name,
+                    //    RValue = Convert.ToDouble(this.dataGridView1.Rows[i].Cells[0].Value),
+                    //    Value = c,
+                    //    X=1,
+                    //    Y=i
+                    //}) ;
+                }
         }
         //加载tab2_View
         private void LoadTab2View()

@@ -487,6 +487,11 @@ namespace ToolkipCAD
             re = Convert.ToDouble(re.ToString("0"));
             return re;
         }
+        public double AbeliteSet(double d)
+        {
+            return Math.Round(78.5 * Math.PI * (d / 2000) * (d / 2000) * 100,3);
+        }
+
 
     }
 

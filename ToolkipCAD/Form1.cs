@@ -119,11 +119,11 @@ namespace ToolkipCAD
                                     //color=dd.Color.colorIndex
                                 }));
                             //double c=Models.MathSience.DistanceForPointToABLine(121324.953422, 33700.002475, ((MxDrawLine)entity).GetStartPoint(),((MxDrawLine)entity).GetEndPoint());
-                            double c1 = Models.MathSience.GetAngle(new MxDrawPoint { x = 121324.953422, y = 33700.002475 }, ((MxDrawLine)entity).GetStartPoint(), ((MxDrawLine)entity).GetEndPoint());
-                            double c = Models.MathSience.GetAngle2(((MxDrawLine)entity).GetStartPoint(), ((MxDrawLine)entity).GetEndPoint());
-                            MxDrawLine line = axMxDrawX1.HandleToObject("61FCB") as MxDrawLine;
-                            PointF point1 = Models.MathSience.point_intersection(line.GetStartPoint(), line.GetEndPoint(), ((MxDrawLine)entity).GetStartPoint(), ((MxDrawLine)entity).GetEndPoint());
-                            MessageBox.Show(c.ToString() + "," + c1.ToString()+"\n"+point1.X+","+point1.Y);
+                            double c1 = Algorithm.MathSience.GetAngle(new MxDrawPoint { x = 121324.95342187915, y = 54350.00279569807 }, ((MxDrawLine)entity).GetStartPoint(), ((MxDrawLine)entity).GetEndPoint());
+                            MessageBox.Show(c1.ToString());
+                            //double c = Algorithm.MathSience.GetAngle2(((MxDrawLine)entity).GetStartPoint(), ((MxDrawLine)entity).GetEndPoint());
+                            //MxDrawLine line = axMxDrawX1.HandleToObject("61FCB") as MxDrawLine;
+                            //PointF point1 = Algorithm.MathSience.point_intersection(line.GetStartPoint(), line.GetEndPoint(), ((MxDrawLine)entity).GetStartPoint(), ((MxDrawLine)entity).GetEndPoint());
                         }
                     }
                     break;
@@ -201,7 +201,7 @@ namespace ToolkipCAD
             }
         }
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        public void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (this.Tag != null)
             {

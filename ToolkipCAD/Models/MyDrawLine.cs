@@ -8,12 +8,15 @@ using ToolkipCAD.Algorithm;
 
 namespace ToolkipCAD.Models
 {
-    class MyDrawLine
+    public class MyDrawLine
     {
         public string handle { get; set; }
         public MxDrawPoint StartPoint { get; set; }
         public MxDrawPoint EndPoint { get; set; }
         public string Layer { get; set; }
+        public string ObjectName { get; set; }
+        public string ObjectID { get; set; }
+        //Line的起始坐标变换，左→右，上→下
         public void ChangePoint()
         {
             MxDrawPoint p1 = StartPoint;

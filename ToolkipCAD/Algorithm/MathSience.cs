@@ -16,7 +16,8 @@ namespace ToolkipCAD.Algorithm
             double normalLength = Math.Sqrt((pt2.x - pt1.x) * (pt2.x - pt1.x) + (pt2.y - pt1.y) * (pt2.y - pt1.y));
             return Math.Abs((x3 - pt1.x) * (pt2.y - pt1.y) - (y3 - pt1.y) * (pt2.x - pt1.x)) / normalLength;
         }
-        public static double DistanceForPointToABLine(double x, double y, MxDrawPoint pt1, MxDrawPoint pt2)//所在点到AB线段的垂线长度
+        //所在点到AB线段的垂线长度
+        public static double DistanceForPointToABLine(double x, double y, MxDrawPoint pt1, MxDrawPoint pt2)
         {
             double reVal = 0d;
             bool retData = false;
@@ -45,6 +46,18 @@ namespace ToolkipCAD.Algorithm
 
             return reVal;
 
+        }
+        //点与直线的垂足
+        public static MxDrawPoint PointToLineFor90(MxDrawPoint pt1,MxDrawPoint pt2,MxDrawPoint point)
+        {
+            if (pt2.x == pt1.x) return new MxDrawPoint();
+            double k = (pt2.y - pt1.y) / (pt2.x - pt1.x);
+            double x = (k*k * pt1.x + k * (point.y - pt1.y) + point.x) / (k *k + 1);
+            double y = k * (x - pt1.x) + pt1.y;
+            return new MxDrawPoint
+            {
+                x=x,y=y
+            };
         }
         public static double PointToSegDist(double x, double y, MxDrawPoint pt1, MxDrawPoint pt2)
         {
@@ -191,6 +204,7 @@ namespace ToolkipCAD.Algorithm
             }
 
         }
+        //求直线角度
         public static double GetAngle2(MxDrawPoint p1, MxDrawPoint p2)
         {
             return Math.Atan2((p2.y - p1.y), (p2.x - p1.x)) * 180 / Math.PI;
@@ -202,7 +216,16 @@ namespace ToolkipCAD.Algorithm
             double y = Math.Abs(B_y - A_y);
             return Math.Sqrt(x * x + y * y);
         }
-
+        //求中点坐标
+        public static MxDrawPoint GetCenterPoint(MxDrawPoint p1,MxDrawPoint p2)
+        {
+            //x =（x1 + x2）/ 2；y =（y1 + y2）/ 2
+            return new MxDrawPoint
+            {
+                x=(p1.x+p2.x)/2,
+                y=(p1.y+p2.y)/2
+            };
+        }
         //判断一个点是否在矩形内部
         public static bool isInside(double x1, double y1, double x4, double y4, double x, double y)
         {
@@ -225,7 +248,6 @@ namespace ToolkipCAD.Algorithm
             }
             return true;
         }
-
         public static bool isInside(double x1, double y1, double x4, double y4,
                 double x2, double y2, double x3, double y3, double x, double y)
         {

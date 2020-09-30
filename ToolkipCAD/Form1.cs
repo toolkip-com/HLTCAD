@@ -57,7 +57,8 @@ namespace ToolkipCAD
             //tree_project.Nodes.Add("测试项目");//根节点
             _TestData = new Project_Tree(ref tree_project, ref tree_drawing);
             bar_state = new MyToolBar(ref _TestData, ref axMxDrawX1);
-            //_TestData.StructTree();            
+            //_TestData.StructTree();   
+            _TestData.LoadHLTTree($@"D:\好蓝图平面CAD钢筋\测试\新建项目2\新建项目2.hlt");
         }
 
         private void axMxDrawX1_ImplementCommandEvent(object sender, AxMxDrawXLib._DMxDrawXEvents_ImplementCommandEventEvent e)
@@ -114,12 +115,14 @@ namespace ToolkipCAD
                                     ID = entity.ObjectID,
                                     Line = entity.ObjectName,
                                     B = entity.LineType,
+                                    rotate=((MxDrawText)entity).Rotation
                                     //pt1 = ((MxDrawLine)entity).GetStartPoint(),
                                     //pt2 = ((MxDrawLine)entity).GetEndPoint(),
                                     //color=dd.Color.colorIndex
                                 }));
                             //double c=Models.MathSience.DistanceForPointToABLine(121324.953422, 33700.002475, ((MxDrawLine)entity).GetStartPoint(),((MxDrawLine)entity).GetEndPoint());
-                            double c1 = Algorithm.MathSience.GetAngle(new MxDrawPoint { x = 121324.95342187915, y = 54350.00279569807 }, ((MxDrawLine)entity).GetStartPoint(), ((MxDrawLine)entity).GetEndPoint());
+                            //double c1 = Algorithm.MathSience.GetAngle(new MxDrawPoint { x = 121324.95342187915, y = 54350.00279569807 }, ((MxDrawLine)entity).GetStartPoint(), ((MxDrawLine)entity).GetEndPoint());
+                            double c1 = Algorithm.MathSience.GetLineK(((MxDrawLine)entity).GetStartPoint(), ((MxDrawLine)entity).GetEndPoint());
                             MessageBox.Show(c1.ToString());
                             //double c = Algorithm.MathSience.GetAngle2(((MxDrawLine)entity).GetStartPoint(), ((MxDrawLine)entity).GetEndPoint());
                             //MxDrawLine line = axMxDrawX1.HandleToObject("61FCB") as MxDrawLine;

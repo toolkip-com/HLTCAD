@@ -90,8 +90,8 @@ namespace ToolkipCAD
             //Task cc = Task.Run(() => FillBeamStruct());
             FillBeamStruct();//beam识别
             progressBar1.Value = 100;
-            transf("SaveData"); //保存 
-            this.Close();                        
+            //transf("SaveData"); //保存 
+            //this.Close();
         }
 
         private void select_range_SelectedIndexChanged(object sender, EventArgs e)
@@ -237,7 +237,7 @@ namespace ToolkipCAD
                             Z = pst.z
                         }, item.Position);
                         //第四步：从第三步结果中逐行用关键字匹配出参数信息
-                        Beam beams = new Beam();
+                        Beam beams = new Beam();                        
                         beams.owner = new List<string>();
                         beams.Sections = new List<Beam_Section>();
                         beams.Stirrup_info = new List<Stirrup_Dim>();
@@ -489,20 +489,12 @@ namespace ToolkipCAD
                         }
                         //break;
                         beam.beams.Add(beams);
-                        GetSideCLine(beams.side_lines);
+                        List<MyDrawLine> CTLine=GetSideCLine(beams.side_lines);
                     }
 
                 }
             }
             #endregion over
-            //绘制主梁中线
-            /* 0、参考附件1，将直线、弧线变成中心线，其中walllist即为搜集的结果线
-            1、循环所有直线所有的端点到其它直线端点距离，找到距离最大的两个端点，其中一个称为P1,算法从P1开始，内存记录L1
-            2、找到L1线的另一端点P2,判断所有其它线的点到P2的距离
-            2.1 当距离小于5时：内存记录L2，并将L2的P3修改等于P2,然后用P4继续步骤2
-            2.2 当没有找到距离小于5的点时，循环其它点至P2距离小于500，且目标点到L1的垂直距离小于5，且最近的一个，则找到P3，将P3修改等于P2,记录L2,然后从P4继续步骤2
-            3、将这条连续的直线用PLine画出来，宽度50，颜色黄色，图层名称：HLT_BEAM_CLINE
-            4、以上需要考虑ARC弧线 */
         }
         //字符串截取
         public string SplitStr(string str, int start, string regex)
@@ -722,14 +714,14 @@ namespace ToolkipCAD
                             if ((angle < 3 && angle > -2) || Math.Abs(Math.Round(angle)) == 180)//左右
                             {
                                 if (angle2 < 3 && angle2 > -2)
-                                    if (MathSience.GetDistance(entity.StartPoint.x, entity.StartPoint.y, entity.EndPoint.x, entity.EndPoint.y) > 100)
+                                    if (MathSience.GetDistance(entity.StartPoint.x, entity.StartPoint.y, entity.EndPoint.x, entity.EndPoint.y) > 300)
                                         return entity;
                             }
                             if ((angle > 80 && angle < 95) || (angle < -80 && angle > -95))//上下
                             {
                                 if ((angle2 > 80 && angle2 < 95) || (angle2 < -80 && angle2 > -95))
                                 {
-                                    if (MathSience.GetDistance(entity.StartPoint.x, entity.StartPoint.y, entity.EndPoint.x, entity.EndPoint.y) > 100)
+                                    if (MathSience.GetDistance(entity.StartPoint.x, entity.StartPoint.y, entity.EndPoint.x, entity.EndPoint.y) > 300)
                                         return entity;
                                 }
                             }
@@ -791,7 +783,7 @@ namespace ToolkipCAD
             }
             return new MxDrawLine();
         }
-        public void GetSideCLine(List<string> lines)
+        public List<MyDrawLine> GetSideCLine(List<string> lines)
         {
             // 1、循环所有直线所有的端点到其它直线端点距离，找到距离最大的两个端点，
             //其中一个称为P1,算法从P1开始，内存记录L1
@@ -836,7 +828,7 @@ namespace ToolkipCAD
                 start.ChangePoint();
                 for (int i = 0; i < lines.Count; i++)
                 {
-                    MxDrawLine entity = axMxDrawX1.HandleToObject(lines[i]) as MxDrawLine; 
+                    MxDrawLine entity = axMxDrawX1.HandleToObject(lines[i]) as MxDrawLine;
                     if (entity.handle != start.handle)
                     {
                         MyDrawLine MyEntity = new MyDrawLine
@@ -904,24 +896,377 @@ namespace ToolkipCAD
             axMxDrawX1.LineWidth = 200;
             axMxDrawX1.DrawColor = System.Drawing.Color.Yellow;
             //axMxDrawX1.DrawLine(Pstart.StartPoint.x,Pstart.StartPoint.y,end.EndPoint.x,end.EndPoint.y);
-            if (lines1.Count > 0)
-                //定义一个路径的开始点
-                axMxDrawX1.PathMoveTo(lines1[0].StartPoint.x, lines1[0].StartPoint.y);
-            for (int i = 0; i < lines1.Count - 1; i++)
+            //if (lines1.Count > 0)
+            //定义一个路径的开始点
+            //axMxDrawX1.PathMoveTo(lines1[0].StartPoint.x, lines1[0].StartPoint.y);
+            //axMxDrawX1.ClearCurrentSelect();
+
+            for (int i = 0; i < lines1.Count; i++)
             {
+                GetDimetions(lines1[i]);
                 //路径的一下个点               
                 //axMxDrawX1.DrawCircle(lines1[i].StartPoint.x,lines1[i].StartPoint.y,50);
-                //axMxDrawX1.DrawLine(lines1[i].StartPoint.x,lines1[i].StartPoint.y,lines1[i+1].StartPoint.x,lines1[i+1].StartPoint.y);
+                axMxDrawX1.DrawLine(lines1[i].StartPoint.x, lines1[i].StartPoint.y, lines1[i].EndPoint.x, lines1[i].EndPoint.y);
+                //axMxDrawX1.AddCurrentSelect(id, false, false);
                 //axMxDrawX1.DrawText(lines1[i].StartPoint.x, lines1[i].StartPoint.y, (i + 1).ToString(), 5, 0, 0, 0);
-                axMxDrawX1.PathLineTo(lines1[i].StartPoint.x, lines1[i].StartPoint.y);
+                //if(i!=0)
+                //axMxDrawX1.PathLineTo(lines1[i].StartPoint.x, lines1[i].StartPoint.y);
+                //axMxDrawX1.PathLineTo(lines1[i].EndPoint.x, lines1[i].EndPoint.y);
             }
-            axMxDrawX1.DrawPathToPolyline();
+            return lines1;
+
+
         }
+        //判断图层存在
         private bool CheckLayerExists()
         {
             MxDrawDatabase database = (Program.MainForm.axMxDrawX1.GetDatabase()) as MxDrawDatabase;
             MxDrawLayerTable layers = database.GetLayerTable();
             return layers.Has("HLT_BEAM_CLINE");
+        }
+        //获取原位标注
+        private void GetDimetions(MyDrawLine line)
+        {
+            /*1、在C21的基础上，每段梁都已经有一条净线段    L1
+            2、算法：判别某个钢筋标注是梁顶（支座、通长）还是梁底的
+            一个文字的定位P1点到任意找一根梁线的垂直交点P2,
+            当P2.X>=P1.X&&P2.Y<=P1.Y则为梁顶标注，否则为梁底标注
+            3、识别梁顶标注，通过以上算法找到所有距离L1垂直距离小于3倍文字高度，且距离最近的文字；
+            然后L1的两端点分别寻找最近的钢筋标注文字，找到的就是数据结构中左右支座钢筋，
+            文字方向与梁线方向差45度之内；注意：有可能找不到是正常的；
+            剩余的点距离L1中点最近的就是通长钢筋，通长钢筋里面发现带（）的即为架力钢筋，
+            注意：文字方向与梁方向差45读之内；
+            4、识别梁下跨中钢筋，根据算法得到的文字距离L1中点最近的就是跨中钢筋
+            5、找到跨中钢筋后，不超过2倍行距范围内向远离梁边线方向继续找，
+            可能找到的原位标注包括截面、腰筋、箍筋，依次落位数据结构*/
+            Beam beam1 = new Beam();
+            beam1.left_seat_dim = new List<string>();
+            List<MxDrawText> Texts = new List<MxDrawText>();
+            MxDrawSelectionSet collect = new MxDrawSelectionSet();
+            MxDrawResbuf filter = new MxDrawResbuf();
+            filter.AddStringEx("TEXT,MTEXT", 5020);
+            collect.Select(MCAD_McSelect.mcSelectionSetAll,null,null,filter);
+            double len1 = double.MaxValue,len2=double.MaxValue,
+                len3=double.MaxValue,len4=double.MaxValue;
+            MxDrawText left = new MxDrawText(), right = new MxDrawText(),
+                center = new MxDrawText(), bottom=new MxDrawText();
+            for (int i = 0; i < collect.Count; i++)
+            {
+                MxDrawText P1 = collect.Item(i) as MxDrawText;
+                if (P1 != null)
+                {
+                    double distance = MathSience.pointToLineDistance(line.StartPoint,line.EndPoint,P1.Position.x,P1.Position.y);
+                    MxDrawPoint P2 = MathSience.PointToLineFor90(line.StartPoint, line.EndPoint, P1.Position);
+                    if(distance<P1.Height*3)
+                    {
+                        //梁顶标注
+                        if (P2.x >= P1.Position.x && P2.y <= P1.Position.y)
+                        {        
+                            //左支座
+                            double range = MathSience.GetDistance(line.StartPoint.x,line.StartPoint.y,P1.Position.x,P1.Position.y);
+                            double angle = MathSience.GetAngle2(line.StartPoint,line.EndPoint);
+                            if (range < len1)
+                            {
+                                if (angle + (P1.Rotation * (180 / 3.14)) < 45)
+                                {
+                                    len1 = range;
+                                    left = P1;
+                                }
+                            }
+                            //右支座
+                            double range2 = MathSience.GetDistance(line.EndPoint.x, line.EndPoint.y, P1.Position.x, P1.Position.y);
+                            if (range2 < len2)
+                            {
+                                if (angle + (P1.Rotation * (180 / 3.14)) < 45)
+                                {
+                                    len2 = range2;
+                                    right = P1;
+                                }
+                            }
+                            //通长钢筋
+                            MxDrawPoint ctr = MathSience.GetCenterPoint(line.StartPoint,line.EndPoint);
+                            double dte = MathSience.GetDistance(ctr.x,ctr.y,P1.Position.x,P1.Position.y);
+                            if (dte < len3)
+                            {
+                                if (angle + (P1.Rotation * (180 / 3.14)) < 45)
+                                {
+                                    if (P1.TextString.Contains("("))
+                                    {
+
+                                    }
+                                    len3 = dte;
+                                    center = P1;
+                                }
+                            }
+                            
+                        }
+                        else
+                        {
+                            MxDrawPoint ctr = MathSience.GetCenterPoint(line.StartPoint, line.EndPoint);
+                            double dte = MathSience.GetDistance(ctr.x, ctr.y, P1.Position.x, P1.Position.y);
+                            if (dte < len4)
+                            {
+                                bottom = P1;
+                            }
+                        }
+                    }
+                }
+            }
+            if (left.handle != "0")
+            {
+                beam1.Left_Seat_Rebars = new List<List<Rebar_Dim>>();
+                beam1.Left_Seat_Rebars = GetRebar_bim(left);                
+            }
+            if (right.handle != "0")
+            {
+                beam1.Right_Seat_Rebars = new List<List<Rebar_Dim>>();
+                beam1.Right_Seat_Rebars = GetRebar_bim(right);
+            }
+            if (bottom.handle != "0")
+            {
+                collect.Select(MCAD_McSelect.mcSelectionSetAll, new MxDrawPoint
+                {
+                    x= bottom.Position.x-2*bottom.Height,
+                    y= bottom.Position.y - 2 * bottom.Height,
+                }, new MxDrawPoint
+                {
+                    x = bottom.Position.x + 2 * bottom.Height,
+                    y = bottom.Position.y + 2 * bottom.Height,
+                }, filter);
+                beam1.owner = new List<string>();
+                beam1.Sections = new List<Beam_Section>();
+                beam1.Stirrup_info = new List<Stirrup_Dim>();
+                beam1.Public_Bar = new List<Rebar_Dim>();
+                beam1.Mid_Beam_Rebars = new List<List<Rebar_Dim>>();
+                beam1.Waist_Bar = new List<Rebar_Dim>();
+                beam1.Twist_Bar = new List<Rebar_Dim>();
+                for (int i = 0; i < collect.Count; i++)
+                {
+                    MxDrawText entity = collect.Item(i) as MxDrawText;
+                    if (entity == null) continue;
+                    Rebar_DimChange(entity,ref beam1);
+                }
+            }
+            Program.MainForm.axMxDrawX1.TwinkeEnt(left.ObjectID);
+            Program.MainForm.axMxDrawX1.TwinkeEnt(right.ObjectID);
+            Program.MainForm.axMxDrawX1.TwinkeEnt(center.ObjectID);
+            Program.MainForm.axMxDrawX1.TwinkeEnt(bottom.ObjectID);
+        }
+        private void Rebar_DimChange(MxDrawText entity,ref Beam beam1)
+        {
+            //梁截面
+            string kval = Regex.Match(entity.TextString, @"(\d{2,4}~)?(\d{2,4})(x|X)(\d{2,4})(~\d{2,4})?").Value;
+            string[] vals = kval.Split(new char[] { '~', 'x', 'X' });
+            if (kval != "")
+            {
+                if (kval.IndexOf('~') == -1)
+                {
+                    beam1.Sections.Add(new Beam_Section
+                    {
+                        a = 1,
+                        b = Convert.ToDouble(vals[0]),
+                        h = Convert.ToDouble(vals[1])
+                    });
+                }
+                else
+                {
+                    if (kval.IndexOf("x", StringComparison.OrdinalIgnoreCase) > kval.IndexOf('~'))
+                    {
+                        //变截面宽  350~450x700
+                        beam1.Sections.Add(new Beam_Section
+                        {
+                            a = 1,
+                            b = Convert.ToDouble(vals[0]),
+                            h = Convert.ToDouble(vals[2]),
+                        });
+                        beam1.Sections.Add(new Beam_Section
+                        {
+                            a = 1,
+                            b = Convert.ToDouble(vals[1]),
+                            h = Convert.ToDouble(vals[2]),
+                        });
+                    }
+                    else
+                    {
+                        //变截面高   350x650~800
+                        beam1.Sections.Add(new Beam_Section
+                        {
+                            a = 1,
+                            b = Convert.ToDouble(vals[0]),
+                            h = Convert.ToDouble(vals[1]),
+                        });
+                        beam1.Sections.Add(new Beam_Section
+                        {
+                            a = 1,
+                            b = Convert.ToDouble(vals[0]),
+                            h = Convert.ToDouble(vals[2]),
+                        });
+                    }
+                }
+                return;
+            }
+            //箍筋   Φ12@100/200(4)                           
+            kval = Regex.Match(entity.TextString, @"((%%130)|(%%131)|(%%132))(\d{1,3})@(\d{2,3})(/\d{2,3})?\(\d{1,2}\)").Value;
+            if (kval != "")
+            {
+                beam1.Stirrup_info.Add(new Stirrup_Dim
+                {
+                    D = Convert.ToDouble(kval.Substring(5, kval.IndexOf('@') - 5)),
+                    Se = Convert.ToDouble(SplitStr(kval, kval.IndexOf('@'), "/(")),
+                    Sa = Convert.ToDouble(SplitStr(kval, kval.IndexOf('/'), "((")),
+                    n = Convert.ToInt32(SplitStr(kval, kval.IndexOf('('), "))"))
+                });
+                return;
+            }
+            //通长钢筋   4Φ20;7Φ20 3/4
+            kval = Regex.Match(entity.TextString, @"^[A-Z]{0}(\(?\d{1,3}%%132\d{1,3}\)?)(\+\(?\d{1,3}%%132\d{1,3}\))?;?(\(?\d{1,3}%%132\d{1,3}\)?)?\s?(/?(\d{1,3})?)*").Value;
+            if (kval != "")
+            {
+                string[] sp1 = kval.Split(';');
+                for (int v = 0; v < sp1.Count(); v++)
+                {
+                    string[] sp2 = sp1[v].Split('+');
+                    for (int f = 0; f < sp2.Count(); f++)
+                    {
+                        sp2[f] = sp2[f].Replace("(", "");
+                        sp2[f] = sp2[f].Replace(")", "");
+                        sp2[f] = sp2[f].Replace("%%132", "|");
+                        string[] sp3 = sp2[f].Split('|');
+                        List<Rebar_Dim> Bdim = new List<Rebar_Dim>();
+                        if (sp2[f].IndexOf('/') == -1)
+                        {
+                            int c = 0;
+                            if (sp2.Count() > 1) c = f + 1;
+                            if (v == 1)
+                                Bdim.Add(new Rebar_Dim
+                                {
+                                    C = c,
+                                    n = Convert.ToInt32(sp3[0]),
+                                    D = Convert.ToInt32(sp3[1])
+                                });
+                            else
+                                beam1.Public_Bar.Add(new Rebar_Dim
+                                {
+                                    C = c,
+                                    n = Convert.ToInt32(sp3[0]),
+                                    D = Convert.ToInt32(sp3[1])
+                                });
+                        }
+                        else
+                        {
+                            sp3[1] = sp3[1].Split(' ')[0];
+                            string xi = sp2[f].Substring(sp2[f].IndexOf(' '));
+                            string[] sp4 = xi.Trim().Split('/');
+                            for (int s = 0; s < sp4.Count(); s++)
+                            {
+                                if (v == 1)
+                                    Bdim.Add(new Rebar_Dim
+                                    {
+                                        n = Convert.ToInt32(sp4[s]),
+                                        D = Convert.ToInt32(sp3[1])
+                                    });
+                                else
+                                    beam1.Public_Bar.Add(new Rebar_Dim
+                                    {
+                                        n = Convert.ToInt32(sp4[s]),
+                                        D = Convert.ToInt32(sp3[1])
+                                    });
+                            }
+                        }
+                        beam1.Mid_Beam_Rebars.Add(Bdim);
+                    }
+                }
+                return;
+            }
+            //腰筋   G4Φ12+N4Φ12
+            kval = Regex.Match(entity.TextString, @"(\+?(G|N)\d{1,3}%%132\d{1,3})*").Value;
+            if (kval != null)
+            {
+                string[] sp1 = kval.Split('+');
+                for (int c = 0; c < sp1.Length; c++)
+                {
+                    sp1[c] = sp1[c].Replace("%%132", "|");
+                    string[] sp2 = sp1[c].Split('|');
+                    if (sp2.Length == 2)
+                    {
+                        char G = sp2[0][0];
+                        int N = Convert.ToInt32(sp2[0].Substring(1));
+                        int C = 0; if (sp1.Length == 2) C = c + 1;
+                        if (G == 'G')
+                            beam1.Waist_Bar.Add(new Rebar_Dim
+                            {
+                                n = N,
+                                C = C,
+                                D = Convert.ToDouble(sp2[1])
+                            });
+                        if (G == 'N')
+                            beam1.Twist_Bar.Add(new Rebar_Dim
+                            {
+                                n = N,
+                                C = C,
+                                D = Convert.ToDouble(sp2[1])
+                            });
+                    }
+                }
+                return;
+            }
+            //标高  (-0.150)
+            kval = Regex.Match(entity.TextString, @"(\(?-?\d{1,3}.\d{3}\)?)").Value;
+            if (kval != null)
+            {
+                kval = kval.Replace("(", "");
+                kval = kval.Replace(")", "");
+                beam1.Sections = beam1.Sections.Select(x => { x.H = Convert.ToDouble(kval); return x; }).ToList();
+            }
+        }
+        private List<List<Rebar_Dim>> GetRebar_bim(MxDrawText entity)
+        {
+            //通长钢筋   4Φ20;7Φ20 3/4
+            List<List<Rebar_Dim>> Dims = new List<List<Rebar_Dim>>();
+            string kval = Regex.Match(entity.TextString, @"^[A-Z]{0}(\(?\d{1,3}%%132\d{1,3}\)?)(\+\(?\d{1,3}%%132\d{1,3}\))?;?(\(?\d{1,3}%%132\d{1,3}\)?)?\s?(/?(\d{1,3})?)*").Value;
+            if (kval != "")
+            {
+                string[] sp1 = kval.Split(';');
+                for (int v = 0; v < sp1.Count(); v++)
+                {
+                    string[] sp2 = sp1[v].Split('+');
+                    for (int f = 0; f < sp2.Count(); f++)
+                    {
+                        sp2[f] = sp2[f].Replace("(", "");
+                        sp2[f] = sp2[f].Replace(")", "");
+                        sp2[f] = sp2[f].Replace("%%132", "|");
+                        string[] sp3 = sp2[f].Split('|');
+                        List<Rebar_Dim> Bdim = new List<Rebar_Dim>();
+                        if (sp2[f].IndexOf('/') == -1)
+                        {
+                            int c = 0;
+                            if (sp2.Count() > 1) c = f + 1;
+                            Bdim.Add(new Rebar_Dim
+                            {
+                                C = c,
+                                n = Convert.ToInt32(sp3[0]),
+                                D = Convert.ToInt32(sp3[1])
+                            });
+                        }
+                        else
+                        {
+                            sp3[1] = sp3[1].Split(' ')[0];
+                            string xi = sp2[f].Substring(sp2[f].IndexOf(' '));
+                            string[] sp4 = xi.Trim().Split('/');
+                            for (int s = 0; s < sp4.Count(); s++)
+                            {
+                                    Bdim.Add(new Rebar_Dim
+                                    {
+                                        n = Convert.ToInt32(sp4[s]),
+                                        D = Convert.ToInt32(sp3[1])
+                                    });
+                            }
+                        }
+                        Dims.Add(Bdim);
+                    }
+                }
+            }
+            return Dims;
         }
     }
 }

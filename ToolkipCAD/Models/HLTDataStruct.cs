@@ -117,6 +117,7 @@ namespace ToolkipCAD
     }
     public class Beam //一段梁
     {
+        public string handle { get; set; }//
         public string id { get; set; }  //梁编号GUID
         public List<string> owner { get; set; }//复用项ID
         //数据采集
@@ -139,16 +140,26 @@ namespace ToolkipCAD
         public string earth_type { get; set; }     //抗震等级
         public List<Beam_Section> Sections { get; set; } //截面及标高
         public List<Rebar_Dim> Public_Bar { get; set; } //通长钢筋 上
+        public Hooks Public_Bar_Hooks_Left { get; set; }//通长钢筋弯钩left
+        public Hooks Public_Bar_Hooks_Right { get; set; }//通长钢筋弯钩right
         public List<Rebar_Dim> Frame_Bar { get; set; } //架力钢筋
         public List<List<Rebar_Dim>> Left_Seat_Rebars { get; set; } //左支座钢筋 每排什么样的钢筋组合
+        public double LeftSeatLen { get; set; }//净长度
+        public Hooks Left_Seat_Rebars_Hooks_Left { get; set; }//左支座钢筋弯钩left
         public List<List<Rebar_Dim>> Right_Seat_Rebars { get; set; } //右支座钢筋 每排什么样的钢筋组合
+        public double RightSeatLen { get; set; }//净长度
+        public Hooks Right_Seat_Rebars_Hooks_Right { get; set; }//右支座钢筋弯钩Right
         public List<List<Rebar_Dim>> Mid_Beam_Rebars { get; set; } //跨中钢筋 每排什么样的钢筋组合 下
+        public Hooks Mid_Beam_Rebars_Hooks_Left { get; set; }//跨中钢筋弯钩left
+        public Hooks Mid_Beam_Rebars_Hooks_Right { get; set; }//跨中钢筋弯钩right
         public List<Stirrup_Dim> Stirrup_info { get; set; }  //箍筋直径与间距,采用list是为多种直径箍筋混用准备的数据结构        
         public List<Rebar_Dim> Waist_Bar { get; set; } //腰筋
         public List<Rebar_Dim> Twist_Bar { get; set; } //抗扭筋
+        public string overmm { get; set; }//超过N mm
+        public string Rebar_overmm { get; set; }//超过N mm 用箍筋
         //数据应用--平显   
-        public List<long> PM_Line { get; set; }  //平显中心线
-        public List<long> PM_Text { get; set; }  //平显文字
+        public List<string> PM_Line { get; set; }  //平显中心线
+        public List<string> PM_Text { get; set; }  //平显文字
         //?1、当绘制出来后必须跟踪否则就会重新绘制
     }
 
@@ -159,7 +170,12 @@ namespace ToolkipCAD
         public double h { get; set; }  //梁截面高度
         public double H { get; set; }  //梁顶标高
     }
-
+    public class Hooks//弯钩
+    {
+        public bool check { get; set; }
+        public int type { get; set; }//弯钩类型
+        public double Length { get; set; }//弯钩长度
+    }
     public class Rebar_Dim //主筋
     {
         public int C { get; set; }//层

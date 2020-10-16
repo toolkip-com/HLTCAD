@@ -74,6 +74,12 @@
     <Compile Include="CustomForm\GouzaoRecord.Designer.cs">
       <DependentUpon>GouzaoRecord.cs</DependentUpon>
     </Compile>
+    <Compile Include="CustomForm\OnePeaceEditDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomForm\OnePeaceEditDialog.Designer.cs">
+      <DependentUpon>OnePeaceEditDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="CustomForm\RecodeDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,6 +136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CustomForm\GouzaoRecord.resx">
       <DependentUpon>GouzaoRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomForm\OnePeaceEditDialog.resx">
+      <DependentUpon>OnePeaceEditDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CustomForm\RecodeDialog.resx">
       <DependentUpon>RecodeDialog.cs</DependentUpon>

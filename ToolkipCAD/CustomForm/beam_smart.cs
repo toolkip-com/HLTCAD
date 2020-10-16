@@ -90,8 +90,9 @@ namespace ToolkipCAD
             //Task cc = Task.Run(() => FillBeamStruct());
             FillBeamStruct();//beam识别
             progressBar1.Value = 100;
-            //transf("SaveData"); //保存 
-            //this.Close();
+            transf("SaveData"); //保存 
+            //Program.MainForm.axMxDrawX1.SaveDwgFile(Program.MainForm.axMxDrawX1.DwgFilePath);
+            this.Close();
         }
 
         private void select_range_SelectedIndexChanged(object sender, EventArgs e)
@@ -182,7 +183,6 @@ namespace ToolkipCAD
             MxDrawText entity;
             foreach (var item in beam.dim_texts)
             {
-                progressBar1.Value++;
                 entity = Program.MainForm.axMxDrawX1.HandleToObject(item) as MxDrawText;
                 if (entity != null)
                     texts.Add(new Text
@@ -227,7 +227,7 @@ namespace ToolkipCAD
                     //第三步：遍历第二步的结果，逐一按下面计算，例如第n个结果
                     if (drawEntity != null && drawEntity.ObjectName == "McDbLine")
                     {
-                        Program.MainForm.axMxDrawX1.TwinkeEnt(drawEntity.ObjectID);
+                        //Program.MainForm.axMxDrawX1.TwinkeEnt(drawEntity.ObjectID);
                         pst = drawEntity.GetStartPoint();
                         ped = drawEntity.GetEndPoint();
                         text3 = smart.SelectTextByBox(texts, new Point3d
@@ -254,7 +254,7 @@ namespace ToolkipCAD
                             if (kval != "")
                             {
                                 beams.type = kval;//(Side_type)Enum.Parse(typeof(Side_type),kval);
-                                beams.owner = GetItemAsync(text3[k].TextString);
+                                //beams.owner = GetItemAsync(text3[k].TextString);
                             }
                             //梁截面
                             kval = Regex.Match(text3[k].TextString, @"(\d{2,4}~)?(\d{2,4})(x|X)(\d{2,4})(~\d{2,4})?").Value;
@@ -438,7 +438,7 @@ namespace ToolkipCAD
                             //2.L1有两个点P1,P2，先从P1开始如下步骤，完了之后再P2
                             //3.找距离P1点2000内的支座线，并且L1与支座线交点距离P1小于300,若有结果则按3.2若无结果按3.1                        
                             L1 = LT1;
-                            Program.MainForm.axMxDrawX1.TwinkeEnt(L1.ObjectID);
+                            //Program.MainForm.axMxDrawX1.TwinkeEnt(L1.ObjectID);
                             int cs = 0;
                             do
                             {
@@ -477,19 +477,20 @@ namespace ToolkipCAD
                                 再寻找与这些梁线共点且角度差别小于40度的梁线，找完写入beam；
                                 然后用3的支座线与L1求到最远相关交点P3，求与P3最近的梁线，且角度差别小于40度，用这根新梁线远端点作为P1重复3
                                 */
-                                cs++;
+                                //cs++;
                                 //Program.MainForm.axMxDrawX1.StopAllTwinkeEnt();
-                                Program.MainForm.axMxDrawX1.TwinkeEnt(L1.ObjectID);
-                                Program.MainForm.axMxDrawX1.TwinkeEnt(L2s.ObjectID);
-                                Program.MainForm.axMxDrawX1.TwinkeEnt(seat.ObjectID);
-                                Program.MainForm.axMxDrawX1.TwinkeEnt(L2.ObjectID);
-                                Program.MainForm.axMxDrawX1.TwinkeEnt(Rline.ObjectID);
-                                if (cs > 10) break;
+                                //Program.MainForm.axMxDrawX1.TwinkeEnt(L1.ObjectID);
+                                //Program.MainForm.axMxDrawX1.TwinkeEnt(L2s.ObjectID);
+                                //Program.MainForm.axMxDrawX1.TwinkeEnt(seat.ObjectID);
+                                //Program.MainForm.axMxDrawX1.TwinkeEnt(L2.ObjectID);
+                                //Program.MainForm.axMxDrawX1.TwinkeEnt(Rline.ObjectID);
+                                //if (cs > 10) break;
                             } while (L1.handle != "0");
                         }
                         //break;
+                        beams.PM_Line = new List<string>();
+                        beams.PM_Line= GetSideCLine(beams.side_lines);
                         beam.beams.Add(beams);
-                        List<MyDrawLine> CTLine=GetSideCLine(beams.side_lines);
                     }
 
                 }
@@ -783,7 +784,7 @@ namespace ToolkipCAD
             }
             return new MxDrawLine();
         }
-        public List<MyDrawLine> GetSideCLine(List<string> lines)
+        public List<string> GetSideCLine(List<string> lines)
         {
             // 1、循环所有直线所有的端点到其它直线端点距离，找到距离最大的两个端点，
             //其中一个称为P1,算法从P1开始，内存记录L1
@@ -889,33 +890,21 @@ namespace ToolkipCAD
                 if (flag) continue;
                 flag = false;
             }
-
+            //在图层上画线
             if (!CheckLayerExists())
                 axMxDrawX1.AddLayer("HLT_BEAM_CLINE");
             axMxDrawX1.LayerName = "HLT_BEAM_CLINE";
             axMxDrawX1.LineWidth = 200;
             axMxDrawX1.DrawColor = System.Drawing.Color.Yellow;
-            //axMxDrawX1.DrawLine(Pstart.StartPoint.x,Pstart.StartPoint.y,end.EndPoint.x,end.EndPoint.y);
-            //if (lines1.Count > 0)
-            //定义一个路径的开始点
-            //axMxDrawX1.PathMoveTo(lines1[0].StartPoint.x, lines1[0].StartPoint.y);
-            //axMxDrawX1.ClearCurrentSelect();
-
+            List<string> PM_Line = new List<string>();
             for (int i = 0; i < lines1.Count; i++)
             {
-                GetDimetions(lines1[i]);
-                //路径的一下个点               
-                //axMxDrawX1.DrawCircle(lines1[i].StartPoint.x,lines1[i].StartPoint.y,50);
-                axMxDrawX1.DrawLine(lines1[i].StartPoint.x, lines1[i].StartPoint.y, lines1[i].EndPoint.x, lines1[i].EndPoint.y);
-                //axMxDrawX1.AddCurrentSelect(id, false, false);
-                //axMxDrawX1.DrawText(lines1[i].StartPoint.x, lines1[i].StartPoint.y, (i + 1).ToString(), 5, 0, 0, 0);
-                //if(i!=0)
-                //axMxDrawX1.PathLineTo(lines1[i].StartPoint.x, lines1[i].StartPoint.y);
-                //axMxDrawX1.PathLineTo(lines1[i].EndPoint.x, lines1[i].EndPoint.y);
+                GetDimetions(lines1[i]);//原位标注             
+                long a=axMxDrawX1.DrawLine(lines1[i].StartPoint.x, lines1[i].StartPoint.y, lines1[i].EndPoint.x, lines1[i].EndPoint.y);
+                MxDrawEntity p=axMxDrawX1.ObjectIdToObject(a) as MxDrawEntity;
+                PM_Line.Add(p.handle);                
             }
-            return lines1;
-
-
+            return PM_Line;
         }
         //判断图层存在
         private bool CheckLayerExists()
@@ -1047,10 +1036,10 @@ namespace ToolkipCAD
                     Rebar_DimChange(entity,ref beam1);
                 }
             }
-            Program.MainForm.axMxDrawX1.TwinkeEnt(left.ObjectID);
-            Program.MainForm.axMxDrawX1.TwinkeEnt(right.ObjectID);
-            Program.MainForm.axMxDrawX1.TwinkeEnt(center.ObjectID);
-            Program.MainForm.axMxDrawX1.TwinkeEnt(bottom.ObjectID);
+            //Program.MainForm.axMxDrawX1.TwinkeEnt(left.ObjectID);
+            //Program.MainForm.axMxDrawX1.TwinkeEnt(right.ObjectID);
+            //Program.MainForm.axMxDrawX1.TwinkeEnt(center.ObjectID);
+            //Program.MainForm.axMxDrawX1.TwinkeEnt(bottom.ObjectID);
         }
         private void Rebar_DimChange(MxDrawText entity,ref Beam beam1)
         {

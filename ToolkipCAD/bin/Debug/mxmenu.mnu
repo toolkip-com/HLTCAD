@@ -86,6 +86,7 @@
 "单梁识别(&D)" "TK_DLSB" "IDB_PROPERTY_BITMAP" "PropertyEditor.mrx" "" ""  ""  "Y"
 "单段识别(&S)" "TK_DDSB" "IDB_PROPERTY_BITMAP" "PropertyEditor.mrx" "" ""  ""  "Y"
 "单段编辑(&E)" "TK_DDBJ" "IDB_PROPERTY_BITMAP" "PropertyEditor.mrx" "" ""  ""  "Y"
+"平显(&C)" "TK_PSHOW" "IDB_PROPERTY_BITMAP" "PropertyEditor.mrx" "" ""  ""  "Y"
 "POPMENUE"
 
 "POPMENUS" "显示(&W)"

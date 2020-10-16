@@ -58,7 +58,7 @@ namespace ToolkipCAD
             _TestData = new Project_Tree(ref tree_project, ref tree_drawing);
             bar_state = new MyToolBar(ref _TestData, ref axMxDrawX1);
             //_TestData.StructTree();   
-            _TestData.LoadHLTTree($@"D:\好蓝图平面CAD钢筋\测试\新建项目2\新建项目2.hlt");
+            _TestData.LoadHLTTree($@"D:\好蓝图平面CAD钢筋\测试\新建项目3\新建项目3.hlt");
         }
 
         private void axMxDrawX1_ImplementCommandEvent(object sender, AxMxDrawXLib._DMxDrawXEvents_ImplementCommandEventEvent e)
@@ -94,7 +94,7 @@ namespace ToolkipCAD
                         mxDrawSelection.SelectAtPoint(point, filter);
                         if (mxDrawSelection.Count > 0)
                         {
-                            MxDrawEntity entity = mxDrawSelection.Item(0);
+                            MxDrawEntity entity = mxDrawSelection.Item(1);
                             //MxDrawLayerTable layer = (axMxDrawX1.GetDatabase() as MxDrawDatabase).GetLayerTable();
                             //MxDrawLayerTableRecord dd = layer.GetAt(entity.Layer);
                             if(entity.ObjectName=="McDbLine")
